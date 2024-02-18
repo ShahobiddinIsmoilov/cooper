@@ -1,7 +1,8 @@
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, ValidationError
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 User = get_user_model()
 
@@ -10,7 +11,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     User registration serializer
     """
     password = serializers.CharField(
-        max_length=68, min_length=6, write_only=True)
+        max_length=40, min_length=6, write_only=True)
 
     class Meta:
         model = User
@@ -19,13 +20,22 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
     
+    def validate(self, attrs):
+        username = attrs.get('username')
+        password = attrs.get('password')
+
+        if username.lower() in password.lower() or password.lower() in username.lower():
+            raise serializers.ValidationError('username and password cannot be similar')
+        
+        return attrs
+    
 
 class LoginSerializer(serializers.ModelSerializer):
     """
     User login serializer
     """
     username = serializers.CharField(max_length=40, min_length=6)
-    password = serializers.CharField(max_length=68, min_length=8, write_only=True)
+    password = serializers.CharField(max_length=40, min_length=6, write_only=True)
     token = serializers.CharField(max_length=68, min_length=8, read_only=True)
 
     class Meta:
@@ -51,7 +61,23 @@ class LoginSerializer(serializers.ModelSerializer):
         }
     
 
-# .. other serializers
+class LogoutSerializer(serializers.Serializer):
+    """
+    User logout serializer
+    """
+    refresh_token = serializers.CharField()
+
+    def validate(self, attrs):
+        self.token = attrs['refresh_token']
+        return attrs
+
+    def save(self, **kwargs):
+        try:
+            RefreshToken(self.token).blacklist()
+        except TokenError:
+            raise ValidationError({'incorrect_token': 'The token is either invalid or expired'})
+    
+
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer to get the users list
