@@ -3,11 +3,13 @@ from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import (RegistrationSerializer,
                           LoginSerializer,
                           LogoutSerializer,
-                          UserSerializer)
+                          UserSerializer,
+                          MyTokenObtainPairSerializer)
 
 User = get_user_model()
 
@@ -16,10 +18,10 @@ def api_root(request, format=None):
     return Response({
         'register': reverse('register', request=request, format=None),
         'login': reverse('login', request=request, format=None),
-        'refresh-token': reverse('token_refresh', request=request, format=None),
+        'token': reverse('token', request=request, format=None),
+        'refresh-token': reverse('refresh-token', request=request, format=None),
         'user-list': reverse('user-list', request=request, format=None),
         'logout': reverse('logout', request=request, format=None)
-        
     })
 
 class RegistrationView(generics.GenericAPIView):
@@ -48,7 +50,12 @@ class LoginView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        state = {
+            'username': serializer.data['username'],
+            'status': 'successfully logged in'
+        }
+
+        return Response(state, status=status.HTTP_200_OK)
     
 
 class LogoutView(generics.GenericAPIView):
@@ -81,3 +88,10 @@ class UserDetail(generics.RetrieveAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    """
+    Customized Token Obtain Pair View
+    """
+    serializer_class = MyTokenObtainPairSerializer
