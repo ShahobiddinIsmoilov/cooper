@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     # internal apps
     'api',
     'users',
-    'posts'
+    'posts',
+    'communities',
 ]
 
 MIDDLEWARE = [

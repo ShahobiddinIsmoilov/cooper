@@ -8,19 +8,19 @@ class ListPostSerializer(serializers.ModelSerializer):
     List post serializer
     """
     url = serializers.HyperlinkedIdentityField(
-        view_name="detail",
+        view_name="post-update",
         lookup_field='pk'
     )
 
     class Meta:
         model = Post
         fields = ['title',
-                  'upvotes',
-                  'downvotes',
+                  'votes',
                   'comments',
                   'user',
+                  'community',
                   'url']
-
+    
 
 class DetailPostSerializer(serializers.ModelSerializer):
     """
@@ -28,13 +28,7 @@ class DetailPostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ['title',
-                  'content',
-                  'upvotes',
-                  'downvotes',
-                  'comments',
-                  'user',
-                  'created_at']
+        fields = '__all__'
 
 
 class CreatePostSerializer(serializers.ModelSerializer):
@@ -52,4 +46,4 @@ class UpdatePostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = '__all__'

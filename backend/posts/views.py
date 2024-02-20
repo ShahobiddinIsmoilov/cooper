@@ -9,6 +9,12 @@ from .serializers import (CreatePostSerializer,
                           DetailPostSerializer,
                           UpdatePostSerializer)
 
+# @api_view(['GET'])
+# def postList(request):
+#     posts = Post.objects.all()
+#     serializer = DetailPostSerializer(posts, many=True)
+#     return Response(serializer.data)
+
 
 class ListPostView(generics.ListAPIView):
     """
@@ -35,7 +41,7 @@ class CreatePostView(generics.CreateAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
 
 
-class UpdatePostView(generics.UpdateAPIView):
+class UpdatePostView(generics.RetrieveUpdateAPIView):
     """
     Updating a post
     """
@@ -48,6 +54,6 @@ class UpdatePostView(generics.UpdateAPIView):
 @api_view(['GET','HEAD'])
 def api_root(request, format=None):
     return Response({
-        'posts': reverse('posts', request=request, format=None),
-        'create': reverse('create', request=request, format=None),
+        'posts': reverse('post-list', request=request, format=None),
+        'create': reverse('post-create', request=request, format=None),
     })
