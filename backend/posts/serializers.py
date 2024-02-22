@@ -8,7 +8,7 @@ class ListPostSerializer(serializers.ModelSerializer):
     List post serializer
     """
     url = serializers.HyperlinkedIdentityField(
-        view_name="post-update",
+        view_name="post-detail",
         lookup_field='pk'
     )
 
@@ -37,7 +37,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['user', 'title', 'content', 'community']
 
 
 class UpdatePostSerializer(serializers.ModelSerializer):

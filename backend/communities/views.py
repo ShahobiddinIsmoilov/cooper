@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
@@ -17,9 +18,9 @@ def communityList(request):
     Function to get and return the list of all communities
     """
     communities = Community.objects.all()
-    serializer_context = {'request': request}
+    context = {'request': request}
     serializer = ListCommunitySerializer(communities,
-                                         context=serializer_context,
+                                         context=context,
                                          many=True)
     
     return Response(serializer.data)
@@ -33,7 +34,7 @@ def communityDetail(request, name: str):
     provided in the request and returns it
     """
     community = Community.objects.get(name=name)
-    posts = Post.objects.filter(community=community.id)
+    posts = Post.objects.filter(community=community.name)
     post_serializer = DetailPostSerializer(posts, many=True)
 
     if request.method == 'GET':
@@ -88,6 +89,8 @@ def communityDelete(request, name):
     """
     community = Community.objects.get(name=name)
     community.delete()
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
     
 
 @api_view(['GET','HEAD'])

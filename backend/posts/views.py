@@ -1,4 +1,6 @@
+from django.shortcuts import redirect
 from rest_framework import generics, permissions
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
@@ -9,51 +11,80 @@ from .serializers import (CreatePostSerializer,
                           DetailPostSerializer,
                           UpdatePostSerializer)
 
-# @api_view(['GET'])
-# def postList(request):
-#     posts = Post.objects.all()
-#     serializer = DetailPostSerializer(posts, many=True)
-#     return Response(serializer.data)
+@api_view(['GET', 'DELETE'])
+def postList(request):
+    """
+    Gets the list of all the posts and returns it
+    """
+    posts = Post.objects.all()
+    context = {'request': request}
+    serializer = ListPostSerializer(posts, context=context, many=True)
+    return Response(serializer.data)
 
 
-class ListPostView(generics.ListAPIView):
+# -------------------------------------------------------------------
+@api_view(['GET', 'POST', 'DELETE'])
+def postDetail(request, pk):
     """
-    Getting the list of posts
+    Retrieves the details of a particular post
     """
-    queryset = Post.objects.all()
-    serializer_class = ListPostSerializer
+    post = Post.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        post_serializer = DetailPostSerializer(post, many=False)
+        return Response(post_serializer.data)
+    elif request.method == 'POST':
+        post_serializer = DetailPostSerializer(instance=post, data=request.data)
+        if post_serializer.is_valid(raise_exception=True):
+            post_serializer.save()
+        return Response(post_serializer.data)
+    elif request.method == 'DELETE':
+        post.delete()
+        return redirect(postList)
+# -------------------------------------------------------------------
 
 
-class DetailPostView(generics.RetrieveAPIView):
+@api_view(['POST'])
+def postCreate(request):
     """
-    Retrieving a detailed post
+    Creates a new post
     """
-    queryset = Post.objects.all()
-    serializer_class = DetailPostSerializer
-    lookup_field = 'pk'
+    serializer = CreatePostSerializer(data=request.data)
+
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+
+    return Response(serializer.data)
 
 
-class CreatePostView(generics.CreateAPIView):
+@api_view(['POST'])
+def postUpdate(request, pk):
     """
-    Creating a new post
+    Updates the post
     """
-    serializer_class = CreatePostSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    post = Post.objects.get(pk=pk)
+    serializer = UpdatePostSerializer(instance=post, data=request.data)
+
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+
+    return Response(serializer.data)
 
 
-class UpdatePostView(generics.RetrieveUpdateAPIView):
+@api_view(['DELETE'])
+def postDelete(request, pk):
     """
-    Updating a post
+    Deletes the post
     """
-    queryset = Post.objects.all()
-    serializer_class = UpdatePostSerializer
-    lookup_field = 'pk'
-    # permission_classes = (permissions.IsAuthenticated,)
+    post = Post.objects.get(pk=pk)
+    post.delete()
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET','HEAD'])
 def api_root(request, format=None):
     return Response({
-        'posts': reverse('post-all', request=request, format=None),
+        'posts': reverse('post-list', request=request, format=None),
         'create': reverse('post-create', request=request, format=None),
     })

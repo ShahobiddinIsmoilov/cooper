@@ -25,7 +25,14 @@ class DetailCommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Community
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'description',
+            'created_at',
+            'members',
+            'number_of_posts'
+        ]
 
     def get_number_of_posts(self, obj):
         return self.context['number_of_posts']

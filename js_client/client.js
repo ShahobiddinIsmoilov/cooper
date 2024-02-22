@@ -60,7 +60,7 @@ function isTokenNotValid(jsonData) {
 }
 
 function getPosts() {
-    const endpoint = `${baseEndpoint}/post/all/`
+    const endpoint = `${baseEndpoint}/post/list/`
     const options = getFetchOptions()
     fetch(endpoint, options)
     .then(response => {
