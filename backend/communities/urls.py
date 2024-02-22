@@ -5,6 +5,9 @@ from . import views
 
 urlpatterns = [
     path('', views.api_root, name='community-root'),
-    path('list/', views.ListCommunityView.as_view(), name='community-list'),
-    path('create/', views.CreateCommunityView.as_view(), name='community-create')
+    path('list/', views.communityList, name='community-list'),
+    path('list/<str:name>/', views.communityDetail, name='community-detail'),
+    path('create/', views.communityCreate, name='community-create'),
+    path('update/<str:name>/', views.communityUpdate, name='community-update'),
+    path('delete/<str:name>/', views.communityDelete, name='community-delete'),
 ]

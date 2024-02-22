@@ -54,6 +54,6 @@ class UpdatePostView(generics.RetrieveUpdateAPIView):
 @api_view(['GET','HEAD'])
 def api_root(request, format=None):
     return Response({
-        'posts': reverse('post-list', request=request, format=None),
+        'posts': reverse('post-all', request=request, format=None),
         'create': reverse('post-create', request=request, format=None),
     })

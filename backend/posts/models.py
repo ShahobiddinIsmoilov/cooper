@@ -8,7 +8,9 @@ User = get_user_model()
 
 class Post(models.Model):
     user = models.ForeignKey(User, default=12, null=True, on_delete=models.CASCADE)
-    community = models.ForeignKey(Community, default=1, null=True, on_delete=models.CASCADE)
+    community = models.ForeignKey(Community, default='cars',
+                                  null=True, to_field='name',
+                                  on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     content = models.TextField(max_length=4096)
     created_at = models.DateTimeField(auto_now_add=True)
