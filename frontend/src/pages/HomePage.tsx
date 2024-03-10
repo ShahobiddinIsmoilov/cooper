@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext, AuthContextProps } from "../context/AuthContext";
+import { useState, useEffect } from "react";
+import useAxios from "../utils/useAxios";
 
 interface NoteProps {
   id: number;
@@ -8,32 +8,20 @@ interface NoteProps {
 
 function HomePage() {
   const [notes, setNotes] = useState([]);
-  const { authTokens, logoutUser } = useContext(
-    AuthContext
-  ) as AuthContextProps;
+
+  const api = useAxios();
 
   useEffect(() => {
     getNotes();
   }, []);
 
   const getNotes = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-    };
+    const response = await api.get("/user/notes");
 
-    const response = await fetch("http://127.0.0.1:8000/user/notes/", options);
-    const data = await response.json();
     if (response.status === 200) {
-      setNotes(data);
-    } else if (response.statusText === "Unauthorized") {
-      logoutUser();
+      setNotes(response.data);
     }
   };
-
   return (
     <>
       <div>

@@ -9,11 +9,13 @@ interface UserProps {
 
 export interface AuthContextProps {
   user: UserProps | null;
+  setUser: (e: any) => void;
   loginUser: (e: any) => void;
   logoutUser: () => void;
+  setAuthTokens: (e: any) => void;
   authTokens: {
-    access: object;
-    refresh: object;
+    access: string;
+    refresh: string;
   };
 }
 
@@ -35,8 +37,6 @@ function AuthProvider({ children }: AuthProviderProps) {
       : null
   );
   const [loading, setLoading] = useState(true);
-
-  console.log(user);
 
   const navigate = useNavigate();
 
@@ -76,56 +76,50 @@ function AuthProvider({ children }: AuthProviderProps) {
     navigate("/login");
   };
 
-  const updateToken = async () => {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh: authTokens?.refresh,
-      }),
-    };
+  // const updateToken = async () => {
+  //   const options = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       refresh: authTokens?.refresh,
+  //     }),
+  //   };
 
-    const response = await fetch(
-      "http://127.0.0.1:8000/user/token/refresh/",
-      options
-    );
-    const data = await response.json();
+  //   const response = await fetch(
+  //     "http://127.0.0.1:8000/user/token/refresh/",
+  //     options
+  //   );
+  //   const data = await response.json();
 
-    if (response.status === 200) {
-      setAuthTokens(data);
-      setUser(jwtDecode(data.access));
-      localStorage.setItem("authTokens", JSON.stringify(data));
-    } else {
-      logoutUser();
-    }
+  //   if (response.status === 200) {
+  //     setAuthTokens(data);
+  //     setUser(jwtDecode(data.access));
+  //     localStorage.setItem("authTokens", JSON.stringify(data));
+  //   } else {
+  //     logoutUser();
+  //   }
 
-    if (loading) {
-      setLoading(false);
-    }
-  };
+  //   if (loading) {
+  //     setLoading(false);
+  //   }
+  // };
 
   let contextData = {
     user: user,
     loginUser: loginUser,
     logoutUser: logoutUser,
+    setAuthTokens: setAuthTokens,
     authTokens: authTokens,
+    setUser: setUser,
   };
 
   useEffect(() => {
-    if (loading) {
-      updateToken();
+    if (authTokens) {
+      setUser(jwtDecode(authTokens?.access));
     }
-
-    const nineMinutes = 1000 * 60 * 9;
-    const interval = setInterval(() => {
-      if (authTokens) {
-        updateToken();
-      }
-    }, nineMinutes);
-
-    return () => clearInterval(interval);
+    setLoading(false);
   }, [authTokens, loading]);
 
   return (
@@ -136,3 +130,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export default AuthProvider;
+
+/*
+
+*/
