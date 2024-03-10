@@ -29,15 +29,13 @@ const useAxios = () => {
         refresh: authTokens.refresh,
       });
 
-      if (response.status === 200) {
-        localStorage.setItem("authTokens", JSON.stringify(response.data));
-        req.headers.Authorization = `Bearer ${response.data.access}`;
+      localStorage.setItem("authTokens", JSON.stringify(response.data));
+      req.headers.Authorization = `Bearer ${response.data.access}`;
 
-        setAuthTokens(response.data);
-        setUser(jwtDecode(response.data.access));
+      setAuthTokens(response.data);
+      setUser(jwtDecode(response.data.access));
 
-        return req;
-      }
+      return req;
     } catch (err: any) {
       if (err.response.status === 401) {
         logoutUser();

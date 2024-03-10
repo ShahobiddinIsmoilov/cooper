@@ -76,42 +76,12 @@ function AuthProvider({ children }: AuthProviderProps) {
     navigate("/login");
   };
 
-  // const updateToken = async () => {
-  //   const options = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       refresh: authTokens?.refresh,
-  //     }),
-  //   };
-
-  //   const response = await fetch(
-  //     "http://127.0.0.1:8000/user/token/refresh/",
-  //     options
-  //   );
-  //   const data = await response.json();
-
-  //   if (response.status === 200) {
-  //     setAuthTokens(data);
-  //     setUser(jwtDecode(data.access));
-  //     localStorage.setItem("authTokens", JSON.stringify(data));
-  //   } else {
-  //     logoutUser();
-  //   }
-
-  //   if (loading) {
-  //     setLoading(false);
-  //   }
-  // };
-
   let contextData = {
     user: user,
+    authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
     setAuthTokens: setAuthTokens,
-    authTokens: authTokens,
     setUser: setUser,
   };
 
@@ -130,7 +100,3 @@ function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export default AuthProvider;
-
-/*
-
-*/
