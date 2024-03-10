@@ -1,95 +1,11 @@
-from django.contrib import auth
-from django.contrib.auth import get_user_model
-from rest_framework import serializers
-from rest_framework.exceptions import AuthenticationFailed, ValidationError
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-User = get_user_model()
-
-class RegistrationSerializer(serializers.ModelSerializer):
-    """
-    User registration serializer
-    """
-    password = serializers.CharField(max_length=64, min_length=6, write_only=True)
-
-    class Meta:
-        model = User
-        fields = ['username', 'password']
-
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
-    
-    def validate(self, attrs):
-        username = attrs.get('username')
-        password = attrs.get('password')
-
-        if len(username) < 3:
-            raise serializers.ValidationError('username length cannot be less than 3')
-
-        if username.lower() in password.lower() or password.lower() in username.lower():
-            raise serializers.ValidationError('username and password cannot be similar')
-        
-        return attrs
-    
-
-class LoginSerializer(serializers.ModelSerializer):
-    """
-    User login serializer
-    """
-    username = serializers.CharField(max_length=40, min_length=3)
-    password = serializers.CharField(max_length=64, min_length=6, write_only=True)
-
-    class Meta:
-        model = User
-        fields = ['username', 'password']
-
-    def validate(self, attrs):
-        username = attrs.get('username', '')
-        password = attrs.get('password', '')
-
-        user = auth.authenticate(username=username, password=password)
-
-        if not user:
-            raise AuthenticationFailed('Invalid Credentials, try again')
-        if not user.is_active:
-            raise AuthenticationFailed('Account disabled, please contact admin')
-        if not user.is_verified:
-            raise AuthenticationFailed('Email is not verified')
-        
-        return attrs
-    
-
-class LogoutSerializer(serializers.Serializer):
-    """
-    User logout serializer
-    """
-    refresh = serializers.CharField()
-
-    def validate(self, attrs):
-        self.token = attrs['refresh']
-        return attrs
-
-    def save(self, **kwargs):
-        try:
-            RefreshToken(self.token).blacklist()
-        except TokenError:
-            raise ValidationError({'incorrect_token': 'The token is either invalid or expired'})
-    
-
-class UserSerializer(serializers.ModelSerializer):
-    """
-    Serializer to get the users list
-    """
-    class Meta:
-        model = User
-        fields = ["id", "username", "is_active", "is_staff"]
+from .models import Note
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """
-    Serializer for customizing token claims
-    """
+# Customizing token claims. Configured to use this serializer in settings.py
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -99,3 +15,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
+    
+class NoteSerializer(ModelSerializer):
+    class Meta:
+        model= Note
+        fields = '__all__'
