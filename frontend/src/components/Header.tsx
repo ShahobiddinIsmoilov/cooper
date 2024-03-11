@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext, AuthContextProps } from "../context/AuthContext";
+import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
 
 function Header() {
   let { user, logoutUser } = useContext(AuthContext) as AuthContextProps;

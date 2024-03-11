@@ -6,7 +6,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
 import { useContext } from "react";
-import { AuthContext, AuthContextProps } from "../context/AuthContext";
+import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
 
 // API baseURL
 const baseURL = import.meta.env.VITE_API_BASE_URL;

@@ -22,6 +22,7 @@ export interface AuthContextProps {
     access: string;
     refresh: string;
   };
+  redirect: (e: string) => void;
 }
 
 // create the context
@@ -97,12 +98,15 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  // logout logic: set states to null, clear local tokens, navigate
+  // logout logic: set states to null and clear local tokens
   function logoutUser() {
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
-    navigate("/login");
+  }
+
+  function redirect(path: string) {
+    navigate(path);
   }
 
   // context data to pass to children
@@ -113,6 +117,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     logoutUser: logoutUser,
     setAuthTokens: setAuthTokens,
     setUser: setUser,
+    redirect: redirect,
   };
 
   // if the value of authTokens or loading state changes

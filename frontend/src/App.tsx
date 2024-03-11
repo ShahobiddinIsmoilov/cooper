@@ -2,26 +2,21 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import Header from "./components/Header";
-import PrivateRoute from "./utils/PrivateRoute";
-import AuthProvider from "./context/AuthContext";
+import LogoutPage from "./pages/LogoutPage";
+import AuthProvider from "./contexts/AuthContext";
+import Navbar from "./components/Navbar";
+import "./index.css";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <AuthProvider>
-          <Header />
+          <Navbar />
           <Routes>
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <HomePage />
-                </PrivateRoute>
-              }
-            />
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/logout" element={<LogoutPage />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

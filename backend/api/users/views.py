@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.reverse import reverse
 
+from api.users.models import Note
+
 from .serializers import (NoteSerializer,
                           RegistrationSerializer,
                           LoginSerializer,
@@ -29,6 +31,7 @@ def api_root(request, format=None):
 def getNotes(request):
     user = request.user
     notes = user.note_set.all()
+    # notes = Note.objects.all()
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
 

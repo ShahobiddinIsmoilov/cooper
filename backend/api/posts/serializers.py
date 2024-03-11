@@ -14,12 +14,15 @@ class ListPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title',
+        fields = ['id',
+                  'title',
+                  'body',
                   'votes',
                   'comments',
                   'user',
                   'community',
-                  'url']
+                  'url',
+                  'created_at']
     
 
 class DetailPostSerializer(serializers.ModelSerializer):

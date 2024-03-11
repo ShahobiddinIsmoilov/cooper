@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext, AuthContextProps } from "../context/AuthContext";
+import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
 
 function LoginPage() {
   const { loginUser } = useContext(AuthContext) as AuthContextProps;
