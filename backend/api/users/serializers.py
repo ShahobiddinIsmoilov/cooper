@@ -5,6 +5,9 @@ from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from .models import Note
+
+
 User = get_user_model()
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -86,10 +89,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id", "username", "is_active", "is_staff"]
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """
-    Serializer for customizing token claims
-    """
+# Customizing token claims. Settings.py is configured to use this serializer
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -99,3 +100,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
+    
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = '__all__'

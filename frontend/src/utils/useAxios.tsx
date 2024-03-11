@@ -37,7 +37,7 @@ const useAxios = () => {
     // otherwise, refresh the tokens
     try {
       // request to refresh the tokens
-      const response = await axios.post(`${baseURL}/user/token/refresh/`, {
+      const response = await axios.post(`${baseURL}/api/user/token/refresh/`, {
         refresh: authTokens.refresh,
       });
 

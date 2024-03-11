@@ -45,10 +45,9 @@ INSTALLED_APPS = [
     'corsheaders',
     
     # internal apps
-    'api',
-    'users',
-    'posts',
-    'communities',
+    'api.users',
+    'api.posts',
+    'api.communities',
 ]
 
 MIDDLEWARE = [
@@ -191,7 +190,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
     # Custom serializer for TokenObtainPairView
-    "TOKEN_OBTAIN_SERIALIZER": "users.serializers.CustomTokenObtainPairSerializer",
+    "TOKEN_OBTAIN_SERIALIZER": "api.users.serializers.CustomTokenObtainPairSerializer",
     # -----------------------------------------
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
@@ -202,4 +201,4 @@ SIMPLE_JWT = {
 
 
 # User model
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'

@@ -76,7 +76,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     const baseURL = import.meta.env.VITE_API_BASE_URL;
 
     // send request to get new tokens and parse them to json
-    const response = await fetch(`${baseURL}/user/token/`, options);
+    const response = await fetch(`${baseURL}/api/user/token/`, options);
     const data = await response.json();
 
     // if everything is ok

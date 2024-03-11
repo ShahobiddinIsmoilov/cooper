@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
-from posts.models import Post
-from posts.serializers import DetailPostSerializer
+from api.posts.models import Post
+from api.posts.serializers import DetailPostSerializer
 from .models import Community
 from .serializers import (ListCommunitySerializer,
                           DetailCommunitySerializer,

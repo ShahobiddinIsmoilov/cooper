@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from communities.models import Community
+from api.communities.models import Community
 
 
 User = get_user_model()

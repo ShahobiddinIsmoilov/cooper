@@ -1,8 +1,8 @@
-from django.urls import path
-
-from . import views
+from django.urls import path, include
 
 
 urlpatterns = [
-    path('', views.getData, name='get-data')
+    path('community/', include('api.communities.urls')),
+    path('post/', include('api.posts.urls')),
+    path('user/', include('api.users.urls')),
 ]
