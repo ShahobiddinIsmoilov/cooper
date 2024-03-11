@@ -16,10 +16,13 @@ function HomePage() {
   }, []);
 
   const getNotes = async () => {
-    const response = await api.get("/user/notes");
-
-    if (response.status === 200) {
-      setNotes(response.data);
+    try {
+      const response = await api.get("/user/notes");
+      if (response.status === 200) {
+        setNotes(response.data);
+      }
+    } catch (error) {
+      alert("You have been logged out");
     }
   };
   return (
