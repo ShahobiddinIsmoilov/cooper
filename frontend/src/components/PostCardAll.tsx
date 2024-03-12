@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PostProps } from "../pages/HomePage";
 
-export interface PostCardProps {
+interface PostCardAllProps {
   post: PostProps;
 }
 
-function PostCard({ post }: PostCardProps) {
+function PostCardAll({ post }: PostCardAllProps) {
   return (
     <Box
       key={post.id}
@@ -16,7 +16,11 @@ function PostCard({ post }: PostCardProps) {
       }}
     >
       <Box className="text-lg px-5 py-2">
-        <span className="opacity-75">posted by </span>
+        <span className="opacity-75">in </span>
+        <Link to={`/community/${post.community}`}>
+          <span className="font-bold hover:underline">{post.community}</span>
+        </Link>
+        <span className="opacity-75"> ∙ posted by </span>
         <Link to={`/user/${post.username}`}>
           <span className="font-bold hover:underline">{post.username}</span>
         </Link>
@@ -54,7 +58,9 @@ function PostCard({ post }: PostCardProps) {
                 : "text-red-700 text-xl font-bold"
             }
           >
-            {post.votes > 0 ? "+" + post.votes.toLocaleString() : post.votes}
+            {post.votes > 0
+              ? "+" + post.votes.toLocaleString()
+              : post.votes.toLocaleString()}
           </span>
           <span className="hover:text-red-700 cursor-pointer">▽</span>
         </span>
@@ -68,4 +74,4 @@ function PostCard({ post }: PostCardProps) {
   );
 }
 
-export default PostCard;
+export default PostCardAll;

@@ -14,7 +14,18 @@ class ListCommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Community
-        fields = ['name', 'members', 'url']
+        fields = ['owner',
+                  'name',
+                  'title',
+                  'bio',
+                  'description',
+                  'created_at',
+                  'upvotes',
+                  'downvotes',
+                  'rules'
+                  'members',
+                  'url',
+                  ]
 
 
 class DetailCommunitySerializer(serializers.ModelSerializer):

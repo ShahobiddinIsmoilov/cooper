@@ -5,20 +5,33 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
 
-from .models import Post
+from api.users.serializers import UserDetailSerializer
+
+from .models import Post, User
 from .serializers import (CreatePostSerializer,
                           ListPostSerializer,
                           DetailPostSerializer,
                           UpdatePostSerializer)
 
 @api_view(['GET', 'DELETE'])
-def postList(request):
+def postListAll(request):
     """
     Gets the list of all the posts and returns it
     """
-    posts = Post.objects.all()
-    context = {'request': request}
-    serializer = ListPostSerializer(posts, context=context, many=True)
+    posts = Post.objects.order_by('-created_at')
+    serializer = ListPostSerializer(posts, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def postList(request, name):
+    """
+    Gets the list of all the posts associated with the community
+    name and returns it
+    """
+    posts = Post.objects.filter(community=name).order_by('-created_at')
+    serializer = ListPostSerializer(posts, many=True)
+
     return Response(serializer.data)
 
 
@@ -85,6 +98,6 @@ def postDelete(request, pk):
 @api_view(['GET','HEAD'])
 def api_root(request, format=None):
     return Response({
-        'posts': reverse('post-list', request=request, format=None),
+        'posts': reverse('post-list-all', request=request, format=None),
         'create': reverse('post-create', request=request, format=None),
     })

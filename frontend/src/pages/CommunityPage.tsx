@@ -1,23 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import PostFeed from "../components/PostFeed";
 import { Typography } from "@mui/material";
 import axios from "axios";
-import PostFeed from "../components/PostFeed";
+import { useParams } from "react-router-dom";
 
-export interface PostProps {
-  user_id: number;
-  username: string;
-  id: number;
-  title: string;
-  body: string;
-  community: string;
-  comments: number;
-  votes: number;
-  url: string;
-  created_at: string;
-}
-
-function HomePage() {
+function CommunityPage() {
   const [posts, setPosts] = useState([]);
+
+  const { name } = useParams();
 
   useEffect(() => {
     getPosts();
@@ -34,7 +24,7 @@ function HomePage() {
   async function getPosts() {
     try {
       const response = await axios.get(
-        `${baseURL}/api/post/list/all/`,
+        `${baseURL}/api/post/list/${name}`,
         options
       );
       console.log(response.data);
@@ -50,7 +40,7 @@ function HomePage() {
     }
   }
 
-  return <PostFeed posts={posts} all={true} />;
+  return <PostFeed posts={posts} community={name} />;
 }
 
-export default HomePage;
+export default CommunityPage;

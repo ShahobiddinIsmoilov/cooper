@@ -9,6 +9,7 @@ export default {
       colors: {
         primary: "#202225",
         secondary: "#5865f2",
+        votes_hover: "#cceaff",
         gray: {
           900: "#202225",
           800: "#2f3136",
