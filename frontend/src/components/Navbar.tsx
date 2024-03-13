@@ -9,21 +9,18 @@ interface NavbarProps {
 
 function Navbar({ direction = "row" }: NavbarProps) {
   return (
-    <Stack
-      direction={direction}
-      alignItems="center"
-      p="30px"
-      sx={{
-        color: "white",
-        background: "#1a325e",
-        justifyContent: "space-between",
-      }}
-    >
-      <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-        <Typography variant="h5">Shredded</Typography>
-      </Link>
-      <Access />
-    </Stack>
+    <div>
+      <Stack
+        direction={direction}
+        className="flex justify-between bg-gray-900
+                text-white px-10 py-5"
+      >
+        <Link to="/" className="no-underline">
+          <p className="text-base xs:text-2xl">Shredded</p>
+        </Link>
+        <Access />
+      </Stack>
+    </div>
   );
 }
 
@@ -32,16 +29,14 @@ function Access() {
 
   return user ? (
     <>
-      <Typography variant="h5" color="orange">
-        {user.username}
-      </Typography>
+      <p className="text-base xs:text-2xl text-orange-400">{user.username}</p>
       <Link to="/logout">
-        <Typography variant="h5">Logout</Typography>
+        <p className="text-base xs:text-2xl">Logout</p>
       </Link>
     </>
   ) : (
     <Link to="/login">
-      <Typography variant="h5">Login</Typography>
+      <p className="text-base sm:text-2xl">Login</p>
     </Link>
   );
 }

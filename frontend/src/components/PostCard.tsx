@@ -1,71 +1,96 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PostProps } from "../pages/HomePage";
 
 export interface PostCardProps {
   post: PostProps;
+  xs: boolean;
 }
 
-function PostCard({ post }: PostCardProps) {
+function PostCard({ post, xs }: PostCardProps) {
   return (
     <Box
       key={post.id}
-      sx={{
-        backgroundColor: "#f2f2f2",
-        "&:hover": { backgroundColor: "#E3F2FD" },
-      }}
+      className="text-white bg-gray-800 max-w-3xl
+                hover:bg-gray-700 rounded-xl px-2"
     >
-      <Box className="text-lg px-5 py-2">
-        <span className="opacity-75">posted by </span>
-        <Link to={`/user/${post.username}`}>
-          <span className="font-bold hover:underline">{post.username}</span>
-        </Link>
-        <span> ∙ 3h ago</span>
-      </Box>
-
-      <Link to={`/community/${post.community}/post/${post.id}`}>
-        <Typography
-          className="px-5 py-2"
-          sx={{ fontWeight: "bold", fontSize: 25 }}
+      <Box className="flex justify-between xs:px-5 xs:py-4">
+        <Box>
+          <span className="opacity-50 text-xs xs:text-base">in </span>
+          <Link to={`/community/${post.community}`}>
+            <span className="font-bold hover:underline text-xs xs:text-base">
+              {post.community}{" "}
+            </span>
+          </Link>
+          <span className="opacity-50 text-xs xs:text-base"> ∙ posted by </span>
+          <Link to={`/user/${post.username}`}>
+            <span className="font-bold hover:underline text-xs xs:text-base">
+              {post.username}
+            </span>
+          </Link>
+          <span className="opacity-50 text-xs xs:text-base"> ∙ 3h ago</span>
+        </Box>
+        <span
+          className="cursor-pointer flex items-center opacity-50
+                    hover:opacity-100 text-xs xs:text-base pr-4 xs:p-0"
         >
-          {post.title}
-        </Typography>
-        <Typography variant="h6" className="px-5 py-2">
-          {post.body}
-        </Typography>
-      </Link>
-      <Box
-        className="px-5 py-2"
-        sx={{
-          fontSize: 20,
-          alignItems: "center",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <span className="flex items-center space-x-2">
-          <span className="hover:text-green-700 cursor-pointer rounded-full">
-            △
-          </span>
-          <span
-            className={
-              post.votes > 0
-                ? "text-green-700 text-xl font-bold"
-                : "text-red-700 text-xl font-bold"
-            }
-          >
-            {post.votes > 0 ? "+" + post.votes.toLocaleString() : post.votes}
-          </span>
-          <span className="hover:text-red-700 cursor-pointer">▽</span>
+          🔗
         </span>
-        <Link to={post.url}>
-          <span className="text-xl pr-2 font-bold hover:underline">
-            {post.comments} comments
+      </Box>
+      <Link to={`/community/${post.community}/post/${post.id}`}>
+        <p className="xs:px-5 pb-2 text-base xs:text-xl font-bold pt-2">
+          {post.title}
+        </p>
+        <p className="xs:px-5 text-base xs:text-lg opacity-75">{post.body}</p>
+      </Link>
+      <Box className="flex justify-between pr-2 xs:pr-2 pt-2">
+        <Box className="xs:px-5 flex items-center justify-space xs:gap-5">
+          <span className="flex items-center">
+            <span
+              className="hover:bg-gray-600 cursor-pointer
+                      rounded-full p-2"
+            >
+              👍
+            </span>
+            <span
+              className={
+                post.votes > 0
+                  ? "text-green-400 xs:text-lg font-bold"
+                  : "text-red-400 xs:text-lg font-bold"
+              }
+            >
+              {post.votes > 0 ? "+" + post.votes.toLocaleString() : post.votes}
+            </span>
+            <span
+              className="hover:bg-gray-600 cursor-pointer
+                      rounded-full p-2"
+            >
+              👎
+            </span>
           </span>
-        </Link>
+          <Link to={post.url}>
+            <span
+              className="xs:text-lg font-bold text-cyan-400 rounded-full
+                          hover:bg-gray-600 px-4 py-2"
+            >
+              💬{" "}
+              {xs
+                ? post.comments.toLocaleString()
+                : post.comments.toLocaleString() + " comments"}
+            </span>
+          </Link>
+        </Box>
+        <span
+          className="text-xl opacity-50 hover:bg-gray-600 px-3 py-2
+                    rounded-full hover:opacity-100 cursor-pointer"
+        >
+          ∙∙∙
+        </span>
       </Box>
     </Box>
   );
 }
 
 export default PostCard;
+
+// △▽

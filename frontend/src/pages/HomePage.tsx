@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import PostFeed from "../components/PostFeed";
 
@@ -50,7 +50,11 @@ function HomePage() {
     }
   }
 
-  return <PostFeed posts={posts} all={true} />;
+  return (
+    <Box className="flex items-center">
+      <PostFeed posts={posts} all={true} />
+    </Box>
+  );
 }
 
 export default HomePage;

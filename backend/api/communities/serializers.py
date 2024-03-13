@@ -22,7 +22,7 @@ class ListCommunitySerializer(serializers.ModelSerializer):
                   'created_at',
                   'upvotes',
                   'downvotes',
-                  'rules'
+                  'rules',
                   'members',
                   'url',
                   ]
