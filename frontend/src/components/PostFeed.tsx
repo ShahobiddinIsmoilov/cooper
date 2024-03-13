@@ -47,7 +47,7 @@ function Sortbar({ size }: SortbarProps) {
       <SortbarItem icon="🔥" text="TRENDING" />
     </Box>
   ) : (
-    <Box className="text-white flex justify-center pb-2">
+    <Box className="text-white flex justify-center py-2">
       <SortbarItem icon="🔥" text="TRENDING" />
       <SortbarItem icon="🕒" text="NEWEST" />
       <SortbarItem icon="🚀" text="TOP" />
