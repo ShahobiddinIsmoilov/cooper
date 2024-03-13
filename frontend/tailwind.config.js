@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#202225",
-        secondary: "#5865f2",
+        primary: "#1f2937",
+        secondary: "#18212e",
         votes_hover: "#cceaff",
       },
       screens: {
@@ -20,7 +20,7 @@ export default {
         // md: { min: "768px", max: "1023px" },
         // lg: { min: "1024px", max: "1279px" },
         // xl: { min: "1280px", max: "1535px" },
-        "2xl": { min: "1536px" },
+        // "2xl": { min: "1536px" },
       },
     },
   },

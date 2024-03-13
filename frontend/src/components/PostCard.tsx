@@ -12,9 +12,9 @@ function PostCard({ post, xs }: PostCardProps) {
     <Box
       key={post.id}
       className="text-white bg-gray-800 max-w-3xl
-                hover:bg-gray-700 rounded-xl px-2"
+                hover:bg-gray-700 rounded-xl px-4"
     >
-      <Box className="flex justify-between xs:px-5 xs:py-4">
+      <Box className="flex justify-between xs:px-5 xs:py-2">
         <Box>
           <span className="opacity-50 text-xs xs:text-base">in </span>
           <Link to={`/community/${post.community}`}>
@@ -38,14 +38,14 @@ function PostCard({ post, xs }: PostCardProps) {
         </span>
       </Box>
       <Link to={`/community/${post.community}/post/${post.id}`}>
-        <p className="xs:px-5 pb-2 text-base xs:text-xl font-bold pt-2">
+        <p className="xs:px-5 pt-2 xs:pt-0 text-base xs:text-xl font-bold">
           {post.title}
         </p>
-        <p className="xs:px-5 text-base xs:text-lg opacity-75">{post.body}</p>
+        {/* <p className="xs:px-5 text-base xs:text-lg opacity-75">{post.body}</p> */}
       </Link>
-      <Box className="flex justify-between pr-2 xs:pr-2 pt-2">
-        <Box className="xs:px-5 flex items-center justify-space xs:gap-5">
-          <span className="flex items-center">
+      <Box className="flex justify-between pr-2 xs:pr-3 pt-2 xs:pb-2">
+        <Box className="xs:px-5 flex items-center justify-space xs:gap-4">
+          <span className="flex items-center xs:gap-1">
             <span
               className="hover:bg-gray-600 cursor-pointer
                       rounded-full p-2"

@@ -8,8 +8,8 @@ import CommunityPage from "./pages/CommunityPage";
 import AuthProvider from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
 import { Box, CssBaseline } from "@mui/material";
-import SidebarLeft from "./components/SidebarLeft";
-import SidebarRight from "./components/SidebarRight";
+import Sidebar from "./components/Sidebar";
+import Infobar from "./components/Infobar";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
           </Box>
           <Box className="flex justify-center">
             <Box className="xs:p-2 sticky top-0">
-              <SidebarLeft />
+              <Sidebar />
             </Box>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -32,7 +32,7 @@ function App() {
               <Route path="/community/post/:id" element={<PostDetail />} />
             </Routes>
             <Box className="xs:p-2 sticky top-0">
-              <SidebarRight />
+              <Infobar />
             </Box>
           </Box>
         </AuthProvider>

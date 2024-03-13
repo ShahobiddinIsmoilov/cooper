@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import CommunityCard from "./CommunityCard";
+import { Route, Routes } from "react-router-dom";
 
 export interface CommunityProps {
   owner: string;

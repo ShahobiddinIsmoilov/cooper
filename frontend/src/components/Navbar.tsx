@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
@@ -12,7 +12,7 @@ function Navbar({ direction = "row" }: NavbarProps) {
     <div>
       <Stack
         direction={direction}
-        className="flex justify-between bg-gray-900
+        className="flex justify-between bg-secondary
                 text-white px-10 py-5"
       >
         <Link to="/" className="no-underline">

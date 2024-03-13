@@ -40,7 +40,11 @@ function CommunityPage() {
     }
   }
 
-  return <PostFeed posts={posts} community={name} />;
+  return (
+    <>
+      <PostFeed posts={posts} />
+    </>
+  );
 }
 
 export default CommunityPage;

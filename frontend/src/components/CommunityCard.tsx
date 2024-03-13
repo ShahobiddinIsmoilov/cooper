@@ -10,13 +10,13 @@ function CommunityCard({ community }: CommunityCardProps) {
   // const baseURL = import.meta.env.VITE_API_BASE_URL;
 
   return (
-    <Link to={`/community/${community.name}`}>
+    <Link reloadDocument to={`/community/${community.name}`}>
       <Box className="flex gap-3 items-center px-8 py-4 rounded-xl hover:bg-gray-800">
         <Box className="flex items-center min-w-12">
           <img className="rounded-full bg-white h-12 w-12" />
         </Box>
         <Box className="truncate">
-          <p className="text-xl truncate">{community.name}</p>
+          <p className="text-xl truncate hover:underline">{community.name}</p>
           <p className="text-gray-400 truncate">
             {community.members.toLocaleString()} members
           </p>

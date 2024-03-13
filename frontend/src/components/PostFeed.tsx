@@ -31,12 +31,15 @@ function PostFeed({ posts }: PostFeedProps) {
       direction="column"
       spacing="8px"
       divider={<Line />}
-      className="bg-gray-800 p-3"
+      className="xs:p-1"
     >
       <Sortbar xs={isScreenXS} />
       {posts.map((post: PostProps) => (
         <PostCard key={post.id} post={post} xs={isScreenXS} />
       ))}
+      <Box className="text-center text-white opacity-25 text-2xl py-8">
+        No more posts...
+      </Box>
     </Stack>
   );
 }
@@ -54,7 +57,7 @@ function Sortbar({ xs }: SortbarProps) {
       <SortbarItem icon="🔥" text="TRENDING" />
     </Box>
   ) : (
-    <Box className="text-white flex justify-between pb-2">
+    <Box className="text-white flex justify-center pb-2">
       <SortbarItem icon="🔥" text="TRENDING" />
       <SortbarItem icon="🕒" text="NEWEST" />
       <SortbarItem icon="🚀" text="TOP" />
@@ -71,8 +74,8 @@ interface SortbarItemProps {
 function SortbarItem({ icon, text }: SortbarItemProps) {
   return (
     <p
-      className="hover:bg-gray-600 cursor-pointer text-lg text-orange-500
-                rounded-full py-2 px-4 opacity-75"
+      className="hover:bg-gray-600 cursor-pointer text-lg text-orange-400
+                rounded-full py-2 px-4"
     >
       {icon + " " + text}
     </p>
