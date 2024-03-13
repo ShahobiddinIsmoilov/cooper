@@ -7,8 +7,6 @@ interface CommunityCardProps {
 }
 
 function CommunityCard({ community }: CommunityCardProps) {
-  // const baseURL = import.meta.env.VITE_API_BASE_URL;
-
   return (
     <Link reloadDocument to={`/community/${community.name}`}>
       <Box className="flex gap-3 items-center px-8 py-4 rounded-xl hover:bg-gray-800">

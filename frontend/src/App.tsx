@@ -10,31 +10,34 @@ import Navbar from "./components/Navbar";
 import { Box, CssBaseline } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Infobar from "./components/Infobar";
+import WindowSizeProvider from "./contexts/WindowSizeContext";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <AuthProvider>
-          <CssBaseline />
-          <Box className="sticky top-0 z-10">
-            <Navbar />
-          </Box>
-          <Box className="flex justify-center">
-            <Box className="xs:p-2 sticky top-0">
-              <Sidebar />
+          <WindowSizeProvider>
+            <CssBaseline />
+            <Box className="sticky top-0 z-10">
+              <Navbar />
             </Box>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/logout" element={<LogoutPage />} />
-              <Route path="/community/:name" element={<CommunityPage />} />
-              <Route path="/community/post/:id" element={<PostDetail />} />
-            </Routes>
-            <Box className="xs:p-2 sticky top-0">
-              <Infobar />
+            <Box className="flex justify-center">
+              <Box className="xs:p-2 sticky top-0">
+                <Sidebar />
+              </Box>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/logout" element={<LogoutPage />} />
+                <Route path="/community/:name" element={<CommunityPage />} />
+                <Route path="/community/post/:id" element={<PostDetail />} />
+              </Routes>
+              <Box className="xs:p-2 sticky top-0">
+                <Infobar />
+              </Box>
             </Box>
-          </Box>
+          </WindowSizeProvider>
         </AuthProvider>
       </BrowserRouter>
     </div>

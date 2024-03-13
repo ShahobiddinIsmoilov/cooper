@@ -2,7 +2,11 @@ import { Box, Stack } from "@mui/material";
 import PostCard from "./PostCard";
 import { PostProps } from "../pages/HomePage";
 import Line from "./Line";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import {
+  WindowSizeContext,
+  WindowSizeProps,
+} from "../contexts/WindowSizeContext";
 
 interface PostFeedProps {
   posts: PostProps[];
@@ -10,32 +14,18 @@ interface PostFeedProps {
 }
 
 function PostFeed({ posts }: PostFeedProps) {
-  const [isScreenXS, setIsScreenXS] = useState(true);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsScreenXS(window.innerWidth < 660);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [isScreenXS]);
+  let { screenWidth } = useContext(WindowSizeContext) as WindowSizeProps;
 
   return (
     <Stack
       direction="column"
-      spacing="8px"
+      spacing={screenWidth < 576 ? "2px" : "8px"}
       divider={<Line />}
       className="xs:p-1"
     >
-      <Sortbar xs={isScreenXS} />
+      <Sortbar size={screenWidth} />
       {posts.map((post: PostProps) => (
-        <PostCard key={post.id} post={post} xs={isScreenXS} />
+        <PostCard key={post.id} post={post} size={screenWidth} />
       ))}
       <Box className="text-center text-white opacity-25 text-2xl py-8">
         No more posts...
@@ -47,12 +37,12 @@ function PostFeed({ posts }: PostFeedProps) {
 export default PostFeed;
 
 interface SortbarProps {
-  xs: boolean;
+  size: number;
 }
 
-function Sortbar({ xs }: SortbarProps) {
-  return xs ? (
-    <Box className="flex justify-end gap-2 text-white ">
+function Sortbar({ size }: SortbarProps) {
+  return size < 660 ? (
+    <Box className="flex justify-center gap-2 text-white ">
       <p className="opacity-50 px-2 flex items-center text-center">SORT BY:</p>
       <SortbarItem icon="🔥" text="TRENDING" />
     </Box>
