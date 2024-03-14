@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import PostFeed from "../components/post/PostFeed";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import PostDetail from "../components/post/PostDetail";
 
-function CommunityPage() {
-  const [posts, setPosts] = useState([]);
-
-  const { name } = useParams();
+function PostDetailPage() {
+  const [post, setPost] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    getPosts();
+    getPost();
   }, []);
 
   const baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -20,26 +19,19 @@ function CommunityPage() {
     },
   };
 
-  async function getPosts() {
+  async function getPost() {
     try {
-      const response = await axios.get(
-        `${baseURL}/api/post/list/${name}`,
-        options
-      );
+      const response = await axios.get(`${baseURL}/api/post/${id}/`, options);
       console.log(response.data);
       if (response.status === 200) {
-        setPosts(response.data);
+        setPost(response.data);
       }
     } catch (error) {
       alert("Something went wrong");
     }
   }
 
-  return (
-    <>
-      <PostFeed posts={posts} />
-    </>
-  );
+  return <PostDetail post={post} />;
 }
 
-export default CommunityPage;
+export default PostDetailPage;

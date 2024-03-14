@@ -11,13 +11,13 @@ class ListPostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id',
                   'title',
-                  'body',
                   'votes',
                   'comments',
                   'user',
+                  'body',
+                  'username',
                   'community',
-                  'created_at',
-                  'username']
+                  'created_at']
     
 
 class DetailPostSerializer(serializers.ModelSerializer):

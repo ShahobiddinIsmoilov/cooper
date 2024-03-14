@@ -1,27 +1,28 @@
 import { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import axios from "axios";
-import PostFeed from "../components/PostFeed";
-
-export interface PostProps {
-  user_id: number;
-  username: string;
-  id: number;
-  title: string;
-  body: string;
-  community: string;
-  comments: number;
-  votes: number;
-  url: string;
-  created_at: string;
-}
+import PostFeed from "../components/post/PostFeed";
 
 function HomePage() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     getPosts();
+    // handleScrollPosition();
   }, []);
+
+  const handleScrollPosition = () => {
+    const scrollPosition = sessionStorage.getItem("scrollPosition");
+    console.log("Scroll position:", scrollPosition);
+    if (scrollPosition) {
+      window.scrollTo(0, parseInt(scrollPosition));
+      sessionStorage.removeItem("scrollPosition");
+    }
+  };
+
+  const handleClick = () => {
+    sessionStorage.setItem("scrollPosition", String(window.scrollY));
+  };
 
   const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -42,17 +43,13 @@ function HomePage() {
         setPosts(response.data);
       }
     } catch (error) {
-      return (
-        <>
-          <Typography variant="h3">Couldn't load data</Typography>
-        </>
-      );
+      alert("Something went wrong");
     }
   }
 
   return (
     <Box className="flex items-center">
-      <PostFeed posts={posts} all={true} />
+      <PostFeed posts={posts} handleClick={handleClick} />
     </Box>
   );
 }

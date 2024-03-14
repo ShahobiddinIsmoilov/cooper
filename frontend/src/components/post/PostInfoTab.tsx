@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { PostProps } from "../../pages/HomePage";
+import { PostProps } from "../../interfaces/postProps";
 
 export interface PostInfoTabProps {
   post: PostProps;
@@ -13,7 +13,7 @@ export default function PostInfoTab({ post }: PostInfoTabProps) {
         <span className="opacity-50 text-xs xs:text-base">in </span>
         <Link to={`/community/${post.community}`}>
           <span
-            className="font-bold hover:underline text-xs
+            className="font-bold hover:underline text-xs text-blue-400
                         xs:text-base"
           >
             {post.community}{" "}
@@ -22,7 +22,7 @@ export default function PostInfoTab({ post }: PostInfoTabProps) {
         <span className="opacity-50 text-xs xs:text-base"> ∙ posted by </span>
         <Link to={`/user/${post.username}`}>
           <span
-            className="font-bold hover:underline text-xs
+            className="font-bold hover:underline text-xs text-orange-400
                         xs:text-base"
           >
             {post.username}

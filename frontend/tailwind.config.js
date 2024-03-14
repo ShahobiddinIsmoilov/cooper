@@ -7,10 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#1f2937",
-        secondary: "#18212e",
-        hover: "#4b5563",
-        votes_hover: "#cceaff",
+        dark: {
+          900: "#0d0d0d",
+          800: "#262626",
+          700: "#404040",
+          600: "#595959",
+          500: "#737373",
+        },
       },
       screens: {
         xs: "576px",

@@ -12,7 +12,7 @@ function Navbar({ direction = "row" }: NavbarProps) {
     <div>
       <Stack
         direction={direction}
-        className="flex justify-between bg-secondary
+        className="flex justify-between bg-dark-900
                 text-white px-10 py-5"
       >
         <Link to="/" className="no-underline">

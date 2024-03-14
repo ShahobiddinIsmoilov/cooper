@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
-import CommunityList from "./CommunityList";
+import CommunityList from "./community/CommunityList";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
     <Box
       className="flex-col w-0 lg:w-80 rounded-xl sticky top-20
-                bg-secondary text-white shadow overflow-hidden"
+                bg-dark-900 text-white shadow overflow-hidden"
     >
       <Box className="h-4"></Box>
       <Link to="/">
@@ -36,7 +36,7 @@ interface SidebarItemProps {
 
 function SidebarItem({ text }: SidebarItemProps) {
   return (
-    <Box className="flex gap-3 items-center px-8 py-4 rounded-xl hover:bg-gray-800">
+    <Box className="flex gap-3 items-center px-8 py-4 rounded-xl hover:bg-dark-700">
       <Box className="flex items-center min-w-12">
         <img className="rounded-full bg-white h-12 w-12" />
       </Box>

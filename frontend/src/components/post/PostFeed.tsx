@@ -1,19 +1,19 @@
 import { Box, Stack } from "@mui/material";
 import PostCard from "./PostCard";
-import { PostProps } from "../pages/HomePage";
-import Line from "./Line";
+import { PostProps } from "../../interfaces/postProps";
+import Line from "../../utils/Line";
 import { useContext } from "react";
 import {
   WindowSizeContext,
   WindowSizeProps,
-} from "../contexts/WindowSizeContext";
+} from "../../contexts/WindowSizeContext";
 
 interface PostFeedProps {
   posts: PostProps[];
-  all?: boolean;
+  handleClick: () => void;
 }
 
-function PostFeed({ posts }: PostFeedProps) {
+function PostFeed({ posts, handleClick }: PostFeedProps) {
   let { screenWidth } = useContext(WindowSizeContext) as WindowSizeProps;
 
   return (
@@ -21,11 +21,11 @@ function PostFeed({ posts }: PostFeedProps) {
       direction="column"
       spacing={screenWidth < 576 ? "2px" : "8px"}
       divider={<Line />}
-      className="xs:p-1"
+      className="xs:p-1 max-w-3xl"
     >
       <Sortbar size={screenWidth} />
       {posts.map((post: PostProps) => (
-        <PostCard key={post.id} post={post} size={screenWidth} />
+        <PostCard key={post.id} post={post} handleClick={handleClick} />
       ))}
       <Box className="text-center text-white opacity-25 text-2xl py-8">
         No more posts...
@@ -64,7 +64,7 @@ interface SortbarItemProps {
 function SortbarItem({ icon, text }: SortbarItemProps) {
   return (
     <p
-      className="hover:bg-gray-600 cursor-pointer text-lg text-orange-400
+      className="hover:bg-dark-700 cursor-pointer text-lg text-orange-400
                 rounded-full py-2 px-4"
     >
       {icon + " " + text}

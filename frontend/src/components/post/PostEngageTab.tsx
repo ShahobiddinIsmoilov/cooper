@@ -6,6 +6,7 @@ import {
   WindowSizeContext,
   WindowSizeProps,
 } from "../../contexts/WindowSizeContext";
+import { BiDislike, BiLike } from "react-icons/bi";
 
 function PostEngageTab({ post }: PostInfoTabProps) {
   let { screenWidth } = useContext(WindowSizeContext) as WindowSizeProps;
@@ -14,15 +15,15 @@ function PostEngageTab({ post }: PostInfoTabProps) {
     <Box className="flex justify-between xs:pr-3 pt-2 xs:pb-1">
       <Box className="xs:px-5 flex items-center justify-space gap-1 xs:gap-4">
         <span
-          className="flex items-center gap-1 bg-secondary
+          className="flex items-center gap-1 bg-dark-900
                     xs:bg-transparent rounded-full"
         >
-          <span
-            className="hover:bg-gray-600 cursor-pointer
-                      rounded-full p-[5px] xs:p-2"
+          <Box
+            className="p-2 rounded-full cursor-pointer hover:bg-dark-600
+                       text-yellow-400 hover:text-green-400"
           >
-            👍
-          </span>
+            <BiLike className="text-2xl" />
+          </Box>
           <span
             className={
               post.votes > 0
@@ -32,17 +33,17 @@ function PostEngageTab({ post }: PostInfoTabProps) {
           >
             {post.votes > 0 ? "+" + post.votes.toLocaleString() : post.votes}
           </span>
-          <span
-            className="hover:bg-gray-600 cursor-pointer
-                      rounded-full p-[5px] xs:p-2"
+          <Box
+            className="p-2 rounded-full cursor-pointer hover:bg-dark-600
+                      text-yellow-400 hover:text-red-400"
           >
-            👎
-          </span>
+            <BiDislike className="text-2xl" />
+          </Box>
         </span>
-        <Link to={post.url}>
+        <Link to={`/community/${post.community}/post/${post.id}`}>
           <span
             className="xs:text-lg font-bold text-cyan-400 rounded-full
-                      hover:bg-gray-600 px-4 py-2 bg-secondary
+                      hover:bg-dark-600 px-4 py-2 bg-dark-800
                       xs:bg-transparent"
           >
             💬{" "}
@@ -53,7 +54,7 @@ function PostEngageTab({ post }: PostInfoTabProps) {
         </Link>
       </Box>
       <span
-        className="text-xl opacity-50 hover:bg-gray-600 px-3 py-2
+        className="text-xl opacity-50 hover:bg-dark-600 px-3 py-2
                     rounded-full hover:opacity-100 cursor-pointer"
       >
         ∙∙∙

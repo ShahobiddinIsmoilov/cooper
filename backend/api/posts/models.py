@@ -8,10 +8,10 @@ User = get_user_model()
 
 class Post(models.Model):
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.CASCADE)
-    username = models.CharField(max_length=32, default='admin', null=True)
     community = models.ForeignKey(Community, default='cars',
                                   null=True, to_field='name',
                                   on_delete=models.CASCADE)
+    username = models.CharField(max_length=32, default='admin', null=True)
     title = models.CharField(max_length=128)
     body = models.TextField(max_length=4096)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,6 +22,7 @@ class Post(models.Model):
     
     class Meta:
         indexes = [
+            models.Index(fields=['user']),
             models.Index(fields=['community']),
             models.Index(fields=['created_at'])
         ]
