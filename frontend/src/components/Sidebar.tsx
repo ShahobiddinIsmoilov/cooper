@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 function Sidebar() {
   return (
     <Box
-      className="flex-col w-0 lg:w-80 rounded-xl sticky top-20
-                bg-dark-900 text-white shadow overflow-hidden"
+      className="flex-col w-0 lg:w-80 sticky rounded-xl top-20
+                bg-neutral-900 text-white shadow overflow-hidden"
     >
       <Box className="h-4"></Box>
       <Link to="/">

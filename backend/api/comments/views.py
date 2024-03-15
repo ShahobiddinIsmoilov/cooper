@@ -22,7 +22,7 @@ def commentListAll(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def commentList(request, post):
+def commentList(request, post: int):
     """
     Gets the list of all the posts associated with the community
     name and returns it

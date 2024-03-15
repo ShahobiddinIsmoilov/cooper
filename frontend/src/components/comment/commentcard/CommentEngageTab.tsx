@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
-import { CommentProps } from "../../interfaces/commentProps";
 import { BiDislike, BiLike } from "react-icons/bi";
+
+import { CommentProps } from "../../../interfaces/commentProps";
 
 interface CommentCardProps {
   comment: CommentProps;

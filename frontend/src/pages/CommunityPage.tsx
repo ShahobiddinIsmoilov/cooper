@@ -10,7 +10,21 @@ function CommunityPage() {
 
   useEffect(() => {
     getPosts();
+    // handleScrollPosition();
   }, []);
+
+  const handleScrollPosition = () => {
+    const scrollPosition = sessionStorage.getItem("scrollPosition");
+    console.log("Scroll position:", scrollPosition);
+    if (scrollPosition) {
+      window.scrollTo(0, parseInt(scrollPosition));
+      sessionStorage.removeItem("scrollPosition");
+    }
+  };
+
+  const handleClick = () => {
+    sessionStorage.setItem("scrollPosition", String(window.scrollY));
+  };
 
   const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -37,7 +51,7 @@ function CommunityPage() {
 
   return (
     <>
-      <PostFeed posts={posts} />
+      <PostFeed posts={posts} handleClick={handleClick} />
     </>
   );
 }

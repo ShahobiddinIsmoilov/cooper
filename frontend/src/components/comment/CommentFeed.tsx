@@ -1,6 +1,7 @@
 import { Stack } from "@mui/material";
+
 import { CommentProps } from "../../interfaces/commentProps";
-import CommentCard from "./CommentCard";
+import CommentCard from "./commentcard/CommentCard";
 
 interface CommentFeedProps {
   comments: CommentProps[];

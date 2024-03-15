@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { CommentProps } from "../../interfaces/commentProps";
+
+import { CommentProps } from "../../../interfaces/commentProps";
 
 interface CommentCardProps {
   comment: CommentProps;

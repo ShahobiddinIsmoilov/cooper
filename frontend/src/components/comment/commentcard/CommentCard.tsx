@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
-import { CommentProps } from "../../interfaces/commentProps";
+
+import { CommentProps } from "../../../interfaces/commentProps";
 import CommentInfoTab from "./CommentInfoTab";
 import CommentEngageTab from "./CommentEngageTab";
 

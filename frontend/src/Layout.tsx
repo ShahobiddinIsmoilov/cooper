@@ -22,7 +22,7 @@ function Layout() {
               <Navbar />
             </Box>
             <Box className="flex justify-center max-w-full">
-              <Box className="xs:p-2 sticky top-0">
+              <Box className="xs:px-2">
                 <Sidebar />
               </Box>
               <Box className="flex-grow max-w-3xl">
@@ -38,9 +38,9 @@ function Layout() {
                   />
                 </Routes>
               </Box>
-              <Box className="xs:p-2 sticky top-0">
+              {/* <Box className="xs:px-2 fixed m-0">
                 <Infobar />
-              </Box>
+              </Box> */}
             </Box>
           </WindowSizeProvider>
         </AuthProvider>
