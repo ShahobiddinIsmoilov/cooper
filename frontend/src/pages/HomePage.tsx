@@ -13,7 +13,6 @@ function HomePage() {
 
   const handleScrollPosition = () => {
     const scrollPosition = sessionStorage.getItem("scrollPosition");
-    console.log("Scroll position:", scrollPosition);
     if (scrollPosition) {
       window.scrollTo(0, parseInt(scrollPosition));
       sessionStorage.removeItem("scrollPosition");
@@ -38,7 +37,6 @@ function HomePage() {
         `${baseURL}/api/post/list/all/`,
         options
       );
-      console.log(response.data);
       if (response.status === 200) {
         setPosts(response.data);
       }

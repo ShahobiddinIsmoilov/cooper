@@ -22,7 +22,6 @@ function PostDetailPage() {
   async function getPost() {
     try {
       const response = await axios.get(`${baseURL}/api/post/${id}/`, options);
-      console.log(response.data);
       if (response.status === 200) {
         setPost(response.data);
       }

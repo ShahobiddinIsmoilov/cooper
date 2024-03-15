@@ -37,7 +37,6 @@ function CommunityList() {
         `${baseURL}/api/community/list/`,
         options
       );
-      console.log(response.data);
       if (response.status === 200) {
         setCommunities(response.data);
       }
