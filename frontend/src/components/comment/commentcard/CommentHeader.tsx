@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 
 import { CommentProps } from "../../../interfaces/commentProps";
+import user from "../../../../src/assets/user.png";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -32,6 +33,11 @@ function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
           />
         )}
       </button>
+      <img
+        src={user}
+        alt="user profile picture"
+        className="w-8 h-8 rounded-full mr-2 min-w-8"
+      />
       <Box>
         <Link to={`/user/${comment.username}`}>
           <span

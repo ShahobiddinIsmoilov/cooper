@@ -11,7 +11,7 @@ interface CommentCardProps {
 
 function CommentFooter({ comment, replyCount }: CommentCardProps) {
   return (
-    <Box className="flex py-2 ml-4">
+    <Box className="flex mt-2 ml-4">
       <Box
         className="flex items-center gap-2 bg-dark-900
                 xs:bg-transparent rounded-full"

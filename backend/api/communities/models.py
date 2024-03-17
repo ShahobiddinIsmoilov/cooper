@@ -15,6 +15,7 @@ class Community(models.Model):
     upvotes = models.IntegerField(default=0, null=True)
     downvotes = models.IntegerField(default=0, null=True)
     rules = models.TextField(max_length=4096, null=True)
+    profile_url = models.CharField(max_length=1024, null=True)
 
     def __str__(self):
         return self.name

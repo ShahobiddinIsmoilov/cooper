@@ -20,7 +20,7 @@ function PostDetailFooter({ post }: PostDetailFooterProps) {
   let { screenWidth } = useContext(WindowSizeContext) as WindowSizeProps;
 
   return (
-    <Box className="flex justify-between xs:pr-3 pt-2 xs:pb-2">
+    <Box className="flex justify-between xs:pr-3 xs:pb-2">
       <Box className="xs:px-5 flex items-center justify-space gap-1 xs:gap-4">
         <Box
           className="flex items-center bg-dark-900

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
+
 import { PostProps } from "../../../interfaces/postProps";
 
 export interface PostHeaderProps {
@@ -9,26 +10,34 @@ export interface PostHeaderProps {
 export default function PostHeader({ post }: PostHeaderProps) {
   return (
     <Box className="flex justify-between px-1 pt-1 xs:px-5 xs:py-2">
-      <Box>
-        <span className="opacity-50 text-xs xs:text-base">in </span>
-        <Link to={`/community/${post.community}`}>
-          <span
-            className="font-bold hover:underline text-xs text-blue-400
+      <Box className="flex items-center gap-4">
+        <img
+          src={`../../../../src/assets/${post.community}.jpg`}
+          alt="community profile picture"
+          className="w-14 h-14 rounded-full min-w-12 object-cover"
+        />
+        <Box>
+          <Link to={`/community/${post.community}`}>
+            <span
+              className="font-bold hover:underline text-xs text-blue-400
                         xs:text-base"
-          >
-            {post.community}{" "}
-          </span>
-        </Link>
-        <span className="opacity-50 text-xs xs:text-base"> ∙ posted by </span>
-        <Link to={`/user/${post.username}`}>
-          <span
-            className="font-bold hover:underline text-xs text-orange-400
+            >
+              {post.community}
+            </span>
+            <span className="opacity-50 text-xs xs:text-base"> ∙ 3h ago</span>
+          </Link>
+          <Box>
+            <span className="opacity-50 text-xs xs:text-base"> posted by </span>
+            <Link to={`/user/${post.username}`}>
+              <span
+                className="font-bold hover:underline text-xs text-orange-400
                         xs:text-base"
-          >
-            {post.username}
-          </span>
-        </Link>
-        <span className="opacity-50 text-xs xs:text-base"> ∙ 3h ago</span>
+              >
+                {post.username}
+              </span>
+            </Link>
+          </Box>
+        </Box>
       </Box>
       <span
         className="cursor-pointer flex items-center opacity-50 pr-1

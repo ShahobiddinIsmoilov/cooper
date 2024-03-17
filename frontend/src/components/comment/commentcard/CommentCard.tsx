@@ -21,7 +21,7 @@ function CommentCard({ comment }: CommentCardProps) {
 
   return (
     <Box className="text-white">
-      <Box className="flex items-center pt-4">
+      <Box className="flex items-center mt-4">
         {comment.parent > 0 && <hr className="w-4 opacity-25" />}
         <CommentHeader
           comment={comment}
