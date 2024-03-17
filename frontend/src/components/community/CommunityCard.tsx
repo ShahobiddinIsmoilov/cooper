@@ -9,7 +9,7 @@ interface CommunityCardProps {
 function CommunityCard({ community }: CommunityCardProps) {
   return (
     <Link reloadDocument to={`/community/${community.name}`}>
-      <Box className="flex gap-3 items-center px-8 py-4 rounded-xl hover:bg-dark-800">
+      <Box className="flex gap-3 items-center px-8 py-4 rounded-xl hover:bg-dark-700">
         <Box className="flex items-center min-w-12">
           <img className="rounded-full bg-white h-12 w-12" />
         </Box>

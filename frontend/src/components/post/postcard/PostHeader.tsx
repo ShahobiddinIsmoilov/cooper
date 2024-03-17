@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { PostProps } from "../../interfaces/postProps";
+import { PostProps } from "../../../interfaces/postProps";
 
-export interface PostInfoTabProps {
+export interface PostHeaderProps {
   post: PostProps;
 }
 
-export default function PostInfoTab({ post }: PostInfoTabProps) {
+export default function PostHeader({ post }: PostHeaderProps) {
   return (
     <Box className="flex justify-between px-1 pt-1 xs:px-5 xs:py-2">
       <Box>

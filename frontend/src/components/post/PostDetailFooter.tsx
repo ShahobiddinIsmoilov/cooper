@@ -12,11 +12,11 @@ import {
 } from "../../contexts/WindowSizeContext";
 import { PostProps } from "../../interfaces/postProps";
 
-interface PostDetailEngageTabProps {
+interface PostDetailFooterProps {
   post: PostProps | null;
 }
 
-function PostDetailEngageTab({ post }: PostDetailEngageTabProps) {
+function PostDetailFooter({ post }: PostDetailFooterProps) {
   let { screenWidth } = useContext(WindowSizeContext) as WindowSizeProps;
 
   return (
@@ -67,4 +67,4 @@ function PostDetailEngageTab({ post }: PostDetailEngageTabProps) {
   );
 }
 
-export default PostDetailEngageTab;
+export default PostDetailFooter;

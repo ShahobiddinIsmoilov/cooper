@@ -6,7 +6,7 @@ function Sidebar() {
   return (
     <Box
       className="flex-col w-0 lg:w-80 sticky rounded-xl top-20
-                bg-neutral-900 text-white shadow overflow-hidden"
+                bg-dark-800 text-white overflow-hidden"
     >
       <Box className="h-4"></Box>
       <Link to="/">

@@ -1,19 +1,24 @@
-import { Stack } from "@mui/material";
+import { useContext } from "react";
+import { Box } from "@mui/material";
 
-import { CommentProps } from "../../interfaces/commentProps";
-import CommentCard from "./commentcard/CommentCard";
+import CommentForm from "./CommentForm";
+import CommentList from "./CommentList";
+import {
+  CommentContext,
+  CommentContextProps,
+} from "../../contexts/CommentContext";
 
-interface CommentFeedProps {
-  comments: CommentProps[];
-}
+function CommentFeed() {
+  const { getReplies } = useContext(CommentContext) as CommentContextProps;
+  const rootComments = getReplies(0);
 
-function CommentFeed({ comments }: CommentFeedProps) {
   return (
-    <Stack spacing="12px" className="px-4">
-      {comments.map((post: CommentProps) => (
-        <CommentCard key={post.id} comment={post} />
-      ))}
-    </Stack>
+    <Box>
+      <CommentForm />
+      {rootComments != null && rootComments.length > 0 && (
+        <CommentList comments={rootComments} />
+      )}
+    </Box>
   );
 }
 

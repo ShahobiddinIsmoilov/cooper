@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { PostProps } from "../../interfaces/postProps";
 import { FaArrowLeft } from "react-icons/fa6";
 
-export interface PostDetailInfoTabProps {
+export interface PostDetailHeaderProps {
   post: PostProps | null;
 }
 
-function PostDetailInfoTab({ post }: PostDetailInfoTabProps) {
+function PostDetailHeader({ post }: PostDetailHeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -42,4 +42,4 @@ function PostDetailInfoTab({ post }: PostDetailInfoTabProps) {
   );
 }
 
-export default PostDetailInfoTab;
+export default PostDetailHeader;

@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { PostProps } from "../../interfaces/postProps";
-import PostInfoTab from "./PostInfoTab";
-import PostEngageTab from "./PostEngageTab";
+import { PostProps } from "../../../interfaces/postProps";
+import PostHeader from "./PostHeader";
+import PostFooter from "./PostFooter";
 
 export interface PostCardProps {
   post: PostProps;
@@ -16,10 +16,11 @@ function PostCard({ post, handleClick }: PostCardProps) {
       className="text-white px-4 py-2 hover:bg-dark-700
                 xs:rounded-xl"
     >
-      <PostInfoTab post={post} />
+      <PostHeader post={post} />
       <Link
         to={`/community/${post.community}/post/${post.id}`}
         onClick={handleClick}
+        reloadDocument
       >
         <p
           className="text-base font-bold pt-1 px-1 xs:px-5
@@ -34,7 +35,7 @@ function PostCard({ post, handleClick }: PostCardProps) {
           {post.body}
         </p>
       </Link>
-      <PostEngageTab post={post} />
+      <PostFooter post={post} />
     </Box>
   );
 }

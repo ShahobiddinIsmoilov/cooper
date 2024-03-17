@@ -1,5 +1,5 @@
 import { Box, Stack } from "@mui/material";
-import PostCard from "./PostCard";
+import PostCard from "./postcard/PostCard";
 import { PostProps } from "../../interfaces/postProps";
 import Line from "../../utils/Line";
 import { useContext } from "react";

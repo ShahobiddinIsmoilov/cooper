@@ -20,7 +20,7 @@ function HomePage() {
   };
 
   const handleClick = () => {
-    sessionStorage.setItem("scrollPosition", String(window.scrollY));
+    // sessionStorage.setItem("scrollPosition", String(window.scrollY));
   };
 
   const baseURL = import.meta.env.VITE_API_BASE_URL;

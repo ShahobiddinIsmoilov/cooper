@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { PostInfoTabProps } from "./PostInfoTab";
+import { PostHeaderProps } from "./PostHeader";
 import { useContext } from "react";
 import {
   WindowSizeContext,
   WindowSizeProps,
-} from "../../contexts/WindowSizeContext";
+} from "../../../contexts/WindowSizeContext";
 import { BiDislike, BiLike } from "react-icons/bi";
 
-function PostEngageTab({ post }: PostInfoTabProps) {
+function PostFooter({ post }: PostHeaderProps) {
   let { screenWidth } = useContext(WindowSizeContext) as WindowSizeProps;
 
   return (
@@ -63,4 +63,4 @@ function PostEngageTab({ post }: PostInfoTabProps) {
   );
 }
 
-export default PostEngageTab;
+export default PostFooter;

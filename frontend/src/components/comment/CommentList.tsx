@@ -1,37 +1,25 @@
-import { useEffect, useState } from "react";
-import CommentFeed from "./CommentFeed";
-import axios from "axios";
+import { Box, Stack } from "@mui/material";
 
-function CommentList() {
-  const [comments, setComments] = useState([]);
+import CommentCard from "./commentcard/CommentCard";
+import { CommentProps } from "../../interfaces/commentProps";
 
-  useEffect(() => {
-    getComments();
-  }, []);
+interface CommentListProps {
+  comments: CommentProps[];
+}
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+function CommentList({ comments }: CommentListProps) {
+  console.log(comments, "WTF?");
 
-  const options = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  async function getComments() {
-    try {
-      const response = await axios.get(
-        `${baseURL}/api/comment/list/all/`,
-        options
-      );
-      if (response.status === 200) {
-        setComments(response.data);
-      }
-    } catch (error) {
-      alert("Something went wrong");
-    }
-  }
-
-  return <CommentFeed comments={comments} />;
+  return (
+    <Box>
+      <Stack>
+        {comments?.length > 0 &&
+          comments.map((comment: CommentProps) => (
+            <CommentCard key={comment.id} comment={comment} />
+          ))}
+      </Stack>
+    </Box>
+  );
 }
 
 export default CommentList;

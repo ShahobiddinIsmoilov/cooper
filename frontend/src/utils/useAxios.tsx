@@ -11,7 +11,7 @@ import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
 // API baseURL
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-const useAxios = () => {
+function useAxios() {
   // importing needed context values
   const { authTokens, setAuthTokens, setUser, logoutUser } = useContext(
     AuthContext
@@ -58,12 +58,12 @@ const useAxios = () => {
       if (err.response.status === 401) {
         logoutUser();
       } else {
-        alert("Something went wrong. Please try again later");
+        console.log("useAxios Error");
       }
     }
   });
 
   return axiosInstance;
-};
+}
 
 export default useAxios;
