@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import CommentCard from "./commentcard/CommentCard";
 import { CommentProps } from "../../interfaces/commentProps";
@@ -8,17 +8,23 @@ interface CommentListProps {
 }
 
 function CommentList({ comments }: CommentListProps) {
-  console.log(comments, "WTF?");
+  const len = comments.length;
+  let count = 0;
 
   return (
-    <Box>
-      <Stack>
-        {comments?.length > 0 &&
-          comments.map((comment: CommentProps) => (
-            <CommentCard key={comment.id} comment={comment} />
-          ))}
-      </Stack>
-    </Box>
+    <Stack>
+      {comments?.length > 0 &&
+        comments.map((comment: CommentProps) => {
+          count = count + 1;
+          return (
+            <CommentCard
+              key={comment.id}
+              comment={comment}
+              last={count === len ? true : false}
+            />
+          );
+        })}
+    </Stack>
   );
 }
 

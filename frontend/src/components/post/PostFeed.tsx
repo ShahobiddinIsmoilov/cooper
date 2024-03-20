@@ -1,12 +1,9 @@
 import { Box, Stack } from "@mui/material";
+
 import PostCard from "./postcard/PostCard";
 import { PostProps } from "../../interfaces/postProps";
 import Line from "../../utils/Line";
-import { useContext } from "react";
-import {
-  WindowSizeContext,
-  WindowSizeProps,
-} from "../../contexts/WindowSizeContext";
+import { useWindowSize } from "../../contexts/WindowSizeContext";
 
 interface PostFeedProps {
   posts: PostProps[];
@@ -14,7 +11,7 @@ interface PostFeedProps {
 }
 
 function PostFeed({ posts, handleClick }: PostFeedProps) {
-  let { screenWidth } = useContext(WindowSizeContext) as WindowSizeProps;
+  let { screenWidth } = useWindowSize();
 
   return (
     <Stack
@@ -41,7 +38,7 @@ interface SortbarProps {
 }
 
 function Sortbar({ size }: SortbarProps) {
-  return size < 660 ? (
+  return size < 620 ? (
     <Box className="flex justify-center gap-2 text-white ">
       <p className="opacity-50 px-2 flex items-center text-center">SORT BY:</p>
       <SortbarItem icon="🔥" text="TRENDING" />

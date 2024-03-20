@@ -5,16 +5,20 @@ import AuthProvider from "./contexts/AuthContext";
 import WindowSizeProvider from "./contexts/WindowSizeContext";
 import CommentProvider from "./contexts/CommentContext";
 import { CssBaseline } from "@mui/material";
+import DialogueProvider from "./contexts/DialogueContext";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <WindowSizeProvider>
-          <CommentProvider>
-            <CssBaseline />
-            <Layout />
-          </CommentProvider>
+          <DialogueProvider>
+            <CommentProvider>
+              <CssBaseline />
+              <Layout />
+              <div id="portal" />
+            </CommentProvider>
+          </DialogueProvider>
         </WindowSizeProvider>
       </AuthProvider>
     </BrowserRouter>

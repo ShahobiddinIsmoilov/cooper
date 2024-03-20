@@ -14,8 +14,10 @@ function PostDetail({ post }: PostDetailProps) {
   return (
     <Box className="p-2">
       <PostDetailHeader post={post} />
-      <Box className="text-2xl font-bold text-white p-2">{post?.title}</Box>
-      <Box className="text-lg text-white opacity-75 mx-2 mt-2 mb-4">
+      <Box className="text-xl xs:text-2xl font-bold text-white p-2">
+        {post?.title}
+      </Box>
+      <Box className="text-base xs:text-lg text-white opacity-75 mx-2 mt-2 mb-4">
         {post?.body}
       </Box>
       <PostDetailFooter post={post} />

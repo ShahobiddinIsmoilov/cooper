@@ -18,4 +18,10 @@
              text-xs font-bold
              transition-all duration-100 scale-0 origin-left;
   }
+
+  .input {
+    @apply text-white placeholder-white placeholder-opacity-25
+            border border-solid border-white border-opacity-50 overflow-x-auto
+            rounded-xl mx-2 xs:mx-4 p-3 xs:p-4 bg-transparent w-64 xs:w-80;
+  }
 }

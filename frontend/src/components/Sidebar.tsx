@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 function Sidebar() {
   return (
     <Box
-      className="flex-col w-0 lg:w-80 sticky rounded-xl top-20
+      className="flex-col sticky top-20 rounded-xl w-0 md:w-80
                 bg-dark-800 text-white overflow-hidden"
     >
-      <Box className="h-4"></Box>
       <Link to="/">
         <SidebarItem text="Home" />
       </Link>

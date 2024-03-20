@@ -13,7 +13,7 @@ function CommentFeed() {
   const rootComments = getReplies(0);
 
   return (
-    <Box>
+    <Box className="mb-12">
       <CommentForm />
       {rootComments != null && rootComments.length > 0 && (
         <CommentList comments={rootComments} />

@@ -1,11 +1,21 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-export interface WindowSizeProps {
+interface WindowSizeProps {
   screenWidth: number;
   screenHeight: number;
 }
 
-export const WindowSizeContext = createContext<WindowSizeProps | null>(null);
+const WindowSizeContext = createContext<WindowSizeProps | null>(null);
+
+export function useWindowSize() {
+  return useContext(WindowSizeContext) as WindowSizeProps;
+}
 
 interface WindowSizeProviderProps {
   children: ReactNode;

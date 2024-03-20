@@ -13,41 +13,36 @@ interface CommentCardProps {
 
 function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
   return (
-    <Box className="flex items-center" id="comment-header-box">
-      <button className="cursor-pointer mr-2" id="comment-collapse-box">
+    <Box className="flex items-center">
+      <button className="cursor-pointer mr-2">
         {hidden ? (
           <CiSquarePlus
-            size={24}
+            className="text-xl xs:text-2xl"
             onClick={() => {
               setHidden(false);
             }}
-            id="comment-show"
           />
         ) : (
           <CiSquareMinus
-            size={24}
+            className="text-xl xs:text-2xl"
             onClick={() => {
               setHidden(true);
             }}
-            id="comment-hide"
           />
         )}
       </button>
       <img
         src={user}
         alt="user profile picture"
-        className="w-8 h-8 rounded-full mr-2 min-w-8"
+        className="w-6 h-6 xs:w-8 xs:h-8 rounded-full mr-2 min-w-6 xs:min-w-8"
       />
-      <Box>
+      <Box className="text-xs xs:text-base" id="fucker">
         <Link to={`/user/${comment.username}`}>
-          <span
-            className="font-bold hover:underline text-xs
-                        xs:text-base text-orange-400"
-          >
-            {comment.username}
+          <span className="font-bold hover:underline text-orange-400">
+            abdulbosit_muhammadjonov
           </span>
         </Link>
-        <span className="opacity-50 text-xs xs:text-base"> ∙ 3h ago</span>
+        <span className="opacity-50"> ∙ 15 daqiqa oldin </span>
       </Box>
     </Box>
   );

@@ -14,25 +14,19 @@ export default function PostHeader({ post }: PostHeaderProps) {
         <img
           src={`../../../../src/assets/${post.community}.jpg`}
           alt="community profile picture"
-          className="w-14 h-14 rounded-full min-w-12 object-cover"
+          className="w-10 xs:w-14 h-10 xs:h-14 min-w-8 xs:min-w-10 object-cover rounded-full"
         />
-        <Box>
+        <Box className="text-xs xs:text-base">
           <Link to={`/community/${post.community}`}>
-            <span
-              className="font-bold hover:underline text-xs text-blue-400
-                        xs:text-base"
-            >
+            <span className="font-bold hover:underline  text-blue-400">
               {post.community}
             </span>
-            <span className="opacity-50 text-xs xs:text-base"> ∙ 3h ago</span>
+            <span className="opacity-50"> ∙ 3h ago</span>
           </Link>
           <Box>
-            <span className="opacity-50 text-xs xs:text-base"> posted by </span>
+            <span className="opacity-50"> posted by </span>
             <Link to={`/user/${post.username}`}>
-              <span
-                className="font-bold hover:underline text-xs text-orange-400
-                        xs:text-base"
-              >
+              <span className="font-bold hover:underline text-orange-400">
                 {post.username}
               </span>
             </Link>
@@ -41,7 +35,7 @@ export default function PostHeader({ post }: PostHeaderProps) {
       </Box>
       <span
         className="cursor-pointer flex items-center opacity-50 pr-1
-                  hover:opacity-100 text-xs xs:text-base xs:p-0"
+                  hover:opacity-100 xs:p-0"
       >
         🔗
       </span>

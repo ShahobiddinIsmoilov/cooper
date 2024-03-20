@@ -9,6 +9,7 @@ export default {
       colors: {
         dark: {
           900: "#0d0d0d",
+          850: "#1f1f1f",
           800: "#262626",
           700: "#404040",
           600: "#595959",
@@ -17,7 +18,7 @@ export default {
       },
       screens: {
         xs: "576px",
-        sm: "960px",
+        sm: "920px",
         md: "1200px",
         lg: "1400px",
         // sm: { min: "640px", max: "767px" },
