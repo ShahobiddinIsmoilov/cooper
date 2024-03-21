@@ -49,13 +49,11 @@ function CommunityList() {
     }
   }
   return (
-    <Box>
-      <Stack direction="column">
-        {communities.map((community: CommunityProps) => (
-          <CommunityCard key={community.name} community={community} />
-        ))}
-      </Stack>
-    </Box>
+    <Stack direction="column">
+      {communities.map((community: CommunityProps) => (
+        <CommunityCard key={community.name} community={community} />
+      ))}
+    </Stack>
   );
 }
 

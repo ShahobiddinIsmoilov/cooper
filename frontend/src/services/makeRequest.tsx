@@ -1,24 +1,36 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
-import { useContext } from "react";
-import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
+
+import { useAuthContext } from "../contexts/AuthContext";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-export async function makeRequest(url: string) {
-  const response = await api(url).catch(function (error) {
+export async function makeRequest(
+  url: string,
+  options?: { method: string; data: {} }
+) {
+  const response = await api(url, options).catch(function (error) {
     return Promise.reject(error);
   });
+
+  api.interceptors.request.use(function (config) {
+    if (options?.method) config.method = options.method;
+    if (options?.data) config.data = options.data;
+    return config;
+  });
+
   return response;
 }
 
-export async function makeRequestWithCredentials(url: string, data?: {}) {
-  const { authTokens, setAuthTokens, setUser, logoutUser } = useContext(
-    AuthContext
-  ) as AuthContextProps;
+export async function makeRequestWithCredentials(
+  url: string,
+  method?: string,
+  data?: {}
+) {
+  const { authTokens, setAuthTokens, setUser, logoutUser } = useAuthContext();
 
   if (authTokens) {
     const response = await api.get(url).catch(function (error) {
@@ -27,6 +39,7 @@ export async function makeRequestWithCredentials(url: string, data?: {}) {
 
     api.interceptors.request.use(async (config: any) => {
       config.headers.Authorization = `Bearer ${authTokens.access}`;
+      if (method) config.method = method;
       if (data) config.data = data;
 
       const user = jwtDecode(authTokens.access);
@@ -56,6 +69,7 @@ export async function makeRequestWithCredentials(url: string, data?: {}) {
         }
       }
     });
+
     return response;
   } else return Promise.reject();
 }

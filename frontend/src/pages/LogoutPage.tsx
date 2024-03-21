@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react";
-import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
+import { useEffect } from "react";
+import { useAuthContext } from "../contexts/AuthContext";
 import { Typography } from "@mui/material";
 
 function LogoutPage() {
-  const { logoutUser, redirect } = useContext(AuthContext) as AuthContextProps;
+  const { logoutUser, redirect } = useAuthContext();
 
   useEffect(() => {
     logoutUser();

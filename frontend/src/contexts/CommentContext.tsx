@@ -22,7 +22,7 @@ function CommentProvider({ children }: CommentProviderProps) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    getComments("api/comment/list/all").then((response) => {
+    getComments("api/comment/list/all/").then((response) => {
       setComments(response.data);
     });
   }, []);

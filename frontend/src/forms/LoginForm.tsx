@@ -1,19 +1,18 @@
 import { Box } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 
-import { useContext } from "react";
-import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
-import { useDialogue } from "../contexts/DialogueContext";
+import { useAuthContext } from "../contexts/AuthContext";
+import { useDialog } from "../contexts/DialogContext";
 import RegisterForm from "./RegisterForm";
 
 function LoginForm() {
-  const { loginUser } = useContext(AuthContext) as AuthContextProps;
-  const { handleDialogueClose, setDialogueContent } = useDialogue();
+  const { loginUser } = useAuthContext();
+  const { handleDialogClose, setDialogContent } = useDialog();
 
   return (
     <Box
       className="text-white rounded-xl p-4 xs:p-8 bg-dark-900 shadow
-                  border border-white border-opacity-50"
+                  border border-white"
     >
       <form
         onSubmit={loginUser}
@@ -21,7 +20,7 @@ function LoginForm() {
       >
         <IoMdClose
           className="text-2xl opacity-50 hover:opacity-100 cursor-pointer"
-          onClick={handleDialogueClose}
+          onClick={handleDialogClose}
         />
         <span className="text-xl xs:text-2xl text-center w-full">
           Welcome back
@@ -50,7 +49,7 @@ function LoginForm() {
           <span className="opacity-50">Not joined yet?</span>
           <span
             className="text-cyan-500 hover:text-cyan-400 cursor-pointer"
-            onClick={() => setDialogueContent(<RegisterForm />)}
+            onClick={() => setDialogContent(<RegisterForm />)}
           >
             {" "}
             SIGN UP

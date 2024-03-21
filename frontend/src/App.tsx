@@ -5,23 +5,23 @@ import AuthProvider from "./contexts/AuthContext";
 import WindowSizeProvider from "./contexts/WindowSizeContext";
 import CommentProvider from "./contexts/CommentContext";
 import { CssBaseline } from "@mui/material";
-import DialogueProvider from "./contexts/DialogueContext";
+import DialogProvider from "./contexts/DialogContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <WindowSizeProvider>
-          <DialogueProvider>
+    <WindowSizeProvider>
+      <DialogProvider>
+        <BrowserRouter>
+          <AuthProvider>
             <CommentProvider>
               <CssBaseline />
               <Layout />
               <div id="portal" />
             </CommentProvider>
-          </DialogueProvider>
-        </WindowSizeProvider>
-      </AuthProvider>
-    </BrowserRouter>
+          </AuthProvider>
+        </BrowserRouter>
+      </DialogProvider>
+    </WindowSizeProvider>
   );
 }
 

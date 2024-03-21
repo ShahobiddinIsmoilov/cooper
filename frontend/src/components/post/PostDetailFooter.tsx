@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";

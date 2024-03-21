@@ -1,24 +1,23 @@
 import { createPortal } from "react-dom";
 import { Route, Routes } from "react-router-dom";
-import { Box } from "@mui/material";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import CommunityPage from "./pages/CommunityPage";
-import Navbar from "./components/Navbar";
-import { useDialogue } from "./contexts/DialogueContext";
+import Navbar from "./components/navbar/Navbar";
+import { useDialog } from "./contexts/DialogContext";
 
 function Layout() {
   const portal = document.getElementById("portal");
-  const { isDialogueVisible, dialogueContent } = useDialogue();
+  const { isDialogVisible, dialogContent } = useDialog();
 
   return (
     <>
-      <Box className="sticky top-0 z-10">
+      <nav className="sticky top-0 z-10">
         <Navbar />
-      </Box>
+      </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
@@ -27,14 +26,14 @@ function Layout() {
         <Route path="/community/:name" element={<CommunityPage />} />
         <Route path="/community/:name/post/:id" element={<PostDetailPage />} />
       </Routes>
-      {isDialogueVisible &&
+      {isDialogVisible &&
         createPortal(
-          <Box
-            className="bg-dark-900 fixed top-0 left-0 w-full h-full
-                        flex justify-center items-center z-20 bg-opacity-50"
+          <div
+            className="bg-white fixed top-0 left-0 w-full h-full
+                        flex justify-center items-center z-20 bg-opacity-25"
           >
-            {dialogueContent}
-          </Box>,
+            {dialogContent}
+          </div>,
           portal!
         )}
     </>
