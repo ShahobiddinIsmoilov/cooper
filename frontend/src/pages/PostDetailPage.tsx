@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import PostDetail from "../components/post/PostDetail";
-import { Box } from "@mui/material";
-import Infobar from "../components/Infobar";
-import Sidebar from "../components/Sidebar";
 
 function PostDetailPage() {
   const [post, setPost] = useState(null);
@@ -33,15 +30,7 @@ function PostDetailPage() {
     }
   }
 
-  return (
-    <Box className="flex justify-center">
-      <Sidebar />
-      <Box className="flex-grow max-w-3xl xs:px-2">
-        <PostDetail post={post} />
-      </Box>
-      <Infobar />
-    </Box>
-  );
+  return <PostDetail post={post} />;
 }
 
 export default PostDetailPage;

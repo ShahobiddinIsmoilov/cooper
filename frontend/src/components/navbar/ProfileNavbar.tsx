@@ -3,7 +3,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { BiSolidLike } from "react-icons/bi";
-
 import profilePicture from "../../assets/gordon.jpg";
 import { useDialog } from "../../contexts/DialogContext";
 import LogoutForm from "../../forms/LogoutForm";
@@ -11,8 +10,9 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 function ProfileNavbar() {
   const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null);
   const { setIsDialogVisible, setDialogContent } = useDialog();
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function handleClickOutside(e: any) {
@@ -32,14 +32,10 @@ function ProfileNavbar() {
           setShowMenu(!showMenu);
         }}
         src={profilePicture}
-        className="h-14 w-14 min-w-14 rounded-full object-cover border-4 border-white
-                    border-opacity-0 hover:border-opacity-50 cursor-pointer"
+        className="h-14 w-14 min-w-14 rounded-full object-cover border-4 border-white border-opacity-0 hover:border-opacity-50 cursor-pointer"
       />
       {showMenu && (
-        <div
-          className="absolute flex flex-col bg-dark-700 top-[66px] right-[30px]
-                    rounded-xl w-72 py-2 shadow"
-        >
+        <div className="absolute flex flex-col bg-dark-700 top-[66px] right-[30px] rounded-xl w-72 py-2 shadow">
           <ProfileInfoNavbar />
           <MenuItem icon={<FaUserCircle size={30} />} text="View Profile" />
           <MenuItem icon={<IoMdSettings size={30} />} text="Settings" />
@@ -68,10 +64,7 @@ interface MenuItemProps {
 
 function MenuItem({ icon, text }: MenuItemProps) {
   return (
-    <div
-      className="flex gap-2 text-lg hover:bg-dark-600 p-4 cursor-pointer
-                  items-center rounded-lg"
-    >
+    <div className="flex gap-2 text-lg hover:bg-dark-600 p-4 cursor-pointer items-center rounded-lg">
       {icon}
       {text}
     </div>

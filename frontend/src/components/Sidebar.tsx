@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import CommunityList from "./community/CommunityList";
 import { Link } from "react-router-dom";
 import { ReactNode } from "react";
@@ -6,9 +5,9 @@ import { FaHome } from "react-icons/fa";
 
 function Sidebar() {
   return (
-    <Box
-      className="flex-col sticky top-0 left-0 rounded-xl w-0 md:w-80
-                bg-dark-800 text-white overflow-hidden"
+    <div
+      className="flex-col rounded-xl w-80 min-w-80 sticky top-0
+                 text-white overflow-hidden"
     >
       <Link to="/">
         <SidebarItem icon={<FaHome size={30} />} text="Home" />
@@ -22,7 +21,7 @@ function Sidebar() {
           ALL COMMUNITIES
         </span>
       </p>
-    </Box>
+    </div>
   );
 }
 

@@ -44,9 +44,7 @@ function CommentCard({ comment, last }: CommentCardProps) {
             <Box className="flex">
               <Box>
                 {!hidden && (
-                  <Box className="mx-2 xs:mx-4 mt-2 xs:text-lg">
-                    {comment.body}
-                  </Box>
+                  <Box className="mx-2 xs:mx-4 mt-2">{comment.body}</Box>
                 )}
                 {!hidden && (
                   <CommentFooter

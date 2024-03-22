@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useDialog } from "../../contexts/DialogContext";
-import { useEffect } from "react";
 import LoginForm from "../../forms/LoginForm";
 import ProfileNavbar from "./ProfileNavbar";
 
@@ -15,24 +13,21 @@ function Navbar() {
       <Link to="/" className="no-underline">
         <p className="text-base xs:text-2xl">Shredded</p>
       </Link>
-      <Access />
+      <Authenticated />
     </div>
   );
 }
 
-function Access() {
-  const authContext = useAuthContext();
-  const user = authContext ? authContext.user : null;
+// THERE IS AN ANNOYING BUG WHERE SAVING FROM LOGINFORM, REGISTERFORM AND
+// LOGOUTFORM CAUSE THIS FUCKER TO HAVE A NULL USER WHEN USING AUTHCONTEXT.
+// THAT IS WHY THIS LITTLE SHIT HAS ITS OWN IMPLEMENTATION OF INITIALIZING
+// THE USER FROM THE LOCALSTORAGE. THIS CAN'T BE A SOLUTION TO THAT BUG!!!
+function Authenticated() {
+  const { user } = useAuthContext();
   const { setIsDialogVisible, setDialogContent } = useDialog();
 
-  useEffect(() => {
-    user && setIsDialogVisible(false);
-  }, [user, setIsDialogVisible]);
-
   return user ? (
-    <>
-      <ProfileNavbar />
-    </>
+    <ProfileNavbar />
   ) : (
     <button
       onClick={() => {
@@ -41,7 +36,7 @@ function Access() {
       }}
       className="text-lg rounded-full py-2 px-4 cursor-pointer bg-cyan-700 hover:bg-cyan-600"
     >
-      Sign in
+      Log in
     </button>
   );
 }

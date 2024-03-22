@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 
 import { useAuthContext } from "../contexts/AuthContext";
@@ -9,8 +9,26 @@ function RegisterForm() {
   const { registerUser } = useAuthContext();
   const { handleDialogClose, setDialogContent } = useDialog();
 
+  // ------------------------ Handling outside click ------------------------ //
+  const registerFormRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    function handleClickOutside(e: any) {
+      if (
+        registerFormRef.current &&
+        !registerFormRef.current.contains(e.target)
+      )
+        handleDialogClose();
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [registerFormRef]);
+  // ------------------------------------------------------------------------ //
+
   return (
-    <Box
+    <div
+      ref={registerFormRef}
       className="text-white rounded-xl p-4 xs:p-8 bg-dark-900 shadow 
                   border border-white"
     >
@@ -62,11 +80,11 @@ function RegisterForm() {
             }}
           >
             {" "}
-            SIGN IN
+            LOG IN
           </span>
         </p>
       </form>
-    </Box>
+    </div>
   );
 }
 

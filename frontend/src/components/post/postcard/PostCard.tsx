@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PostProps } from "../../../interfaces/postProps";
-import PostHeader from "./PostHeader";
+import PostHeader from "./postheader/PostHeader";
 import PostFooter from "./PostFooter";
 
 export interface PostCardProps {
@@ -21,12 +21,10 @@ function PostCard({ post, handleClick }: PostCardProps) {
         onClick={handleClick}
         reloadDocument
       >
-        <p className="text-base xs:text-xl font-bold pt-1 px-1 xs:px-5 xs:pt-1">
+        <p className="xs:text-xl font-bold pt-1 px-1 xs:px-5 xs:pt-1">
           {post.title}
         </p>
-        <p className="px-1 xs:px-5 my-2 text-base xs:text-lg opacity-75 line-clamp-3">
-          {post.body}
-        </p>
+        <p className="px-1 xs:px-5 my-2 opacity-75 line-clamp-3">{post.body}</p>
       </Link>
       <PostFooter post={post} />
     </Box>

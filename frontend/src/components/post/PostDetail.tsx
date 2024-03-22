@@ -1,5 +1,3 @@
-import { Box } from "@mui/material";
-
 import { PostProps } from "../../interfaces/postProps";
 import PostDetailHeader from "./PostDetailHeader";
 import Line from "../../utils/Line";
@@ -12,18 +10,18 @@ interface PostDetailProps {
 
 function PostDetail({ post }: PostDetailProps) {
   return (
-    <Box className="p-2">
+    <div className="p-2">
       <PostDetailHeader post={post} />
-      <Box className="text-xl xs:text-2xl font-bold text-white p-2">
+      <div className="text-xl xs:text-2xl font-bold text-white p-2">
         {post?.title}
-      </Box>
-      <Box className="text-base xs:text-lg text-white opacity-75 mx-2 mt-2 mb-4">
+      </div>
+      <div className="text-base xs:text-lg text-white opacity-75 mx-2 mt-2 mb-4">
         {post?.body}
-      </Box>
+      </div>
       <PostDetailFooter post={post} />
       <Line />
       <CommentFeed />
-    </Box>
+    </div>
   );
 }
 

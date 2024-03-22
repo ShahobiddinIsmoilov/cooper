@@ -6,30 +6,10 @@ import {
   useState,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
-
+import { AuthContextProps } from "../interfaces/authContextProps";
 import { makeRequest } from "../services/makeRequest";
 import { useDialog } from "./DialogContext";
 import LoginForm from "../forms/LoginForm";
-
-interface UserProps {
-  user_id: number;
-  username: string;
-}
-
-export interface AuthContextProps {
-  user: UserProps | null;
-  setUser: (e: any) => void;
-  registerUser: (e: any) => void;
-  loginUser: (e: any) => void;
-  logoutUser: () => void;
-  setAuthTokens: (e: any) => void;
-  authTokens: {
-    access: string;
-    refresh: string;
-  };
-  redirect: (e: string) => void;
-}
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
@@ -55,10 +35,9 @@ function AuthProvider({ children }: AuthProviderProps) {
   );
 
   const [loading, setLoading] = useState(true);
-  const { setDialogContent } = useDialog();
-  const navigate = useNavigate();
 
-  async function registerUser(e: any) {
+  const { setDialogContent } = useDialog();
+  async function register(e: any) {
     e.preventDefault();
     const element = e.target;
 
@@ -78,7 +57,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  async function loginUser(e: any) {
+  async function login(e: any) {
     e.preventDefault();
     const element = e.target;
 
@@ -100,38 +79,31 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  function logoutUser() {
+  function logout() {
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
   }
 
-  function redirect(path: string) {
-    navigate(path);
-  }
-
-  let contextData = {
+  const contextData = {
     user: user,
     authTokens: authTokens,
-    registerUser: registerUser,
-    loginUser: loginUser,
-    logoutUser: logoutUser,
+    registerUser: register,
+    loginUser: login,
+    logoutUser: logout,
     setAuthTokens: setAuthTokens,
     setUser: setUser,
-    redirect: redirect,
   };
 
   useEffect(() => {
     if (authTokens) {
-      setUser(jwtDecode(authTokens?.access));
+      setUser(jwtDecode(authTokens.access));
     }
     setLoading(false);
   }, [authTokens, loading]);
 
   return (
-    <AuthContext.Provider value={contextData}>
-      {loading ? null : children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
 }
 

@@ -7,10 +7,18 @@ class ListCommunitySerializer(serializers.ModelSerializer):
     """
     Community List Serializer
     """
-    url = serializers.HyperlinkedIdentityField(
-        view_name='community-detail',
-        lookup_field='name'
-    )
+    class Meta:
+        model = Community
+        fields = ['name',
+                  'title',
+                  'description',
+                  'members']
+
+class DetailCommunitySerializer(serializers.ModelSerializer):
+    """
+    Community Detail Serializer
+    """
+    number_of_posts = serializers.SerializerMethodField()
 
     class Meta:
         model = Community
@@ -24,26 +32,7 @@ class ListCommunitySerializer(serializers.ModelSerializer):
                   'downvotes',
                   'rules',
                   'members',
-                  'url',
-                  ]
-
-
-class DetailCommunitySerializer(serializers.ModelSerializer):
-    """
-    Community Detail Serializer
-    """
-    number_of_posts = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Community
-        fields = [
-            'id',
-            'name',
-            'description',
-            'created_at',
-            'members',
-            'number_of_posts'
-        ]
+                  'number_of_posts']
 
     def get_number_of_posts(self, obj):
         return self.context['number_of_posts']

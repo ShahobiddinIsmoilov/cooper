@@ -27,7 +27,7 @@ def communityList(request):
 
 
 # -------------------------------------------------------------------
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET'])
 def communityDetail(request, name: str):
     """
     Retrieves the details of a community with the name parameter
@@ -35,23 +35,11 @@ def communityDetail(request, name: str):
     """
     community = Community.objects.get(name=name)
     posts = Post.objects.filter(community=community.name)
-    post_serializer = DetailPostSerializer(posts, many=True)
-
-    if request.method == 'GET':
-        context = {"number_of_posts": len(posts)}
-        community_serializer = DetailCommunitySerializer(community,
-                                                         context=context,
-                                                         many=False)
-        return Response(community_serializer.data)
-    elif request.method == 'POST':
-        community_serializer = DetailCommunitySerializer(instance=community,
-                                                         data=request.data)
-        if community_serializer.is_valid(raise_exception=True):
-            community_serializer.save()
-        return Response(community_serializer.data)
-    elif request.method == 'DELETE':
-        community.delete()
-        return redirect(communityList)
+    context = {"number_of_posts": len(posts)}
+    community_serializer = DetailCommunitySerializer(community,
+                                                    context=context,
+                                                    many=False)
+    return Response(community_serializer.data)
 # -------------------------------------------------------------------
 
 

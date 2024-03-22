@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
-import { Box } from "@mui/material";
 import axios from "axios";
 import PostFeed from "../components/post/PostFeed";
-import Sidebar from "../components/Sidebar";
-import Infobar from "../components/Infobar";
 
 function HomePage() {
   const [posts, setPosts] = useState([]);
@@ -47,15 +44,7 @@ function HomePage() {
     }
   }
 
-  return (
-    <Box className="flex justify-center">
-      <Sidebar />
-      <Box className="flex-grow max-w-3xl xs:px-2">
-        <PostFeed posts={posts} handleClick={handleClick} />
-      </Box>
-      <Infobar />
-    </Box>
-  );
+  return <PostFeed posts={posts} handleClick={handleClick} />;
 }
 
 export default HomePage;
