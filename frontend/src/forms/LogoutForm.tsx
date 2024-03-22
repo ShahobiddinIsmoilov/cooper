@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useDialog } from "../contexts/DialogContext";
 import { useAuthContext } from "../contexts/AuthContext";
-import { FaSpinner } from "react-icons/fa";
+import { ImSpinner4 } from "react-icons/im";
 
 function LogoutForm() {
   const { handleDialogClose, setIsDialogVisible } = useDialog();
@@ -70,7 +70,7 @@ function LogoutForm() {
           } w-64 xs:w-48 flex justify-center items-center`}
         >
           {showSpinner ? (
-            <FaSpinner size={22} className="animate-spin" />
+            <ImSpinner4 size={22} className="animate-spin" />
           ) : (
             "Log out"
           )}

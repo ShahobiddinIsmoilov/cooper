@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import PostFeed from "../components/post/PostFeed";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Box } from "@mui/material";
-import Infobar from "../components/Infobar";
-import Sidebar from "../components/Sidebar";
 
 function CommunityPage() {
   const [posts, setPosts] = useState([]);
@@ -50,15 +47,7 @@ function CommunityPage() {
     }
   }
 
-  return (
-    <Box className="flex justify-center">
-      <Sidebar />
-      <Box className="flex-grow max-w-3xl xs:px-2">
-        <PostFeed posts={posts} handleClick={handleClick} />
-      </Box>
-      <Infobar />
-    </Box>
-  );
+  return <PostFeed posts={posts} handleClick={handleClick} />;
 }
 
 export default CommunityPage;

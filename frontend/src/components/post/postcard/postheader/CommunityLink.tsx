@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import getCommunityDetail from "../../../../services/community/getCommunityDetail";
 import { ImSpinner4 } from "react-icons/im";
-import uzb from "../../../../assets/uzb.png";
 
 interface CommunityLinkProps {
   community: string;
@@ -29,10 +28,10 @@ function CommunityLink({ community }: CommunityLinkProps) {
   }
 
   return (
-    <div className="flex gap-1">
+    <div className="flex items-center gap-1">
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <Link to={`/community/${community}`}>
-          <span className="font-bold hover:underline  text-blue-400">
+          <span className="text-lg font-bold hover:underline  text-blue-400">
             {community}
           </span>
         </Link>
@@ -69,7 +68,7 @@ function Preview({ community }: CommunityLinkProps) {
   return (
     <div className="overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
       {loading ? (
-        <div className="flex justify-center items-center w-48 h-48">
+        <div className="flex justify-center items-center w-96 h-48">
           <ImSpinner4 className="animate-spin text-xl opacity-50" />
         </div>
       ) : communityDetail ? (
@@ -90,7 +89,10 @@ interface CommunityPreviewProps {
 function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
   return (
     <div className="w-96">
-      <img src={uzb} className="bg-blue-400 w-96 object-cover" />
+      <img
+        src={`../../../../src/assets/${communityDetail.name}.png`}
+        className="bg-blue-400 h-24 w-96 object-cover"
+      />
       <div className="flex items-center gap-2 m-4">
         <img
           src={`../../../../src/assets/${communityDetail.name}.jpg`}
@@ -102,7 +104,7 @@ function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
               to={`/community/${communityDetail.name}`}
               className="text-xl text-blue-500 hover:text-blue-400 font-bold max-w-[180px] overflow-hidden"
             >
-              {communityDetail.name}
+              Namanganlik taksistlar
             </Link>
             <button className="bg-cyan-700 hover:bg-cyan-600 text-white rounded-full px-3 max-h-10 text-nowrap">
               A'zo bo'lish

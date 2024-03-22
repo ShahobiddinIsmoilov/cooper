@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
-
 import { useAuthContext } from "../contexts/AuthContext";
 import { useDialog } from "../contexts/DialogContext";
 import LoginForm from "./LoginForm";

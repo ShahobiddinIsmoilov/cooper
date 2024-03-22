@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { FaSpinner } from "react-icons/fa";
+import { ImSpinner4 } from "react-icons/im";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useDialog } from "../contexts/DialogContext";
 import RegisterForm from "./RegisterForm";
@@ -76,7 +76,7 @@ function LoginForm() {
             className="rounded-xl mx-2 xs:mx-4 p-3 xs:p-4 cursor-pointer text-center
                       bg-cyan-700 hover:bg-cyan-600 w-64 xs:w-80"
           >
-            <FaSpinner size={20} className="inline-block animate-spin mr-2" />
+            <ImSpinner4 size={20} className="inline-block animate-spin mr-2" />
             Logging in...
           </p>
         ) : (

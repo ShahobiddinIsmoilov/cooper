@@ -1,31 +1,22 @@
-import { Link } from "react-router-dom";
 import { PostProps } from "../../../../interfaces/postProps";
 import CommunityLink from "./CommunityLink";
 
-export interface PostHeaderProps {
+export interface PostHeaderHomeProps {
   post: PostProps;
 }
 
-export default function PostHeader({ post }: PostHeaderProps) {
+export default function PostHeaderHome({ post }: PostHeaderHomeProps) {
   return (
     <div className="flex justify-between px-1 pt-1 xs:px-5 xs:py-2">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         <img
           src={`../../../../src/assets/${post.community}.jpg`}
           alt="community profile picture"
-          className="w-10 xs:w-14 h-10 xs:h-14 min-w-10 xs:min-w-14 object-cover rounded-full"
+          className="w-8 xs:w-10 h-8 xs:h-10 min-w-8 xs:min-w-10 object-cover rounded-full"
         />
 
         <div className="text-xs xs:text-base">
           <CommunityLink community={post.community} />
-          <div>
-            <span className="opacity-50"> posted by </span>
-            <Link to={`/user/${post.username}`}>
-              <span className="font-bold hover:underline text-orange-400">
-                {post.username}
-              </span>
-            </Link>
-          </div>
         </div>
       </div>
       <span

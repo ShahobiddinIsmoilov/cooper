@@ -8,7 +8,7 @@ function Infobar({ community }: InfobarProps) {
   return (
     <div
       className="flex-col w-80 min-w-80 text-white overflow-hidden
-                bg-dark-850 h-screen"
+                bg-dark-800 h-screen"
     ></div>
   );
 }

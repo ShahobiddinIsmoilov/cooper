@@ -1,21 +1,27 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PostProps } from "../../../interfaces/postProps";
-import PostHeader from "./postheader/PostHeader";
+import PostHeaderHome from "./postheader/PostHeaderHome";
 import PostFooter from "./PostFooter";
+import PostHeaderCommunity from "./postheader/PostHeaderCommunity";
 
 export interface PostCardProps {
   post: PostProps;
+  home?: boolean;
   handleClick: () => void;
 }
 
-function PostCard({ post, handleClick }: PostCardProps) {
+function PostCard({ post, home, handleClick }: PostCardProps) {
   return (
     <Box
       key={post.id}
       className="text-white px-2 py-2 hover:bg-dark-700 xs:rounded-xl"
     >
-      <PostHeader post={post} />
+      {home ? (
+        <PostHeaderHome post={post} />
+      ) : (
+        <PostHeaderCommunity post={post} />
+      )}
       <Link
         to={`/community/${post.community}/post/${post.id}`}
         onClick={handleClick}

@@ -44,7 +44,7 @@ function HomePage() {
     }
   }
 
-  return <PostFeed posts={posts} handleClick={handleClick} />;
+  return <PostFeed posts={posts} home={true} handleClick={handleClick} />;
 }
 
 export default HomePage;

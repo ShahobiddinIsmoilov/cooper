@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PostHeaderProps } from "./postheader/PostHeader";
+import { PostHeaderProps } from "./postheader/PostHeaderHome";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
