@@ -8,10 +8,9 @@ import { useWindowSize } from "../../contexts/WindowSizeContext";
 interface PostFeedProps {
   posts: PostProps[];
   home?: boolean;
-  handleClick: () => void;
 }
 
-function PostFeed({ posts, home, handleClick }: PostFeedProps) {
+function PostFeed({ posts, home }: PostFeedProps) {
   let { screenWidth } = useWindowSize();
 
   return (
@@ -23,12 +22,7 @@ function PostFeed({ posts, home, handleClick }: PostFeedProps) {
     >
       <Sortbar size={screenWidth} />
       {posts.map((post: PostProps) => (
-        <PostCard
-          key={post.id}
-          post={post}
-          home={home}
-          handleClick={handleClick}
-        />
+        <PostCard key={post.id} post={post} home={home} />
       ))}
       <Box className="text-center text-white opacity-25 text-2xl py-8">
         No more posts...

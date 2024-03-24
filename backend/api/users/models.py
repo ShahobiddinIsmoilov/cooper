@@ -34,10 +34,12 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=32, unique=True, db_index=True)
+    phone_number = models.CharField(max_length=12, default=None, null=True)
     is_verified = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'username'
 

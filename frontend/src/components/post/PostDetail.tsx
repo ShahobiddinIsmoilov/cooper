@@ -5,7 +5,7 @@ import PostDetailFooter from "./PostDetailFooter";
 import CommentFeed from "../comment/CommentFeed";
 
 interface PostDetailProps {
-  post: PostProps | null;
+  post: PostProps;
 }
 
 function PostDetail({ post }: PostDetailProps) {
@@ -13,10 +13,10 @@ function PostDetail({ post }: PostDetailProps) {
     <div className="p-2">
       <PostDetailHeader post={post} />
       <div className="text-xl xs:text-2xl font-bold text-white p-2">
-        {post?.title}
+        {post.title}
       </div>
       <div className="text-base xs:text-lg text-white opacity-75 mx-2 mt-2 mb-4">
-        {post?.body}
+        {post.body}
       </div>
       <PostDetailFooter post={post} />
       <Line />

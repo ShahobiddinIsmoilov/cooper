@@ -1,53 +1,21 @@
-import { useEffect, useState } from "react";
-import { Stack, Typography } from "@mui/material";
-import axios from "axios";
+import { Stack } from "@mui/material";
 import CommunityCard from "./CommunityCard";
-
-export interface CommunityProps {
-  owner: string;
-  name: string;
-  title: string;
-  bio: string;
-  description: string;
-  created_at: string;
-  upvotes: number;
-  downvotes: number;
-  rules: string;
-  members: number;
-}
+import { CommunityProps } from "../../interfaces/communityProps";
+import { useQuery } from "@tanstack/react-query";
+import getCommunities from "../../services/community/getCommunities";
 
 function CommunityList() {
-  const [communities, setCommunities] = useState([]);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["community-list"],
+    queryFn: () => getCommunities(),
+  });
 
-  useEffect(() => {
-    getCommunities();
-  }, []);
+  if (isPending) return "Loeading...";
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  if (error) return "Couldn't load data";
 
-  const options = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  const communities = data.data;
 
-  async function getCommunities() {
-    try {
-      const response = await axios.get(
-        `${baseURL}/api/community/list/`,
-        options
-      );
-      if (response.status === 200) {
-        setCommunities(response.data);
-      }
-    } catch (error) {
-      return (
-        <>
-          <Typography variant="h3">Couldn't load data</Typography>
-        </>
-      );
-    }
-  }
   return (
     <Stack direction="column">
       {communities.map((community: CommunityProps) => (

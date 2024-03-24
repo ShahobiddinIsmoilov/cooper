@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import getCommunityDetail from "../../../../services/community/getCommunityDetail";
 import { ImSpinner4 } from "react-icons/im";
+import { useQuery } from "@tanstack/react-query";
+import { CommunityDetailProps } from "../../../../interfaces/communityDetailProps";
+import getCommunityDetail from "../../../../services/community/getCommunityDetail";
 
 interface CommunityLinkProps {
   community: string;
 }
 
-function CommunityLink({ community }: CommunityLinkProps) {
+export default function CommunityLink({ community }: CommunityLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
 
   let showPreviewTimer: NodeJS.Timeout;
@@ -30,10 +32,11 @@ function CommunityLink({ community }: CommunityLinkProps) {
   return (
     <div className="flex items-center gap-1">
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Link to={`/community/${community}`}>
-          <span className="text-lg font-bold hover:underline  text-blue-400">
-            {community}
-          </span>
+        <Link
+          to={`/community/${community}`}
+          className="text-lg font-bold hover:underline  text-blue-400"
+        >
+          {community}
         </Link>
         {showPreview && <Preview community={community} />}
       </div>
@@ -42,42 +45,34 @@ function CommunityLink({ community }: CommunityLinkProps) {
   );
 }
 
-export default CommunityLink;
-
-interface CommunityDetailProps {
-  name: string;
-  title: string;
-  description: string;
-  members: number;
-}
-
 function Preview({ community }: CommunityLinkProps) {
-  const [loading, setLoading] = useState(true);
-  const [communityDetail, setCommunityDetail] =
-    useState<CommunityDetailProps | null>(null);
+  const { isPending, error, data } = useQuery({
+    queryKey: [`community-${community}`],
+    queryFn: () => getCommunityDetail(community),
+    retry: false,
+  });
 
-  useEffect(() => {
-    getCommunityDetail(community)
-      .then((response) => {
-        setLoading(false);
-        setCommunityDetail(response.data);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  return (
-    <div className="overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
-      {loading ? (
+  if (isPending)
+    return (
+      <div className="overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
         <div className="flex justify-center items-center w-96 h-48">
           <ImSpinner4 className="animate-spin text-xl opacity-50" />
         </div>
-      ) : communityDetail ? (
-        <CommunityPreview communityDetail={communityDetail} />
-      ) : (
-        <div className="flex justify-center items-center w-48 h-48 opacity-50">
-          Something went wrong
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
+        <div className="flex justify-center items-center w-96 h-48 opacity-50">
+          Couldn't load data
         </div>
-      )}
+      </div>
+    );
+
+  return (
+    <div className="overflow-hidden absolute z-30 bg-dark-850 rounded-xl text-white shadow shadow-white">
+      <CommunityPreview communityDetail={data.data} />
     </div>
   );
 }
@@ -102,15 +97,15 @@ function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
           <div className="flex justify-between">
             <Link
               to={`/community/${communityDetail.name}`}
-              className="text-xl text-blue-500 hover:text-blue-400 font-bold max-w-[180px] overflow-hidden"
+              className="text-xl text-blue-500 hover:text-blue-400 font-bold max-w-[180px] overflow-hidden break-words"
             >
-              Namanganlik taksistlar
+              {communityDetail.name}
             </Link>
-            <button className="bg-cyan-700 hover:bg-cyan-600 text-white rounded-full px-3 max-h-10 text-nowrap">
+            <button className="bg-cyan-700 hover:bg-cyan-600 text-white rounded-full px-3 max-h-10 text-nowrap text-sm">
               A'zo bo'lish
             </button>
           </div>
-          <p className="opacity-50">
+          <p className="opacity-50 text-sm">
             {communityDetail.members.toLocaleString()} ta a'zo
           </p>
         </div>

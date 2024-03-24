@@ -1,34 +1,33 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import PostDetail from "../components/post/PostDetail";
+import { useQuery } from "@tanstack/react-query";
+import getPostDetail from "../services/post/getPostDetail";
+import { ImSpinner4 } from "react-icons/im";
+import { IoCloudOffline } from "react-icons/io5";
 
 function PostDetailPage() {
-  const [post, setPost] = useState(null);
-  const { id } = useParams();
+  const { post_id } = useParams();
+  const { isPending, error, data } = useQuery({
+    queryKey: [`post-detail-${post_id}`],
+    queryFn: () => getPostDetail(Number(post_id)),
+  });
 
-  useEffect(() => {
-    getPost();
-  }, []);
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center mt-16 text-white text-2xl">
+        <ImSpinner4 className="animate-spin" />
+      </div>
+    );
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  if (error)
+    return (
+      <div className="flex justify-center items-center mt-16 text-white text-xl gap-2">
+        <IoCloudOffline />
+        Couldn't load data
+      </div>
+    );
 
-  const options = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  async function getPost() {
-    try {
-      const response = await axios.get(`${baseURL}/api/post/${id}/`, options);
-      if (response.status === 200) {
-        setPost(response.data);
-      }
-    } catch (error) {
-      console.log("Error in PostDetailPage.tsx getPosts function");
-    }
-  }
+  const post = data.data;
 
   return <PostDetail post={post} />;
 }

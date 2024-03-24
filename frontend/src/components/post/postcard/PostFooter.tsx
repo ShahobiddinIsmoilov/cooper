@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PostHeaderProps } from "./postheader/PostHeaderHome";
+import { PostHeaderHomeProps } from "./postheader/PostHeaderHome";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
@@ -7,7 +7,7 @@ import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { FaFlag, FaBookmark } from "react-icons/fa6";
 
-function PostFooter({ post }: PostHeaderProps) {
+function PostFooter({ post }: PostHeaderHomeProps) {
   const { screenWidth } = useWindowSize();
 
   return (
@@ -30,10 +30,7 @@ function PostFooter({ post }: PostHeaderProps) {
             <BiDislike className="text-xl xs:text-2xl" />
           </button>
         </div>
-        <Link
-          to={`/community/${post.community}/post/${post.id}`}
-          reloadDocument
-        >
+        <Link to={`/community/${post.community}/post/${post.id}`}>
           <div className="py-1 px-3 rounded-full cursor-pointer flex justify-center bg-dark-900 xs:bg-transparent items-center hover:bg-dark-600 text-white gap-2">
             <FaComment className="text-lg xs:text-xl" />
             <span className="xs:text-lg text-cyan-400 font-bold">

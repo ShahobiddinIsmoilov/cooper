@@ -32,7 +32,7 @@ function Layout() {
             <Route path="/logout" element={<LogoutPage />} />
             <Route path="/community/:name" element={<CommunityPage />} />
             <Route
-              path="/community/:name/post/:id"
+              path="/community/:name/post/:post_id"
               element={<PostDetailPage />}
             />
           </Routes>

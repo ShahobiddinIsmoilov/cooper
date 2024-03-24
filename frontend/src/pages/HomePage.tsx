@@ -1,50 +1,20 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import PostFeed from "../components/post/PostFeed";
+import getPosts from "../services/post/getPosts";
 
 function HomePage() {
-  const [posts, setPosts] = useState([]);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["homepage-posts"],
+    queryFn: () => getPosts(),
+  });
 
-  useEffect(() => {
-    getPosts();
-    // handleScrollPosition();
-  }, []);
+  if (isPending) return "Loading";
 
-  const handleScrollPosition = () => {
-    const scrollPosition = sessionStorage.getItem("scrollPosition");
-    if (scrollPosition) {
-      window.scrollTo(0, parseInt(scrollPosition));
-      sessionStorage.removeItem("scrollPosition");
-    }
-  };
+  if (error) return "Couldn't load data";
 
-  const handleClick = () => {
-    // sessionStorage.setItem("scrollPosition", String(window.scrollY));
-  };
+  const posts = data.data;
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
-
-  const options = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  async function getPosts() {
-    try {
-      const response = await axios.get(
-        `${baseURL}/api/post/list/all/`,
-        options
-      );
-      if (response.status === 200) {
-        setPosts(response.data);
-      }
-    } catch (error) {
-      alert("Something went wrong");
-    }
-  }
-
-  return <PostFeed posts={posts} home={true} handleClick={handleClick} />;
+  return <PostFeed posts={posts} home={true} />;
 }
 
 export default HomePage;

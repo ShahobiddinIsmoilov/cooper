@@ -8,7 +8,7 @@ import { useWindowSize } from "../../contexts/WindowSizeContext";
 import { PostProps } from "../../interfaces/postProps";
 
 interface PostDetailFooterProps {
-  post: PostProps | null;
+  post: PostProps;
 }
 
 function PostDetailFooter({ post }: PostDetailFooterProps) {
@@ -25,7 +25,7 @@ function PostDetailFooter({ post }: PostDetailFooterProps) {
             <BiLike className="text-lg xs:text-2xl" />
           </div>
           <span className="xs:text-xl text-green-400 font-bold pr-4">
-            {post?.upvotes.toLocaleString()}
+            {post?.upvotes?.toLocaleString()}
           </span>
           <div
             className="p-2 rounded-full cursor-pointer hover:bg-dark-700
@@ -34,7 +34,7 @@ function PostDetailFooter({ post }: PostDetailFooterProps) {
             <BiDislike className="text-lg xs:text-2xl" />
           </div>
           <span className="xs:text-xl text-red-400 font-bold pr-4">
-            {post?.downvotes.toLocaleString()}
+            {post?.downvotes?.toLocaleString()}
           </span>
         </div>
         <Link to={`/community/${post?.community}/post/${post?.id}`}>
@@ -45,8 +45,8 @@ function PostDetailFooter({ post }: PostDetailFooterProps) {
             <FaComment className="text-lg xs:text-xl" />
             <span className="xs:text-lg text-cyan-400 font-bold">
               {screenWidth < 576
-                ? post?.comments.toLocaleString()
-                : post?.comments.toLocaleString() + " comments"}
+                ? post?.comments?.toLocaleString()
+                : post?.comments?.toLocaleString() + " comments"}
             </span>
           </div>
         </Link>

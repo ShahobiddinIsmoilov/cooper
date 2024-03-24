@@ -7,7 +7,7 @@ from api.communities.models import Community
 User = get_user_model()
 
 class Post(models.Model):
-    user = models.ForeignKey(User, default=1, null=True, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, default=1, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey(Community, default='cars',
                                   null=True, to_field='name',
                                   on_delete=models.CASCADE)
@@ -22,7 +22,7 @@ class Post(models.Model):
     
     class Meta:
         indexes = [
-            models.Index(fields=['user']),
+            models.Index(fields=['user_id']),
             models.Index(fields=['community']),
             models.Index(fields=['created_at'])
         ]

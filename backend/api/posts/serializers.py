@@ -13,7 +13,7 @@ class ListPostSerializer(serializers.ModelSerializer):
                   'title',
                   'votes',
                   'comments',
-                  'user',
+                  'user_id',
                   'body',
                   'username',
                   'community',

@@ -15,9 +15,7 @@ export default function PostHeaderHome({ post }: PostHeaderHomeProps) {
           className="w-8 xs:w-10 h-8 xs:h-10 min-w-8 xs:min-w-10 object-cover rounded-full"
         />
 
-        <div className="text-xs xs:text-base">
-          <CommunityLink community={post.community} />
-        </div>
+        <CommunityLink community={post.community} />
       </div>
       <span
         className="cursor-pointer flex items-center opacity-50 pr-1

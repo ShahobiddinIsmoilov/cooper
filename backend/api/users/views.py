@@ -11,7 +11,8 @@ from .serializers import (NoteSerializer,
                           RegistrationSerializer,
                           LoginSerializer,
                           LogoutSerializer,
-                          UserSerializer)
+                          UserSerializer,
+                          UserDetailSerializer)
 
 User = get_user_model()
 
@@ -98,4 +99,4 @@ class UserDetail(generics.RetrieveAPIView):
     Retrieving the details about a user
     """
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserDetailSerializer
