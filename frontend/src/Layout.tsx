@@ -1,14 +1,14 @@
 import { createPortal } from "react-dom";
 import { Route, Routes } from "react-router-dom";
+import { useDialog } from "./contexts/DialogContext";
+import { useWindowSize } from "./contexts/WindowSizeContext";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import CommunityPage from "./pages/CommunityPage";
-import Navbar from "./components/navbar/Navbar";
-import { useDialog } from "./contexts/DialogContext";
-import { useWindowSize } from "./contexts/WindowSizeContext";
-import Sidebar from "./components/Sidebar";
+import Header from "./components/header/Header";
+import Navbar from "./components/Navbar";
 
 function Layout() {
   const portal = document.getElementById("portal");
@@ -18,10 +18,10 @@ function Layout() {
   return (
     <div>
       <nav className="sticky top-0 z-10" id="navbar">
-        <Navbar />
+        <Header />
       </nav>
       <div className="flex justify-center" id="main">
-        {screenWidth >= 1200 && <Sidebar />}
+        {screenWidth >= 1200 && <Navbar />}
         <div className="flex-grow xs:px-2 max-w-[1056px]" id="feed">
           <Routes>
             <Route path="/" element={<HomePage />} />

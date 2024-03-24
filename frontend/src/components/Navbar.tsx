@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ReactNode } from "react";
 import { FaHome } from "react-icons/fa";
 
-function Sidebar() {
+function Navbar() {
   return (
     <div className="flex-col rounded-xl w-80 min-w-80 text-white overflow-hidden">
       <Link to="/">
@@ -22,7 +22,7 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default Navbar;
 
 interface SidebarItemProps {
   icon: ReactNode;

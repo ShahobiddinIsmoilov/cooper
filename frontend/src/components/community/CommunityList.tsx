@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack } from "@mantine/core";
 import CommunityCard from "./CommunityCard";
 import { CommunityProps } from "../../interfaces/communityProps";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +17,7 @@ function CommunityList() {
   const communities = data.data;
 
   return (
-    <Stack direction="column">
+    <Stack>
       {communities.map((community: CommunityProps) => (
         <CommunityCard key={community.name} community={community} />
       ))}

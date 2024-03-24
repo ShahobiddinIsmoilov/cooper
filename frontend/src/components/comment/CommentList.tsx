@@ -1,7 +1,6 @@
-import { Stack } from "@mui/material";
-
 import CommentCard from "./commentcard/CommentCard";
 import { CommentProps } from "../../interfaces/commentProps";
+import { Stack } from "@mantine/core";
 
 interface CommentListProps {
   comments: CommentProps[];

@@ -4,7 +4,7 @@ import { useDialog } from "../../contexts/DialogContext";
 import LoginForm from "../../forms/LoginForm";
 import ProfileNavbar from "./ProfileNavbar";
 
-function Navbar() {
+function Header() {
   return (
     <div
       className="flex justify-between bg-dark-900 h-[72px]
@@ -41,4 +41,4 @@ function Authenticated() {
   );
 }
 
-export default Navbar;
+export default Header;

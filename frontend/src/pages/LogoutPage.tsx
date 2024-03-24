@@ -1,25 +1,22 @@
 import { useEffect } from "react";
 import { useAuthContext } from "../contexts/AuthContext";
-import { Typography } from "@mui/material";
 
 function LogoutPage() {
-  const { logoutUser, redirect } = useAuthContext();
+  const { logoutUser } = useAuthContext();
 
   useEffect(() => {
     logoutUser();
 
-    function timedRedirect() {
-      redirect("/");
-    }
+    function timedRedirect() {}
 
     setTimeout(timedRedirect, 3000);
   });
 
   return (
-    <Typography>
+    <span>
       You have successfully logged out. You will be redirected to the homepage
       in a moment...
-    </Typography>
+    </span>
   );
 }
 

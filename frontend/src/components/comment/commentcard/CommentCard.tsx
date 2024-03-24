@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { Box } from "@mui/material";
 
 import { CommentProps } from "../../../interfaces/commentProps";
 import CommentHeader from "./CommentHeader";
@@ -21,30 +20,30 @@ function CommentCard({ comment, last }: CommentCardProps) {
   const [hidden, setHidden] = useState(false);
 
   return (
-    <Box className="flex text-white">
-      <Box
+    <div className="flex text-white">
+      <div
         className={`w-[1px] ${last && "h-8"} bg-white ${
           comment.parent > 0 ? "ml-8 opacity-25" : "opacity-0"
         }`}
       />
-      <Box className="">
-        <Box className="flex">
+      <div className="">
+        <div className="flex">
           {comment.parent > 0 && <hr className="w-4 min-w-4 mt-8 opacity-25" />}
-          <Box
+          <div
             className="border border-solid border-white border-opacity-25 p-2
                        mt-2 bg-dark-850 rounded-xl"
           >
-            <Box className="flex items-center">
+            <div className="flex items-center">
               <CommentHeader
                 comment={comment}
                 hidden={hidden}
                 setHidden={setHidden}
               />
-            </Box>
-            <Box className="flex">
-              <Box>
+            </div>
+            <div className="flex">
+              <div>
                 {!hidden && (
-                  <Box className="mx-2 xs:mx-4 mt-2">{comment.body}</Box>
+                  <div className="mx-2 xs:mx-4 mt-2">{comment.body}</div>
                 )}
                 {!hidden && (
                   <CommentFooter
@@ -52,17 +51,17 @@ function CommentCard({ comment, last }: CommentCardProps) {
                     replyCount={replies && replies.length}
                   />
                 )}
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+              </div>
+            </div>
+          </div>
+        </div>
         {replies && replies.length > 0 && (
-          <Box className={`flex ${hidden ? "hidden" : ""}`}>
+          <div className={`flex ${hidden ? "hidden" : ""}`}>
             <CommentList comments={replies} />
-          </Box>
+          </div>
         )}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 

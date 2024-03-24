@@ -1,8 +1,7 @@
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mantine/core";
 
 import PostCard from "./postcard/PostCard";
 import { PostProps } from "../../interfaces/postProps";
-import Line from "../../utils/Line";
 import { useWindowSize } from "../../contexts/WindowSizeContext";
 
 interface PostFeedProps {
@@ -14,19 +13,14 @@ function PostFeed({ posts, home }: PostFeedProps) {
   let { screenWidth } = useWindowSize();
 
   return (
-    <Stack
-      direction="column"
-      spacing={screenWidth < 576 ? "2px" : "8px"}
-      divider={<Line />}
-      className="xs:p-1 max-w-3xl"
-    >
+    <Stack className="xs:p-1 max-w-3xl">
       <Sortbar size={screenWidth} />
       {posts.map((post: PostProps) => (
         <PostCard key={post.id} post={post} home={home} />
       ))}
-      <Box className="text-center text-white opacity-25 text-2xl py-8">
+      <div className="text-center text-white opacity-25 text-2xl py-8">
         No more posts...
-      </Box>
+      </div>
     </Stack>
   );
 }
@@ -39,17 +33,17 @@ interface SortbarProps {
 
 function Sortbar({ size }: SortbarProps) {
   return size < 620 ? (
-    <Box className="flex justify-center gap-2 text-white">
+    <div className="flex justify-center gap-2 text-white">
       <p className="opacity-50 px-2 flex items-center text-center">SORT BY:</p>
       <SortbarItem icon="🔥" text="TRENDING" />
-    </Box>
+    </div>
   ) : (
-    <Box className="text-white flex justify-center py-2">
+    <div className="text-white flex justify-center py-2">
       <SortbarItem icon="🔥" text="HOT" />
       <SortbarItem icon="🕒" text="NEWEST" />
       <SortbarItem icon="🚀" text="TOP" />
       <SortbarItem icon="🚩" text="CONTROVERSIAL" />
-    </Box>
+    </div>
   );
 }
 

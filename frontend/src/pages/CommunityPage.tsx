@@ -6,6 +6,7 @@ import { ImSpinner4 } from "react-icons/im";
 import { IoCloudOffline } from "react-icons/io5";
 import { useWindowSize } from "../contexts/WindowSizeContext";
 import Infobar from "../components/Infobar";
+import CreatePostButton from "../components/buttons/CreatePostButton";
 
 function CommunityPage() {
   const { screenWidth } = useWindowSize();
@@ -51,6 +52,7 @@ function CommunityPage() {
               <button className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8">
                 Join
               </button>
+              <CreatePostButton />
             </div>
           </div>
           <div className="max-w-3xl xs:px-2">

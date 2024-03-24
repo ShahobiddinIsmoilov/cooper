@@ -40,8 +40,7 @@ function LoginForm() {
   return (
     <div
       ref={loginFormRef}
-      className="text-white rounded-xl p-4 xs:p-8 bg-dark-900 shadow
-                  border border-white"
+      className="text-white rounded-xl p-4 xs:p-8 bg-dark-900 shadow border border-white"
     >
       <form
         onSubmit={handleSubmit}

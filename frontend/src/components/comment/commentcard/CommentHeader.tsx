@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 
@@ -13,7 +12,7 @@ interface CommentCardProps {
 
 function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
   return (
-    <Box className="flex items-center">
+    <div className="flex items-center">
       <button className="cursor-pointer mr-2">
         {hidden ? (
           <CiSquarePlus
@@ -36,15 +35,15 @@ function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
         alt="user profile picture"
         className="w-6 h-6 xs:w-8 xs:h-8 rounded-full mr-2 min-w-6 xs:min-w-8"
       />
-      <Box className="text-xs xs:text-base" id="fucker">
+      <div className="text-xs xs:text-base" id="fucker">
         <Link to={`/user/${comment.username}`}>
           <span className="font-bold hover:underline text-orange-400">
             abdulbosit_muhammadjonov
           </span>
         </Link>
         <span className="opacity-50"> ∙ 15 daqiqa oldin </span>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 
