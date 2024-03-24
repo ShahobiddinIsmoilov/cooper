@@ -4,8 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import getPostDetail from "../services/post/getPostDetail";
 import { ImSpinner4 } from "react-icons/im";
 import { IoCloudOffline } from "react-icons/io5";
+import Infobar from "../components/Infobar";
+import { useWindowSize } from "../contexts/WindowSizeContext";
 
 function PostDetailPage() {
+  const { screenWidth } = useWindowSize();
   const { post_id } = useParams();
   const { isPending, error, data } = useQuery({
     queryKey: [`post-detail-${post_id}`],
@@ -29,7 +32,14 @@ function PostDetailPage() {
 
   const post = data.data;
 
-  return <PostDetail post={post} />;
+  return (
+    <div className="flex">
+      <div className="max-w-3xl xs:px-2">
+        <PostDetail post={post} />
+      </div>
+      {screenWidth >= 920 && <Infobar />}
+    </div>
+  );
 }
 
 export default PostDetailPage;

@@ -1,53 +1,66 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import PostFeed from "../components/post/PostFeed";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import getCommunityPosts from "../services/post/getCommunityPosts";
+import { ImSpinner4 } from "react-icons/im";
+import { IoCloudOffline } from "react-icons/io5";
+import { useWindowSize } from "../contexts/WindowSizeContext";
+import Infobar from "../components/Infobar";
 
 function CommunityPage() {
-  const [posts, setPosts] = useState([]);
+  const { screenWidth } = useWindowSize();
+  const { community_name } = useParams();
+  const { isPending, error, data } = useQuery({
+    queryKey: [`community-page-${community_name}`],
+    queryFn: () => getCommunityPosts(community_name!),
+  });
 
-  const { name } = useParams();
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center mt-16 text-white text-2xl">
+        <ImSpinner4 className="animate-spin" />
+      </div>
+    );
 
-  useEffect(() => {
-    getPosts();
-    // handleScrollPosition();
-  }, []);
+  if (error)
+    return (
+      <div className="flex justify-center items-center mt-16 text-white gap-2">
+        <IoCloudOffline />
+        Couldn't load data
+      </div>
+    );
 
-  const handleScrollPosition = () => {
-    const scrollPosition = sessionStorage.getItem("scrollPosition");
-    if (scrollPosition) {
-      window.scrollTo(0, parseInt(scrollPosition));
-      sessionStorage.removeItem("scrollPosition");
-    }
-  };
-
-  const handleClick = () => {
-    sessionStorage.setItem("scrollPosition", String(window.scrollY));
-  };
-
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
-
-  const options = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  async function getPosts() {
-    try {
-      const response = await axios.get(
-        `${baseURL}/api/post/list/${name}`,
-        options
-      );
-      if (response.status === 200) {
-        setPosts(response.data);
-      }
-    } catch (error) {
-      alert("Something went wrong");
-    }
-  }
-
-  return <PostFeed posts={posts} handleClick={handleClick} />;
+  const posts = data.data;
+  return (
+    <>
+      <img
+        src={`../../../src/assets/${community_name}.png`}
+        className="h-24 xs:h-48 bg-white w-[1088px] object-cover"
+      />
+      <div className="flex">
+        <div className="-translate-y-10 xs:-translate-y-14">
+          <div className="flex ml-4 xs:ml-8">
+            <img
+              src={`../../../src/assets/${community_name}.jpg`}
+              className="w-24 h-24 xs:w-32 xs:h-32 rounded-full bg-white object-cover border-4 xs:border-8 border-dark-800"
+            />
+            <div className="flex justify-between items-center mt-10 xs:mt-14 ml-2">
+              <p className="text-blue-400 text-lg xs:text-3xl font-bold break-words">
+                {community_name}
+              </p>
+              <button className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8">
+                Join
+              </button>
+            </div>
+          </div>
+          <div className="max-w-3xl xs:px-2">
+            <PostFeed posts={posts} />
+          </div>
+        </div>
+        <div className="mt-4">{screenWidth >= 920 && <Infobar />}</div>
+      </div>
+    </>
+  );
 }
 
 export default CommunityPage;

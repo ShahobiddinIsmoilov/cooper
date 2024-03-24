@@ -49,7 +49,7 @@ export default function UserLink({ username, user_id }: UserLinkProps) {
 
 function Preview({ user_id }: UserLinkProps) {
   const { isPending, error, data } = useQuery({
-    queryKey: [`user-${user_id}`],
+    queryKey: [`user-preview-${user_id}`],
     queryFn: () => getUserDetail(user_id),
     retry: false,
   });

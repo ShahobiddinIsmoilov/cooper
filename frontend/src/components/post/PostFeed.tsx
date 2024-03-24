@@ -39,7 +39,7 @@ interface SortbarProps {
 
 function Sortbar({ size }: SortbarProps) {
   return size < 620 ? (
-    <Box className="flex justify-center gap-2 text-white ">
+    <Box className="flex justify-center gap-2 text-white">
       <p className="opacity-50 px-2 flex items-center text-center">SORT BY:</p>
       <SortbarItem icon="🔥" text="TRENDING" />
     </Box>

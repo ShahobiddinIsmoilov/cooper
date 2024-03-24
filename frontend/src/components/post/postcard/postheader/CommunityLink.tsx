@@ -47,7 +47,7 @@ export default function CommunityLink({ community }: CommunityLinkProps) {
 
 function Preview({ community }: CommunityLinkProps) {
   const { isPending, error, data } = useQuery({
-    queryKey: [`community-${community}`],
+    queryKey: [`community-preview-${community}`],
     queryFn: () => getCommunityDetail(community),
     retry: false,
   });
@@ -97,7 +97,7 @@ function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
           <div className="flex justify-between">
             <Link
               to={`/community/${communityDetail.name}`}
-              className="text-xl text-blue-500 hover:text-blue-400 font-bold max-w-[180px] overflow-hidden break-words"
+              className="text-xl text-blue-400 hover:text-blue-300 font-bold max-w-[180px] overflow-hidden break-words"
             >
               {communityDetail.name}
             </Link>

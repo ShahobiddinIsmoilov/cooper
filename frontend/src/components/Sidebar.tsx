@@ -5,10 +5,7 @@ import { FaHome } from "react-icons/fa";
 
 function Sidebar() {
   return (
-    <div
-      className="flex-col rounded-xl w-80 min-w-80 sticky top-0
-                 text-white overflow-hidden"
-    >
+    <div className="flex-col rounded-xl w-80 min-w-80 text-white overflow-hidden">
       <Link to="/">
         <SidebarItem icon={<FaHome size={30} />} text="Home" />
       </Link>
