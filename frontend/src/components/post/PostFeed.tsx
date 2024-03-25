@@ -3,6 +3,7 @@ import { Stack } from "@mantine/core";
 import PostCard from "./postcard/PostCard";
 import { PostProps } from "../../interfaces/postProps";
 import { useWindowSize } from "../../contexts/WindowSizeContext";
+import Line from "../../utils/Line";
 
 interface PostFeedProps {
   posts: PostProps[];

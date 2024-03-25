@@ -36,7 +36,7 @@ function CommunityPage() {
     <>
       <img
         src={`../../../src/assets/${community_name}.png`}
-        className="h-24 xs:h-48 bg-white w-[1088px] object-cover"
+        className="h-24 xs:h-48 bg-white w-[1088px] object-cover rounded-xl"
       />
       <div className="flex">
         <div className="-translate-y-10 xs:-translate-y-14">

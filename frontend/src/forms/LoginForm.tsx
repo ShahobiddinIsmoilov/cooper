@@ -38,20 +38,11 @@ function LoginForm() {
   }
 
   return (
-    <div
-      ref={loginFormRef}
-      className="text-white rounded-xl p-4 xs:p-8 bg-dark-900 shadow border border-white"
-    >
+    <div ref={loginFormRef} className="text-white p-4 xs:p-8">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-end gap-4 xs:gap-6"
       >
-        <button>
-          <IoMdClose
-            className="text-2xl opacity-50 hover:opacity-100 cursor-pointer"
-            onClick={handleClose}
-          />
-        </button>
         <span className="text-xl xs:text-2xl text-center w-full">
           Welcome back
         </span>

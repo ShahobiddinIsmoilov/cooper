@@ -5,13 +5,11 @@ import { FaHome } from "react-icons/fa";
 
 function Navbar() {
   return (
-    <div className="flex-col rounded-xl w-80 min-w-80 text-white overflow-hidden">
+    <div className="bg-dark-850 text-white overflow-hidden h-full">
       <Link to="/">
         <SidebarItem icon={<FaHome size={30} />} text="Home" />
       </Link>
-      <p className="text-white opacity-75 pt-8 pb-2 text-center">
-        POPULAR COMMUNITIES
-      </p>
+      <p className="opacity-75 pt-8 pb-2 text-center">POPULAR COMMUNITIES</p>
       <CommunityList />
       <p className="text-white opacity-75 text-sm py-4 text-center">
         <span className="hover:text-cyan-300 cursor-pointer ">

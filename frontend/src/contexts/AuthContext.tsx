@@ -10,6 +10,7 @@ import { AuthContextProps } from "../interfaces/authContextProps";
 import { makeRequest } from "../services/makeRequest";
 import { useDialog } from "./DialogContext";
 import LoginForm from "../forms/LoginForm";
+import { LoginFormProps } from "../interfaces/loginFormProps";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
@@ -37,13 +38,13 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
 
   const { setDialogContent } = useDialog();
-  async function register(e: any) {
-    e.preventDefault();
-    const element = e.target;
+  async function register(values: LoginFormProps) {
+    // e.preventDefault();
+    // const element = e.target;
 
     const userData = {
-      username: element.username.value,
-      password: element.password.value,
+      username: values.username,
+      password: values.password,
     };
 
     try {
@@ -57,13 +58,13 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  async function login(e: any) {
-    e.preventDefault();
-    const element = e.target;
+  async function login(values: LoginFormProps) {
+    // e.preventDefault();
+    // const element = e.target;
 
     const userData = {
-      username: element.username.value,
-      password: element.password.value,
+      username: values.username,
+      password: values.password,
     };
 
     try {
