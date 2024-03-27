@@ -1,4 +1,13 @@
-import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
+// WARNING: HIGHLY UNSTABLE PIECE OF CODE. DO NOT CHANGE IF YOU DON'T KNOW WHAT YOU'RE DOING!!!
+
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { CommentProps } from "../interfaces/commentProps";
 import { getComments } from "../services/comment/getComments";
 
@@ -6,34 +15,41 @@ export interface CommentContextProps {
   comments: CommentProps[];
   getReplies: (parent: number) => CommentProps[];
   rootComments: {};
+  post_id: number;
 }
 
-export const CommentContext = createContext<CommentContextProps | null>(null);
+export function useComments() {
+  return useContext(CommentContext) as CommentContextProps;
+}
+
+const CommentContext = createContext<CommentContextProps | null>(null);
 
 interface CommentProviderProps {
   children: ReactNode;
+  post_id: number;
 }
 
 interface CommentsByParentProps {
   [parent: number]: CommentProps[];
 }
 
-function CommentProvider({ children }: CommentProviderProps) {
+function CommentProvider({ children, post_id }: CommentProviderProps) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    getComments("api/comment/list/all/").then((response) => {
-      setComments(response.data);
-    });
+    post_id &&
+      getComments(`api/comment/list/${post_id}/`).then((response) => {
+        setComments(response.data);
+      });
   }, []);
 
+  // critical piece of code to get an array of a parent comment
   const commentsByParent = useMemo(() => {
     const group: CommentsByParentProps = {};
     comments.forEach((comment: CommentProps) => {
       group[comment.parent] ||= [];
       group[comment.parent].push(comment);
     });
-
     return group;
   }, [comments]);
 
@@ -45,6 +61,7 @@ function CommentProvider({ children }: CommentProviderProps) {
     comments: comments,
     getReplies: getReplies,
     rootComments: commentsByParent[0],
+    post_id: post_id,
   };
 
   return (

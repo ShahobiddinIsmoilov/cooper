@@ -47,7 +47,7 @@ function Infobar({ community }: InfobarProps) {
   );
 
   return (
-    <div className="w-80 min-w-72 text-white overflow-hidden h-fit bg-dark-850 rounded-xl p-8">
+    <div className="w-80 min-w-80 text-white overflow-hidden h-fit bg-dark-850 rounded-xl p-8">
       <p className="flex justify-center items-center gap-2 opacity-50 pb-4">
         <FaInfoCircle className="inline-block" />
         About this community

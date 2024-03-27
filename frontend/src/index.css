@@ -47,4 +47,9 @@
     @apply mx-2 mb-4 text-[rgba(256,256,256,0.80)] [&_hr]:my-4 [&_p]:mt-0
           [&_a]:text-blue-400 [&_h2]:text-2xl [&_h2]:py-2;
   }
+
+  .post-card {
+    @apply px-1 xs:px-5 my-2 text-[rgba(256,256,256,0.75)] [&_hr]:my-4 [&_p]:mt-0
+          [&_a]:text-blue-400 [&_h2]:text-xl [&_h2]:py-2;
+  }
 }

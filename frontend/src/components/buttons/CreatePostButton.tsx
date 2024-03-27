@@ -1,5 +1,4 @@
 import { Avatar, Modal, Stack, Text, Group, Button, Flex } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import FancyTextEditor from "../../forms/post/FancyTextEditor";
 import CommunityCombobox from "../../forms/post/CommunityCombobox";
@@ -42,7 +41,8 @@ export default function CreatePostButton({ com }: CreatePostButtonProps) {
   // modal state
   const [opened, { open, close }] = useDisclosure();
 
-  async function handleSubmit() {
+  async function handleSubmit(e: any) {
+    e.preventDefault();
     const newPost = {
       username: username,
       community: community,
@@ -63,8 +63,6 @@ export default function CreatePostButton({ com }: CreatePostButtonProps) {
     setFormDisabled(false);
   }
 
-  const newPostForm = useForm({});
-
   return (
     <>
       <Modal
@@ -78,7 +76,7 @@ export default function CreatePostButton({ com }: CreatePostButtonProps) {
         closeOnEscape={false}
         withCloseButton={false}
       >
-        <form onSubmit={newPostForm.onSubmit(() => handleSubmit())}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <Stack gap="lg" pt="md" px="md">
             <Flex className="justify-between items-center">
               <Group>

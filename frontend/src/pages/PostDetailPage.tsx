@@ -6,6 +6,7 @@ import { ImSpinner4 } from "react-icons/im";
 import { IoCloudOffline } from "react-icons/io5";
 import Infobar from "../components/Infobar";
 import { useWindowSize } from "../contexts/WindowSizeContext";
+import { Flex } from "@mantine/core";
 
 function PostDetailPage() {
   const { screenWidth } = useWindowSize();
@@ -33,12 +34,12 @@ function PostDetailPage() {
   const post = data.data;
 
   return (
-    <div className="flex">
-      <div className="max-w-3xl xs:px-2">
+    <Flex>
+      <div className="flex-grow max-w-3xl xs:px-2">
         <PostDetail post={post} />
       </div>
       {screenWidth >= 920 && <Infobar />}
-    </div>
+    </Flex>
   );
 }
 

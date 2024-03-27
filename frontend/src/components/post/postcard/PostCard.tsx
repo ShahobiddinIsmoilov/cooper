@@ -3,6 +3,7 @@ import { PostProps } from "../../../interfaces/postProps";
 import PostHeaderHome from "./postheader/PostHeaderHome";
 import PostFooter from "./PostFooter";
 import PostHeaderCommunity from "./postheader/PostHeaderCommunity";
+import ReactHtmlParser from "react-html-parser";
 
 export interface PostCardProps {
   post: PostProps;
@@ -24,8 +25,11 @@ function PostCard({ post, home }: PostCardProps) {
         <p className="xs:text-xl font-bold pt-1 px-1 xs:px-5 xs:pt-1">
           {post.title}
         </p>
-        <p className="px-1 xs:px-5 my-2 opacity-75 line-clamp-3">{post.body}</p>
       </Link>
+      <div className="post-card line-clamp-3">{ReactHtmlParser(post.body)}</div>
+      {/* <p className="px-1 xs:px-5 my-2 opacity-75 line-clamp-3">
+          {ReactHtmlParser(post.body)}
+        </p> */}
       <PostFooter post={post} />
     </div>
   );

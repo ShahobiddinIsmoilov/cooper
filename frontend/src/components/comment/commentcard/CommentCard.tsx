@@ -1,13 +1,11 @@
-import { useContext, useState } from "react";
-
+import { useState } from "react";
 import { CommentProps } from "../../../interfaces/commentProps";
 import CommentHeader from "./CommentHeader";
 import CommentFooter from "./CommentFooter";
-import {
-  CommentContext,
-  CommentContextProps,
-} from "../../../contexts/CommentContext";
 import CommentList from "../CommentList";
+import { useComments } from "../../../contexts/CommentContext";
+import ReactHtmlParser from "react-html-parser";
+import CommentForm from "../CommentForm";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -15,9 +13,11 @@ interface CommentCardProps {
 }
 
 function CommentCard({ comment, last }: CommentCardProps) {
-  const { getReplies } = useContext(CommentContext) as CommentContextProps;
+  const { getReplies } = useComments();
   const replies = getReplies(comment.id);
   const [hidden, setHidden] = useState(false);
+  const { post_id } = useComments();
+  const [showReply, setShowReply] = useState(false);
 
   return (
     <div className="flex text-white">
@@ -29,10 +29,7 @@ function CommentCard({ comment, last }: CommentCardProps) {
       <div className="">
         <div className="flex">
           {comment.parent > 0 && <hr className="w-4 min-w-4 mt-8 opacity-25" />}
-          <div
-            className="border border-solid border-white border-opacity-25 p-2
-                       mt-2 bg-dark-850 rounded-xl"
-          >
+          <div className="border border-solid border-white border-opacity-25 p-2 mt-2 bg-dark-850 rounded-xl">
             <div className="flex items-center">
               <CommentHeader
                 comment={comment}
@@ -43,12 +40,15 @@ function CommentCard({ comment, last }: CommentCardProps) {
             <div className="flex">
               <div>
                 {!hidden && (
-                  <div className="mx-2 xs:mx-4 mt-2">{comment.body}</div>
+                  <div className="mx-2 xs:mx-4 mt-2">
+                    {ReactHtmlParser(comment.body)}
+                  </div>
                 )}
                 {!hidden && (
                   <CommentFooter
                     comment={comment}
                     replyCount={replies && replies.length}
+                    setShowReply={setShowReply}
                   />
                 )}
               </div>
@@ -59,6 +59,14 @@ function CommentCard({ comment, last }: CommentCardProps) {
           <div className={`flex ${hidden ? "hidden" : ""}`}>
             <CommentList comments={replies} />
           </div>
+        )}
+        {showReply && (
+          <CommentForm
+            post={post_id}
+            parent={comment.id}
+            setShowReply={setShowReply}
+            autofocus={true}
+          />
         )}
       </div>
     </div>

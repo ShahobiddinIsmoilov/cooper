@@ -24,8 +24,7 @@ def commentListAll(request):
 @api_view(['GET'])
 def commentList(request, post: int):
     """
-    Gets the list of all the posts associated with the community
-    name and returns it
+    Gets the list of all the posts associated with a post and returns it
     """
     posts = Comment.objects.filter(post=post).order_by('-created_at')
     serializer = ListCommentSerializer(posts, many=True)

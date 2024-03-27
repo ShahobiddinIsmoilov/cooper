@@ -4,6 +4,7 @@ import Line from "../../utils/Line";
 import PostDetailFooter from "./PostDetailFooter";
 import CommentFeed from "../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
+import CommentProvider from "../../contexts/CommentContext";
 
 interface PostDetailProps {
   post: PostProps;
@@ -16,10 +17,16 @@ function PostDetail({ post }: PostDetailProps) {
       <div className="text-xl xs:text-2xl font-bold text-white p-2">
         {post.title}
       </div>
-      <div className="post-detail">{ReactHtmlParser(post.body)}</div>
+      <div className="post-detail overflow-hidden break-words">
+        {ReactHtmlParser(post.body)}
+      </div>
       <PostDetailFooter post={post} />
       <Line />
-      <CommentFeed />
+      {post && (
+        <CommentProvider post_id={post.id}>
+          <CommentFeed />
+        </CommentProvider>
+      )}
     </div>
   );
 }

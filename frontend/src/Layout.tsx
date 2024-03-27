@@ -31,7 +31,7 @@ export default function Layout() {
 
       <AppShell.Main>
         <Flex justify={{ xs: "center" }}>
-          <Container className="xs:px-2 max-w-[1056px]">
+          <Container className="xs:px-2 w-[1056px] max-w-[1056px]">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/home" element={<HomePage />} />
