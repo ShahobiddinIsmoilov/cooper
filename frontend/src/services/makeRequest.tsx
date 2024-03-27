@@ -27,20 +27,19 @@ export async function makeRequest(
 
 export async function makeRequestWithCredentials(
   url: string,
-  method?: string,
-  data?: {}
+  options?: { method: string; data: {} }
 ) {
   const { authTokens, setAuthTokens, setUser, logoutUser } = useAuthContext();
 
   if (authTokens) {
-    const response = await api.get(url).catch(function (error) {
+    const response = await api(url, options).catch(function (error) {
       return Promise.reject(error);
     });
 
-    api.interceptors.request.use(async (config: any) => {
+    api.interceptors.request.use(async function (config: any) {
       config.headers.Authorization = `Bearer ${authTokens.access}`;
-      if (method) config.method = method;
-      if (data) config.data = data;
+      if (options?.method) config.method = options.method;
+      if (options?.data) config.data = options.data;
 
       const user = jwtDecode(authTokens.access);
       const isExpired = dayjs.unix(user.exp!).diff(dayjs()) < 1;

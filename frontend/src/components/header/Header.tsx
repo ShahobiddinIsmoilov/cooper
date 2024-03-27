@@ -44,7 +44,7 @@ function Authenticated() {
       >
         <form onSubmit={loginForm.onSubmit((values) => loginUser(values))}>
           <p className="text-2xl text-center">Welcome back</p>
-          <Stack gap={24} p={24}>
+          <Stack gap="xl" p="md">
             <TextInput
               maxLength={32}
               size="lg"

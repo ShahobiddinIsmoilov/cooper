@@ -1,7 +1,7 @@
-import { makeRequestWithCredentials } from "../makeRequest";
+import useAxios from "../useCredentials";
 
-function createPost(data: {}) {
-  return makeRequestWithCredentials("/api/post/create", "post", data);
+async function createPost() {
+  const data = { title: "WTF", body: "fuck this shit" };
 }
 
 export default createPost;

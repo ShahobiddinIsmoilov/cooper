@@ -52,7 +52,7 @@ function CommunityPage() {
               <button className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8">
                 Join
               </button>
-              <CreatePostButton />
+              <CreatePostButton com={community_name!} />
             </div>
           </div>
           <div className="max-w-3xl xs:px-2">

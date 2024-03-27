@@ -5,17 +5,14 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
-import { useContext } from "react";
-import { AuthContext, AuthContextProps } from "../contexts/AuthContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 // API baseURL
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-function useAxios() {
+function useCredentials() {
   // importing needed context values
-  const { authTokens, setAuthTokens, setUser, logoutUser } = useContext(
-    AuthContext
-  ) as AuthContextProps;
+  const { authTokens, setAuthTokens, setUser, logoutUser } = useAuthContext();
 
   // custom axios instance
   const axiosInstance: any = axios.create({
@@ -58,7 +55,7 @@ function useAxios() {
       if (err.response.status === 401) {
         logoutUser();
       } else {
-        console.log("useAxios Error");
+        console.log("Error in useCredentials");
       }
     }
   });
@@ -66,4 +63,4 @@ function useAxios() {
   return axiosInstance;
 }
 
-export default useAxios;
+export default useCredentials;
