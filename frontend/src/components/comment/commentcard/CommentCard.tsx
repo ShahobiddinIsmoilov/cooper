@@ -12,13 +12,14 @@ interface CommentCardProps {
   last: boolean;
 }
 
-function CommentCard({ comment, last }: CommentCardProps) {
+export default function CommentCard({ comment, last }: CommentCardProps) {
   const { getReplies } = useComments();
   const replies = getReplies(comment.id);
   const [hidden, setHidden] = useState(false);
   const { post_id } = useComments();
   const [showReply, setShowReply] = useState(false);
 
+  // WARNING: UNINTELLIGIBLE CODE AHEAD!
   return (
     <div className="flex text-white">
       <div
@@ -26,7 +27,7 @@ function CommentCard({ comment, last }: CommentCardProps) {
           comment.parent > 0 ? "ml-8 opacity-25" : "opacity-0"
         }`}
       />
-      <div className="">
+      <div>
         <div className="flex">
           {comment.parent > 0 && <hr className="w-4 min-w-4 mt-8 opacity-25" />}
           <div className="border border-solid border-white border-opacity-25 p-2 mt-2 bg-dark-850 rounded-xl">
@@ -40,7 +41,7 @@ function CommentCard({ comment, last }: CommentCardProps) {
             <div className="flex">
               <div>
                 {!hidden && (
-                  <div className="mx-2 xs:mx-4 mt-2">
+                  <div className="post-detail mx-2 xs:mx-4 mt-2">
                     {ReactHtmlParser(comment.body)}
                   </div>
                 )}
@@ -55,22 +56,22 @@ function CommentCard({ comment, last }: CommentCardProps) {
             </div>
           </div>
         </div>
+        <div className="ml-10">
+          {showReply && (
+            <CommentForm
+              post={post_id}
+              parent={comment.id}
+              setShowReply={setShowReply}
+              autofocus={true}
+            />
+          )}
+        </div>
         {replies && replies.length > 0 && (
           <div className={`flex ${hidden ? "hidden" : ""}`}>
             <CommentList comments={replies} />
           </div>
         )}
-        {showReply && (
-          <CommentForm
-            post={post_id}
-            parent={comment.id}
-            setShowReply={setShowReply}
-            autofocus={true}
-          />
-        )}
       </div>
     </div>
   );
 }
-
-export default CommentCard;

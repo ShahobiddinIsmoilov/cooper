@@ -37,11 +37,11 @@ function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
       />
       <div className="text-xs xs:text-base" id="fucker">
         <Link to={`/user/${comment.username}`}>
-          <span className="font-bold hover:underline text-orange-400">
+          <span className="font-bold hover:underline text-orange-400 text-sm">
             abdulbosit_muhammadjonov
           </span>
         </Link>
-        <span className="opacity-50"> ∙ 15 daqiqa oldin </span>
+        <span className="opacity-50 text-sm"> ∙ 15 daqiqa oldin </span>
       </div>
     </div>
   );
