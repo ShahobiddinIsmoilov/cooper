@@ -14,7 +14,7 @@ function PostCard({ post, home }: PostCardProps) {
   return (
     <div
       key={post.id}
-      className="text-white px-2 py-2 hover:bg-dark-700 xs:rounded-xl"
+      className="text-white hover:bg-dark-750 xs:rounded-xl my-2"
     >
       {home ? (
         <PostHeaderHome post={post} />
@@ -27,9 +27,6 @@ function PostCard({ post, home }: PostCardProps) {
         </p>
       </Link>
       <div className="post-card line-clamp-3">{ReactHtmlParser(post.body)}</div>
-      {/* <p className="px-1 xs:px-5 my-2 opacity-75 line-clamp-3">
-          {ReactHtmlParser(post.body)}
-        </p> */}
       <PostFooter post={post} />
     </div>
   );

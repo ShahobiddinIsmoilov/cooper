@@ -30,7 +30,7 @@ export default function Layout() {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Flex justify={{ xs: "center" }}>
+        <Flex justify={{ xs: "flex-center" }}>
           <Container className="xs:px-2 w-[1056px] max-w-[1056px]">
             <Routes>
               <Route path="/" element={<HomePage />} />

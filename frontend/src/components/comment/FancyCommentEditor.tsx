@@ -73,8 +73,13 @@ export default function FancyCommentEditor({
     <div className="tiptap-editor">
       <RichTextEditor editor={editor}>
         {toolbarVisible && (
-          <RichTextEditor.Toolbar sticky p={0} h={40} bg={"dark"}>
-            <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Toolbar
+            sticky
+            p={0}
+            h={40}
+            className="overflow-x-scroll"
+          >
+            <RichTextEditor.ControlsGroup w={"100%"}>
               <RichTextEditor.Bold icon={ImBold} h={h} px={w} />
               <RichTextEditor.Italic icon={LuItalic} h={h} px={w} />
               <RichTextEditor.Underline

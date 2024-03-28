@@ -59,7 +59,7 @@ function CommentForm({
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <Stack gap={4} className="max-w-[507px] py-2 xs:py-6">
+      <Stack gap={4} className="py-2 xs:py-6">
         <FancyCommentEditor
           setHTMLComment={setHTMLComment}
           formDisabled={formDisabled}

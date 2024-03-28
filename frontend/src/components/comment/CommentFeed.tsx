@@ -7,13 +7,13 @@ export default function CommentFeed() {
   const rootComments = getReplies(0);
 
   return (
-    <div className="mb-12">
+    <div id="comment-feed" className="mb-12">
       <CommentForm post={post_id} parent={0} placeholder="Add a comment" />
       {rootComments != null && rootComments.length > 0 ? (
         <CommentList comments={rootComments} />
       ) : (
         <p className="text-white opacity-25 text-center text-lg">
-          No comments here yet
+          Nobody commented yet
         </p>
       )}
     </div>

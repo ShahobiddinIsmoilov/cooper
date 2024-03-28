@@ -14,10 +14,13 @@ function PostFeed({ posts, home }: PostFeedProps) {
   let { screenWidth } = useWindowSize();
 
   return (
-    <Stack className="xs:p-1 max-w-3xl">
+    <Stack gap={0} className="xs:p-1 max-w-3xl">
       <Sortbar size={screenWidth} />
       {posts.map((post: PostProps) => (
-        <PostCard key={post.id} post={post} home={home} />
+        <div key={post.id}>
+          <PostCard post={post} home={home} />
+          <Line />
+        </div>
       ))}
       <div className="text-center text-white opacity-25 text-2xl py-8">
         No more posts...

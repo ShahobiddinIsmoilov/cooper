@@ -11,7 +11,7 @@ function CommentList({ comments }: CommentListProps) {
   let count = 0;
 
   return (
-    <Stack gap={0}>
+    <Stack gap={0} w={"100%"}>
       {comments?.length > 0 &&
         comments.map((comment: CommentProps) => {
           count = count + 1;
