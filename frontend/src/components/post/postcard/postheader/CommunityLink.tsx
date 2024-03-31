@@ -4,6 +4,7 @@ import { ImSpinner4 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
 import { CommunityDetailProps } from "../../../../interfaces/communityDetailProps";
 import getCommunityDetail from "../../../../services/community/getCommunityDetail";
+import { Avatar, Image } from "@mantine/core";
 
 interface CommunityLinkProps {
   community: string;
@@ -84,13 +85,13 @@ interface CommunityPreviewProps {
 function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
   return (
     <div className="w-96">
-      <img
-        src={`../../../../src/assets/${communityDetail.name}.png`}
+      <Image
+        src={`../../../../src/assets/banner_${communityDetail.name}.jpg`}
         className="bg-blue-400 h-24 w-96 object-cover"
       />
       <div className="flex items-center gap-2 m-4">
-        <img
-          src={`../../../../src/assets/${communityDetail.name}.jpg`}
+        <Avatar
+          src={`../../../../src/assets/avatar_${communityDetail.name}.jpg`}
           className="w-10 xs:w-14 h-10 xs:h-14 min-w-10 xs:min-w-14 object-cover rounded-full"
         />
         <div className="mx-1 w-full">

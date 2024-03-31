@@ -1,13 +1,18 @@
 export interface PostProps {
-  user_id: number;
-  username: string;
   id: number;
+  username: string;
+  community_name: string;
+  community_link: string;
   title: string;
-  community: string;
-  comments: number;
-  votes: number;
-  created_at: string;
   body: string;
+  created_at: string;
+  visits: number;
   upvotes: number;
   downvotes: number;
+  comments: number;
+  votes: number;
+  ratio: number;
+  score: number;
+  user: number;
+  community: number;
 }

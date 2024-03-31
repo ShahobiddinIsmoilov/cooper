@@ -1,12 +1,17 @@
 export interface CommunityDetailProps {
-  owner: string;
+  id: number;
   name: string;
-  title: string;
-  bio: string;
+  link: string;
+  owner: number;
+  owner_username: string;
   description: string;
   created_at: string;
   upvotes: number;
   downvotes: number;
   rules: string;
   members: number;
+  posts: number;
+  comments: number;
+  avatar_url: URL;
+  banner_url: URL;
 }

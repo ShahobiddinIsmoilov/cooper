@@ -58,10 +58,7 @@ interface SortbarItemProps {
 
 function SortbarItem({ icon, text }: SortbarItemProps) {
   return (
-    <p
-      className="hover:bg-dark-700 cursor-pointer text-lg text-orange-400
-                rounded-full py-2 px-4"
-    >
+    <p className="hover:bg-dark-700 cursor-pointer text-lg text-orange-400 rounded-full py-2 px-4">
       {icon + " " + text}
     </p>
   );

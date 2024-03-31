@@ -94,7 +94,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['id', 'username', 'likes', 'created_at']
+        fields = ['id', 'username', 'votes', 'created_at']
 
 
 # Customizing token claims. Settings.py is configured to use this serializer

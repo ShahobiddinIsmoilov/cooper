@@ -20,7 +20,7 @@ function PostDetailHeader({ post }: PostDetailHeaderProps) {
           <FaArrowLeft className="text-2xl" />
         </div>
         <div className="px-4 flex gap-2">
-          <UserLink username={post?.username} user_id={post?.user_id} />
+          <UserLink username={post?.username} user_id={post?.user} />
           <span className="opacity-50 text-xs xs:text-base"> ∙ 3h ago</span>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { IoCloudOffline } from "react-icons/io5";
 import { useWindowSize } from "../contexts/WindowSizeContext";
 import Infobar from "../components/Infobar";
 import CreatePostButton from "../components/buttons/CreatePostButton";
+import { Avatar, Image } from "@mantine/core";
 
 function CommunityPage() {
   const { screenWidth } = useWindowSize();
@@ -34,16 +35,16 @@ function CommunityPage() {
   const posts = data.data;
   return (
     <>
-      <img
-        src={`../../../src/assets/${community_name}.png`}
+      <Image
+        src={`../../../src/assets/banner_${community_name}.jpg`}
         className="h-24 xs:h-48 bg-white w-[1088px] object-cover rounded-xl"
       />
       <div className="flex">
-        <div className="-translate-y-10 xs:-translate-y-14">
+        <div className="flex-grow -translate-y-10 xs:-translate-y-14">
           <div className="flex ml-4 xs:ml-8">
-            <img
-              src={`../../../src/assets/${community_name}.jpg`}
-              className="w-24 h-24 xs:w-32 xs:h-32 rounded-full bg-white object-cover border-4 xs:border-8 border-dark-800"
+            <Avatar
+              src={`../../../src/assets/avatar_${community_name}.jpg`}
+              className="w-24 h-24 xs:w-32 xs:h-32 rounded-full object-cover border-4 xs:border-8 border-dark-800"
             />
             <div className="flex justify-between items-center mt-10 xs:mt-14 ml-2">
               <p className="text-blue-400 text-lg xs:text-3xl font-bold break-words">
@@ -55,9 +56,7 @@ function CommunityPage() {
               <CreatePostButton com={community_name!} />
             </div>
           </div>
-          <div className="max-w-3xl xs:px-2">
-            <PostFeed posts={posts} />
-          </div>
+          <PostFeed posts={posts} />
         </div>
         <div className="mt-4">{screenWidth >= 920 && <Infobar />}</div>
       </div>
