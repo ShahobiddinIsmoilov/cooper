@@ -1,67 +1,86 @@
-from django.shortcuts import redirect
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
-from api.users.serializers import UserDetailSerializer
-
-from .models import Post, User
+from .models import Post
 from .serializers import (CreatePostSerializer,
                           ListPostSerializer,
                           DetailPostSerializer,
                           UpdatePostSerializer)
 
-@api_view(['GET', 'DELETE'])
-def postListAll(request):
-    """
-    Gets the list of all the posts and returns it
-    """
-    posts = Post.objects.order_by('-created_at')
+
+# Get posts of a community
+@api_view(['GET'])
+def postListCommunity(request, community_link):
+    posts_raw = Post.objects.filter(community_link=community_link)
+    
+    sort_by = request.GET.get('sort', '')
+    
+    if sort_by == '':
+        posts = posts_raw.order_by('-created_at')
+    elif sort_by == 'top':
+        posts = posts_raw.order_by('-votes')
+    elif sort_by == 'new':
+        posts = posts_raw.order_by('-created_at')
+    
     serializer = ListPostSerializer(posts, many=True)
     
     return Response(serializer.data)
 
+
+# Get posts of a user
 @api_view(['GET'])
-def postList(request, name):
-    """
-    Gets the list of all the posts associated with the community
-    name and returns it
-    """
-    posts = Post.objects.filter(community=name).order_by('-created_at')
+def postListUser(request, username):
+    posts_raw = Post.objects.filter(username=username)
+    
+    sort_by = request.GET.get('sort', '')
+    
+    if sort_by == '':
+        posts = posts_raw.order_by('-created_at')
+    elif sort_by == 'top':
+        posts = posts_raw.order_by('-votes')
+    elif sort_by == 'new':
+        posts = posts_raw.order_by('-created_at')
+        
     serializer = ListPostSerializer(posts, many=True)
 
     return Response(serializer.data)
 
 
-# -------------------------------------------------------------------
-@api_view(['GET', 'POST', 'DELETE'])
+# Get all posts -- for testing
+@api_view(['GET'])
+def postListAll(request):
+    posts_raw = Post.objects.all()
+    
+    sort_by = request.GET.get('sort', '')
+    
+    if sort_by == '':
+        posts = posts_raw.order_by('-created_at')
+    elif sort_by == 'top':
+        posts = posts_raw.order_by('-votes')
+    elif sort_by == 'new':
+        posts = posts_raw.order_by('-created_at')
+    
+    serializer = ListPostSerializer(posts, many=True)
+    
+    return Response(serializer.data)
+
+
+# Get details of a post
+@api_view(['GET'])
 def postDetail(request, pk):
-    """
-    Retrieves the details of a particular post
-    """
     post = Post.objects.get(pk=pk)
 
-    if request.method == 'GET':
-        post_serializer = DetailPostSerializer(post, many=False)
-        return Response(post_serializer.data)
-    elif request.method == 'POST':
-        post_serializer = DetailPostSerializer(instance=post, data=request.data)
-        if post_serializer.is_valid(raise_exception=True):
-            post_serializer.save()
-        return Response(post_serializer.data)
-    elif request.method == 'DELETE':
-        post.delete()
-        return redirect(postList)
-# -------------------------------------------------------------------
+    post_serializer = DetailPostSerializer(post, many=False)
+    return Response(post_serializer.data)
 
+
+# Create new post
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def postCreate(request):
-    """
-    Creates a new post
-    """
     serializer = CreatePostSerializer(data=request.data)
 
     if serializer.is_valid(raise_exception=True):
@@ -71,6 +90,7 @@ def postCreate(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Update post
 @api_view(['POST'])
 def postUpdate(request, pk):
     """
@@ -85,6 +105,7 @@ def postUpdate(request, pk):
     return Response(serializer.data)
 
 
+# Delete post
 @api_view(['DELETE'])
 def postDelete(request, pk):
     """
@@ -96,9 +117,11 @@ def postDelete(request, pk):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# API root
 @api_view(['GET','HEAD'])
 def api_root(request, format=None):
     return Response({
-        'posts': reverse('post-list-all', request=request, format=None),
-        'create': reverse('post-create', request=request, format=None),
+        'list by community': reverse('post-list-community', request=request, format=None),
+        'list by user': reverse('post-list-user', request=request, format=None),
+        'list all': reverse('post-list-all', request=request, format=None),
     })

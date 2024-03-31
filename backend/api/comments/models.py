@@ -1,32 +1,71 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
-from api.posts.models import Post
-
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.apps import apps
 
 User = get_user_model()
 
+
 class Comment(models.Model):
-    user = models.ForeignKey(User, default=1, null=True, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, default=1, null=True, on_delete=models.CASCADE)
-    username = models.CharField(max_length=32, null=True, default="admin")
-    community = models.CharField(max_length=32, null=True, default="cars")
+    user = models.ForeignKey(User, default=None, null=True, on_delete=models.CASCADE)
+    post = models.ForeignKey('posts.Post', default=None, null=True, on_delete=models.CASCADE)
+    community = models.ForeignKey('communities.Community', default=None, null=True,
+                                                           on_delete=models.CASCADE)
+    username = models.CharField(max_length=32, default=None, null=True)
+    post_title = models.CharField(max_length=200, default=None, null=True)
+    community_name = models.CharField(max_length=32, default=None, null=True)
+    community_link = models.CharField(max_length=32, default=None, null=True)
     parent = models.IntegerField(default=0, null=True)
-    body = models.TextField(max_length=2048, null=True)
+    parent_user = models.IntegerField(default=0, null=True)
+    parent_username = models.TextField(max_length=32, default=None, null=True)
+    body = models.TextField(max_length=10000, default=None, null=True)
     upvotes = models.IntegerField(default=0, null=True)
     downvotes = models.IntegerField(default=0, null=True)
+    votes = models.IntegerField(default=0, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
         indexes = [
             models.Index(fields=['user']),
             models.Index(fields=['post']),
+            models.Index(fields=['votes']),
             models.Index(fields=['created_at'])
         ]
+    
+    def save(self, *args, **kwargs):
+        self.votes = self.upvotes - self.downvotes
+        super().save(*args, **kwargs)
         
     def __str__(self):
         return self.body
     
-    @property
-    def votes(self):
-        return self.upvotes - self.downvotes
+    
+@receiver(post_save, sender=Comment)
+def increment_comments(sender, instance, created, **kwargs):
+    if created:
+        Post = apps.get_model('posts', 'Post')
+        post = Post.objects.get(id=instance.post_id)
+        post.comments += 1
+        post.save()
+        
+        Community = apps.get_model('communities', 'Community')
+        community = Community.objects.get(id=instance.community_id)
+        community.comments += 1
+        community.save()
+
+        
+@receiver(post_delete, sender=Comment)
+def decrement_comments(sender, instance, **kwargs):
+    Post = apps.get_model('posts', 'Post')
+    post = Post.objects.get(id=instance.post_id)
+    if post.comments > 0:
+        post.comments -= 1
+    post.save()
+    
+    Community = apps.get_model('communities', 'Community')
+    community = Community.objects.get(id=instance.community_id)
+    if community.comments > 0:
+        community.comments -= 1
+    community.save()

@@ -6,13 +6,14 @@ import { UserDetailProps } from "../../../../interfaces/userDetailProps";
 import getUserDetail from "../../../../services/getUserDetail";
 import { IoIosMail } from "react-icons/io";
 import { BiSolidLike } from "react-icons/bi";
+import { Avatar } from "@mantine/core";
 
 interface UserLinkProps {
   username?: string;
   user_id: number;
 }
 
-export default function UserLink({ username, user_id }: UserLinkProps) {
+export default function UserLinkAvatar({ user_id, username }: UserLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
 
   let showPreviewTimer: NodeJS.Timeout;
@@ -33,14 +34,16 @@ export default function UserLink({ username, user_id }: UserLinkProps) {
   }
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link
-        to={`/user/${username}`}
-        className="font-bold hover:underline text-orange-400"
-      >
-        {username}
-      </Link>
-      {showPreview && <Preview user_id={user_id} />}
+    <div className="flex items-center gap-1">
+      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <Link
+          to={`/user/${username}`}
+          className="font-bold hover:underline text-orange-400"
+        >
+          {<Avatar />}
+        </Link>
+        {showPreview && <Preview user_id={user_id} />}
+      </div>
     </div>
   );
 }
@@ -88,7 +91,7 @@ function UserPreview({ userDetail }: UserPreviewProps) {
         <div className="mx-1 w-full">
           <div className="flex justify-between">
             <Link
-              to={`/user/${userDetail.username}`}
+              to={`/community/${userDetail.username}`}
               className="text-xl text-orange-400 hover:text-orange-300 font-bold overflow-hidden max-w-64 break-words"
             >
               {userDetail.username}

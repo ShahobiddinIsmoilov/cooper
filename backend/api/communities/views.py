@@ -1,46 +1,36 @@
-from django.shortcuts import redirect
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
 from api.posts.models import Post
-from api.posts.serializers import DetailPostSerializer
 from .models import Community
 from .serializers import (ListCommunitySerializer,
                           DetailCommunitySerializer,
                           CreateCommunitySerializer)
 
 
-@api_view(['GET', 'DELETE'])
+@api_view(['GET'])
 def communityList(request):
     """
     Function to get and return the list of all communities
     """
     communities = Community.objects.all()
-    context = {'request': request}
-    serializer = ListCommunitySerializer(communities,
-                                         context=context,
-                                         many=True)
+    serializer = ListCommunitySerializer(communities, many=True)
     
     return Response(serializer.data)
 
 
-# -------------------------------------------------------------------
 @api_view(['GET'])
-def communityDetail(request, name: str):
+def communityDetail(request, link: str):
     """
     Retrieves the details of a community with the name parameter
     provided in the request and returns it
     """
-    community = Community.objects.get(name=name)
-    posts = Post.objects.filter(community=community.name)
-    context = {"number_of_posts": len(posts)}
-    community_serializer = DetailCommunitySerializer(community,
-                                                    context=context,
-                                                    many=False)
+    community = Community.objects.get(link=link)
+    community_serializer = DetailCommunitySerializer(community, many=False)
+    
     return Response(community_serializer.data)
-# -------------------------------------------------------------------
 
 
 @api_view(['POST'])
@@ -51,17 +41,17 @@ def communityCreate(request):
     serializer = CreateCommunitySerializer(data=request.data)
 
     if serializer.is_valid(raise_exception=True):
-        serializer.save()
+        serializer.save(owner=request.user)
     
     return Response(serializer.data)
 
 
 @api_view(['POST'])
-def communityUpdate(request, name):
+def communityUpdate(request, pk):
     """
     Updates the community with specified changes
     """
-    community = Community.objects.get(name=name)
+    community = Community.objects.get(pk=pk)
     serializer = DetailCommunitySerializer(instance=community, data=request.data)
 
     if serializer.is_valid(raise_exception=True):
@@ -71,11 +61,11 @@ def communityUpdate(request, name):
 
 
 @api_view(['DELETE'])
-def communityDelete(request, name):
+def communityDelete(request, pk):
     """
     Deletes the community with the given name
     """
-    community = Community.objects.get(name=name)
+    community = Community.objects.get(pk=pk)
     community.delete()
 
     return Response(status=status.HTTP_204_NO_CONTENT)
@@ -85,5 +75,4 @@ def communityDelete(request, name):
 def api_root(request, format=None):
     return Response({
         'communities': reverse('community-list', request=request, format=None),
-        'create': reverse('community-create', request=request, format=None),
     })

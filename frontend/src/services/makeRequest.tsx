@@ -8,17 +8,13 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-export async function makeRequest(
-  url: string,
-  options?: { method: string; data: {} }
-) {
+export async function makeRequest(url: string, options?: { params: {} }) {
   const response = await api(url, options).catch(function (error) {
     return Promise.reject(error);
   });
 
   api.interceptors.request.use(function (config) {
-    if (options?.method) config.method = options.method;
-    if (options?.data) config.data = options.data;
+    if (options?.params) config.params = options.params;
     return config;
   });
 

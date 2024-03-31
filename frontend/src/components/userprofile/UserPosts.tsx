@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import PostFeed from "../components/post/PostFeed";
-import getPosts from "../services/post/getPosts";
+import getPosts from "../../services/post/getPosts";
+import UserPostList from "./UserPostList";
 
-export default function HomePage() {
+export default function UserPosts() {
   const { isPending, error, data } = useQuery({
-    queryKey: ["homepage-posts"],
+    queryKey: ["user-posts"],
     queryFn: () => getPosts(),
   });
 
@@ -14,5 +14,5 @@ export default function HomePage() {
 
   const posts = data.data;
 
-  return <PostFeed posts={posts} home={true} />;
+  return <UserPostList posts={posts} />;
 }

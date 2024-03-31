@@ -38,7 +38,7 @@ function CommentProvider({ children, post_id }: CommentProviderProps) {
 
   useEffect(() => {
     post_id &&
-      getComments(`api/comment/list/${post_id}/`).then((response) => {
+      getComments(`api/comment/post/${post_id}/`).then((response) => {
         setComments(response.data);
       });
   }, []);

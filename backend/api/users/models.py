@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from rest_framework_simplejwt.tokens import RefreshToken
 
+
 class UserManager(BaseUserManager):
     
     def create_user(self, username, password, **extra_fields):
@@ -33,13 +34,28 @@ class UserManager(BaseUserManager):
     
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=32, unique=True, db_index=True)
-    phone_number = models.CharField(max_length=12, default=None, null=True)
+    username = models.CharField(max_length=32, unique=True)
+    phone_number = models.CharField(max_length=9, default=None, null=True)
     is_verified = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_banned = models.BooleanField(default=False)
+    is_warned = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    likes = models.IntegerField(default=0)
+    votes = models.IntegerField(default=0, null=True)
+    avatar_url = models.URLField(max_length=10000, default=None, null=True)
+    joined_communities = models.ManyToManyField('communities.Community', related_name='joined_by')
+    saved_posts = models.ManyToManyField('posts.Post', related_name='saved_by')
+    upvoted_posts = models.ManyToManyField('posts.Post', related_name='upvoted_by')
+    downvoted_posts = models.ManyToManyField('posts.Post', related_name='downvoted_by')
+    saved_comments = models.ManyToManyField('comments.Comment', related_name='saved_by')
+    upvoted_comments = models.ManyToManyField('comments.Comment', related_name='upvoted_by')
+    downvoted_comments = models.ManyToManyField('comments.Comment', related_name='downvoted_by')
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['username']),
+        ]
 
     USERNAME_FIELD = 'username'
 

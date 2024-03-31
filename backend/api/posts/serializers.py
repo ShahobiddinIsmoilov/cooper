@@ -9,15 +9,7 @@ class ListPostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ['id',
-                  'title',
-                  'votes',
-                  'comments',
-                  'user_id',
-                  'body',
-                  'username',
-                  'community',
-                  'created_at']
+        fields = '__all__'
     
 
 class DetailPostSerializer(serializers.ModelSerializer):
@@ -35,7 +27,13 @@ class CreatePostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ['title', 'body', 'community', 'username']
+        fields = ['user',
+                  'community',
+                  'username',
+                  'community_name',
+                  'community_link',
+                  'title',
+                  'body']
 
 
 class UpdatePostSerializer(serializers.ModelSerializer):
@@ -44,4 +42,4 @@ class UpdatePostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['body']

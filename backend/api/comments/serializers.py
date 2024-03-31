@@ -5,36 +5,35 @@ from .models import Comment
 
 class ListCommentSerializer(serializers.ModelSerializer):
     """
-    Serializer to get comments assocciated with a post
+    List comments serializer
     """
     class Meta:
         model = Comment
         fields = '__all__'
-        # fields = ['id',
-        #           'user',
-        #           'username',
-        #           'community',
-        #           'post',
-        #           'body',
-        #           'parent',
-        #           'votes',
-        #           'upvotes',
-        #           'downvotes',
-        #           'created_at']
         
 class CreateCommentSerializer(serializers.ModelSerializer):
     """
-    Create post serializer
+    Create comment serializer
     """
     class Meta:
         model = Comment
-        fields = ['username', 'post', 'parent', 'body', 'community']
+        fields = ['user',
+                  'post',
+                  'community',
+                  'username',
+                  'post_title',
+                  'community_name',
+                  'community_link',
+                  'parent',
+                  'parent_user',
+                  'parent_username',
+                  'body']
 
 
 class UpdateCommentSerializer(serializers.ModelSerializer):
     """
-    Update post serializer
+    Update comment serializer
     """
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['body']

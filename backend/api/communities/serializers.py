@@ -10,32 +10,19 @@ class ListCommunitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Community
         fields = ['name',
-                  'title',
+                  'link',
                   'description',
-                  'members']
+                  'members',
+                  'avatar_url']
+
 
 class DetailCommunitySerializer(serializers.ModelSerializer):
     """
     Community Detail Serializer
     """
-    number_of_posts = serializers.SerializerMethodField()
-
     class Meta:
         model = Community
-        fields = ['owner',
-                  'name',
-                  'title',
-                  'bio',
-                  'description',
-                  'created_at',
-                  'upvotes',
-                  'downvotes',
-                  'rules',
-                  'members',
-                  'number_of_posts']
-
-    def get_number_of_posts(self, obj):
-        return self.context['number_of_posts']
+        fields = '__all__'
 
 
 class CreateCommunitySerializer(serializers.ModelSerializer):
@@ -44,4 +31,22 @@ class CreateCommunitySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Community
-        fields = ['name', 'description']
+        fields = ['owner',
+                  'owner_username',
+                  'name',
+                  'link',
+                  'description',
+                  'avatar_url',
+                  'banner_url']
+        
+
+class UpdateCommunitySerializer(serializers.ModelSerializer):
+    """
+    Community Update Serializer
+    """
+    class Meta:
+        model = Community
+        fields = ['description',
+                  'rules',
+                  'avatar_url',
+                  'banner_url']

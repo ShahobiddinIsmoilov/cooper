@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
-
 import { CommentProps } from "../../../interfaces/commentProps";
-import user from "../../../../src/assets/user.png";
+import UserLink from "../../post/postcard/postheader/UserLink";
+import UserLinkAvatar from "../../post/postcard/postheader/UserLinkAvatar";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -30,17 +30,9 @@ function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
           />
         )}
       </button>
-      <img
-        src={user}
-        alt="user profile picture"
-        className="w-6 h-6 xs:w-8 xs:h-8 rounded-full mr-2 min-w-6 xs:min-w-8"
-      />
-      <div className="text-xs xs:text-base" id="fucker">
-        <Link to={`/user/${comment.username}`}>
-          <span className="font-bold hover:underline text-orange-400 text-sm">
-            {comment.username}
-          </span>
-        </Link>
+      <div className="text-xs xs:text-base flex items-center gap-1" id="fucker">
+        <UserLinkAvatar username={comment.username} user_id={comment.user} />
+        <UserLink username={comment.username} user_id={comment.user} />
         <span className="opacity-50 text-sm"> ∙ 15 daqiqa oldin </span>
       </div>
     </div>
