@@ -1,20 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import PostFeed from "../components/post/PostFeed";
 import { useParams } from "react-router-dom";
-import getCommunityPosts from "../services/post/getCommunityPosts";
 import { ImSpinner4 } from "react-icons/im";
 import { IoCloudOffline } from "react-icons/io5";
 import { useWindowSize } from "../contexts/WindowSizeContext";
 import Infobar from "../components/Infobar";
-import CreatePostButton from "../components/buttons/CreatePostButton";
+import CreatePostButton from "../components/modals/post/CreatePostButton";
 import { Avatar, Image } from "@mantine/core";
+import getCommunityDetail from "../services/community/getCommunityDetail";
+import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 
 function CommunityPage() {
   const { screenWidth } = useWindowSize();
   const { community_name } = useParams();
   const { isPending, error, data } = useQuery({
     queryKey: [`community-page-${community_name}`],
-    queryFn: () => getCommunityPosts(community_name!),
+    queryFn: () => getCommunityDetail(community_name!),
   });
 
   if (isPending)
@@ -32,7 +33,8 @@ function CommunityPage() {
       </div>
     );
 
-  const posts = data.data;
+  const community: CommunityDetailProps = data.data;
+
   return (
     <>
       <Image
@@ -53,12 +55,18 @@ function CommunityPage() {
               <button className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8">
                 Join
               </button>
-              <CreatePostButton com={community_name!} />
+              <CreatePostButton
+                community={community.id}
+                community_name={community.name}
+                community_link={community.link}
+              />
             </div>
           </div>
-          <PostFeed posts={posts} />
+          <PostFeed page={community.id} />
         </div>
-        <div className="mt-4">{screenWidth >= 920 && <Infobar />}</div>
+        <div className="mt-4">
+          {screenWidth >= 920 && <Infobar community={community} />}
+        </div>
       </div>
     </>
   );

@@ -6,7 +6,11 @@ interface PostTitleProps {
   formDisabled: boolean;
 }
 
-function PostTitle({ title, setTitle, formDisabled }: PostTitleProps) {
+export default function PostTitle({
+  title,
+  setTitle,
+  formDisabled,
+}: PostTitleProps) {
   return (
     <div>
       <Textarea
@@ -24,15 +28,9 @@ function PostTitle({ title, setTitle, formDisabled }: PostTitleProps) {
         size="lg"
         className="flex-grow border border-[#424242] rounded-[4px] px-4 read-only:"
       />
-      <span
-        className={`opacity-75 inline-block w-full text-end ${
-          title.length === 200
-        }`}
-      >
+      <span className={`opacity-75 inline-block w-full text-end`}>
         {title.length}/200
       </span>
     </div>
   );
 }
-
-export default PostTitle;

@@ -1,11 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import getPosts from "../../services/post/getPosts";
 import UserPostList from "./UserPostList";
+import getUserPosts from "../../services/post/getUserPosts";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 export default function UserPosts() {
+  const { username } = useParams();
+  const [sortOption, setSortOption] = useState("NEW");
+
   const { isPending, error, data } = useQuery({
     queryKey: ["user-posts"],
-    queryFn: () => getPosts(),
+    queryFn: () =>
+      getUserPosts(
+        `/api/post/list/user/${username}/?sort=${sortOption.toLowerCase()}`
+      ),
   });
 
   if (isPending) return "Loading";
@@ -14,5 +22,11 @@ export default function UserPosts() {
 
   const posts = data.data;
 
-  return <UserPostList posts={posts} />;
+  return (
+    <UserPostList
+      posts={posts}
+      sortOption={sortOption}
+      setSortOption={setSortOption}
+    />
+  );
 }

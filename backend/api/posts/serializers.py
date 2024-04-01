@@ -27,8 +27,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Post
-        fields = ['user',
-                  'community',
+        fields = ['community',
                   'username',
                   'community_name',
                   'community_link',

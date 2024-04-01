@@ -59,6 +59,7 @@ export default function CommentCard({ comment, last }: CommentCardProps) {
             <CommentForm
               post={post_id}
               parent={comment.id}
+              parent_username={comment.username}
               setShowReply={setShowReply}
               autofocus={true}
             />

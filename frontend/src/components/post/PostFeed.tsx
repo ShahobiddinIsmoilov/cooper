@@ -1,24 +1,38 @@
 import { Stack } from "@mantine/core";
-
 import PostCard from "./postcard/PostCard";
 import { PostProps } from "../../interfaces/postProps";
 import { useWindowSize } from "../../contexts/WindowSizeContext";
 import Line from "../../utils/Line";
+import { useQuery } from "@tanstack/react-query";
+import getPosts from "../../services/post/getPosts";
 
 interface PostFeedProps {
-  posts: PostProps[];
-  home?: boolean;
+  page: number | "home" | "explore";
 }
 
-function PostFeed({ posts, home }: PostFeedProps) {
+function PostFeed({ page }: PostFeedProps) {
   let { screenWidth } = useWindowSize();
+
+  const { isPending, error, data } = useQuery({
+    queryKey: [`post-feed-${page}`],
+    queryFn: () => getPosts({ page: page }),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "Error";
+
+  const posts = data.data;
+
+  let notCommunity = false;
+  if (page === "home" || page == "explore") notCommunity = true;
 
   return (
     <Stack gap={0} className="xs:p-1 max-w-3xl">
       <Sortbar size={screenWidth} />
       {posts.map((post: PostProps) => (
         <div key={post.id}>
-          <PostCard post={post} home={home} />
+          <PostCard post={post} notCommunity={notCommunity} />
           <Line />
         </div>
       ))}

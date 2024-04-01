@@ -7,10 +7,14 @@ import getCommunityDetail from "../../../../services/community/getCommunityDetai
 import { Avatar, Image } from "@mantine/core";
 
 interface CommunityLinkProps {
-  community: string;
+  community_name?: string;
+  community_link: string;
 }
 
-export default function CommunityLink({ community }: CommunityLinkProps) {
+export default function CommunityLink({
+  community_name,
+  community_link,
+}: CommunityLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
 
   let showPreviewTimer: NodeJS.Timeout;
@@ -31,25 +35,22 @@ export default function CommunityLink({ community }: CommunityLinkProps) {
   }
 
   return (
-    <div className="flex items-center gap-1">
-      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Link
-          to={`/community/${community}`}
-          className="text-lg font-bold hover:underline text-blue-400"
-        >
-          {community}
-        </Link>
-        {showPreview && <Preview community={community} />}
-      </div>
-      <span className="opacity-50"> ∙ 3h ago</span>
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <Link
+        to={`/community/${community_link}`}
+        className="font-bold hover:underline text-blue-400"
+      >
+        {community_name}
+      </Link>
+      {showPreview && <Preview community_link={community_link} />}
     </div>
   );
 }
 
-function Preview({ community }: CommunityLinkProps) {
+function Preview({ community_link }: CommunityLinkProps) {
   const { isPending, error, data } = useQuery({
-    queryKey: [`community-preview-${community}`],
-    queryFn: () => getCommunityDetail(community),
+    queryKey: [`community-preview-${community_link}`],
+    queryFn: () => getCommunityDetail(community_link),
     retry: false,
   });
 

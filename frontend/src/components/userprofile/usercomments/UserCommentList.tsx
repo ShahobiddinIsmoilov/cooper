@@ -18,7 +18,7 @@ export default function UserCommentList({
   const query = useQueryClient();
 
   return (
-    <Stack gap={0} className="xs:p-1 w-[768px] min-w-3xl max-w-3xl">
+    <Stack gap={0} className="xs:p-1 flex-grow max-w-3xl">
       <Group className="p-2 pb-3">
         <span>SORT BY:</span>
         <Select

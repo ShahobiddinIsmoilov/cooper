@@ -7,16 +7,16 @@ import ReactHtmlParser from "react-html-parser";
 
 export interface PostCardProps {
   post: PostProps;
-  home?: boolean;
+  notCommunity?: boolean;
 }
 
-function PostCard({ post, home }: PostCardProps) {
+function PostCard({ post, notCommunity }: PostCardProps) {
   return (
     <div
       key={post.id}
       className="text-white hover:bg-dark-750 xs:rounded-xl my-2"
     >
-      {home ? (
+      {notCommunity ? (
         <PostHeaderHome post={post} />
       ) : (
         <PostHeaderCommunity post={post} />

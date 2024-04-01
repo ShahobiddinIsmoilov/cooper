@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 from .models import Post
+from api.communities.models import Community
+from api.communities.serializers import DetailCommunitySerializer
 from .serializers import (CreatePostSerializer,
                           ListPostSerializer,
                           DetailPostSerializer,
@@ -13,8 +15,8 @@ from .serializers import (CreatePostSerializer,
 
 # Get posts of a community
 @api_view(['GET'])
-def postListCommunity(request, community_link):
-    posts_raw = Post.objects.filter(community_link=community_link)
+def postListCommunity(request, community):
+    posts_raw = Post.objects.filter(community=community)
     
     sort_by = request.GET.get('sort', '')
     
@@ -72,9 +74,15 @@ def postListAll(request):
 @api_view(['GET'])
 def postDetail(request, pk):
     post = Post.objects.get(pk=pk)
-
     post_serializer = DetailPostSerializer(post, many=False)
-    return Response(post_serializer.data)
+
+    community = Community.objects.get(pk=post_serializer.data['community'])
+    community_serializer = DetailCommunitySerializer(community, many=False)
+    
+    data = {'post_detail': {**post_serializer.data},
+            'community_detail': {**community_serializer.data}}
+    
+    return Response(data)
 
 
 # Create new post
@@ -93,9 +101,6 @@ def postCreate(request):
 # Update post
 @api_view(['POST'])
 def postUpdate(request, pk):
-    """
-    Updates the post
-    """
     post = Post.objects.get(pk=pk)
     serializer = UpdatePostSerializer(instance=post, data=request.data)
 
@@ -108,9 +113,6 @@ def postUpdate(request, pk):
 # Delete post
 @api_view(['DELETE'])
 def postDelete(request, pk):
-    """
-    Deletes the post
-    """
     post = Post.objects.get(pk=pk)
     post.delete()
 

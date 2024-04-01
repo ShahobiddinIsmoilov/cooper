@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 import { CommentProps } from "../../../interfaces/commentProps";
 import UserLink from "../../post/postcard/postheader/UserLink";

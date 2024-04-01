@@ -4,10 +4,12 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { Button, Stack } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import useCredentials from "../../services/useCredentials";
+import { useComments } from "../../contexts/CommentContext";
 
 interface CommentFormProps {
   post: number;
   parent: number;
+  parent_username?: string;
   placeholder?: string;
   setShowReply?: (value: boolean) => void;
   autofocus?: boolean;
@@ -16,11 +18,14 @@ interface CommentFormProps {
 function CommentForm({
   post,
   parent,
+  parent_username,
   placeholder,
   autofocus,
   setShowReply,
 }: CommentFormProps) {
   const username = useAuthContext().user?.username;
+  const { community, community_name, community_link, post_title } =
+    useComments();
   const [HTMLComment, setHTMLComment] = useState("");
   const [controlsVisible, setControlsVisible] = useState(false);
   const [toolbarVisible, setToolbarVisible] = useState(false);
@@ -49,9 +54,14 @@ function CommentForm({
     e.preventDefault();
     setFormDisabled(true);
     const newComment = {
-      username: username,
       post: post,
+      post_title: post_title,
+      community: community,
+      community_name: community_name,
+      community_link: community_link,
+      username: username,
       parent: parent,
+      parent_username: parent_username,
       body: HTMLComment,
     };
     mutatation.mutate(newComment);

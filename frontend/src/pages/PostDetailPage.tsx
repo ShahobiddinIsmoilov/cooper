@@ -7,6 +7,8 @@ import { IoCloudOffline } from "react-icons/io5";
 import Infobar from "../components/Infobar";
 import { useWindowSize } from "../contexts/WindowSizeContext";
 import { Flex } from "@mantine/core";
+import { PostProps } from "../interfaces/postProps";
+import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 
 function PostDetailPage() {
   const { screenWidth } = useWindowSize();
@@ -31,14 +33,20 @@ function PostDetailPage() {
       </div>
     );
 
-  const post = data.data;
+  const post: PostProps = data.data.post_detail;
+  const community: CommunityDetailProps = data.data.community_detail;
 
   return (
     <Flex>
       <div className="flex-grow max-w-3xl xs:px-2">
-        <PostDetail post={post} />
+        <PostDetail
+          post={post}
+          community={community.id}
+          community_name={community.name}
+          community_link={community.link}
+        />
       </div>
-      {screenWidth >= 920 && <Infobar />}
+      {screenWidth >= 920 && <Infobar community={data.data.community_detail} />}
     </Flex>
   );
 }

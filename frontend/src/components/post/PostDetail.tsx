@@ -8,22 +8,36 @@ import CommentProvider from "../../contexts/CommentContext";
 
 interface PostDetailProps {
   post: PostProps;
+  community: number;
+  community_name: string;
+  community_link: string;
 }
 
-function PostDetail({ post }: PostDetailProps) {
+function PostDetail({
+  post,
+  community,
+  community_name,
+  community_link,
+}: PostDetailProps) {
   return (
     <div className="p-2">
       <PostDetailHeader post={post} />
       <div className="text-xl xs:text-2xl font-bold text-white p-2">
         {post.title}
       </div>
-      <div className="post-detail overflow-hidden break-words">
+      <div className="post-detail mt-2 mb-4 mx-2 overflow-hidden break-words">
         {ReactHtmlParser(post.body)}
       </div>
       <PostDetailFooter post={post} />
       <Line />
       {post && (
-        <CommentProvider post_id={post.id}>
+        <CommentProvider
+          post_id={post.id}
+          post_title={post.title}
+          community={community}
+          community_name={community_name}
+          community_link={community_link}
+        >
           <CommentFeed />
         </CommentProvider>
       )}

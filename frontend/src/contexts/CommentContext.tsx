@@ -16,6 +16,10 @@ export interface CommentContextProps {
   getReplies: (parent: number) => CommentProps[];
   rootComments: {};
   post_id: number;
+  post_title: string;
+  community: number;
+  community_name: string;
+  community_link: string;
 }
 
 export function useComments() {
@@ -27,13 +31,24 @@ const CommentContext = createContext<CommentContextProps | null>(null);
 interface CommentProviderProps {
   children: ReactNode;
   post_id: number;
+  post_title: string;
+  community: number;
+  community_name: string;
+  community_link: string;
 }
 
 interface CommentsByParentProps {
   [parent: number]: CommentProps[];
 }
 
-function CommentProvider({ children, post_id }: CommentProviderProps) {
+function CommentProvider({
+  children,
+  post_id,
+  post_title,
+  community,
+  community_name,
+  community_link,
+}: CommentProviderProps) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -62,6 +77,10 @@ function CommentProvider({ children, post_id }: CommentProviderProps) {
     getReplies: getReplies,
     rootComments: commentsByParent[0],
     post_id: post_id,
+    post_title: post_title,
+    community: community,
+    community_name: community_name,
+    community_link: community_link,
   };
 
   return (

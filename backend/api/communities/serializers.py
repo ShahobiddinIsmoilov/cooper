@@ -31,13 +31,10 @@ class CreateCommunitySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Community
-        fields = ['owner',
-                  'owner_username',
+        fields = ['owner_username',
                   'name',
                   'link',
-                  'description',
-                  'avatar_url',
-                  'banner_url']
+                  'description']
         
 
 class UpdateCommunitySerializer(serializers.ModelSerializer):

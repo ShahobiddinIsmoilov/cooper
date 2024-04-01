@@ -2,6 +2,8 @@ import CommunityList from "./community/CommunityList";
 import { Link } from "react-router-dom";
 import { ReactNode } from "react";
 import { FaHome } from "react-icons/fa";
+import { FaGlobe } from "react-icons/fa";
+import CreateCommunityButton from "./modals/community/CreateCommunityButton";
 
 function Navbar() {
   return (
@@ -9,12 +11,18 @@ function Navbar() {
       <Link to="/">
         <SidebarItem icon={<FaHome size={30} />} text="Home" />
       </Link>
+      <Link to="/">
+        <SidebarItem icon={<FaGlobe size={30} />} text="Explore" />
+      </Link>
       <p className="opacity-75 pt-8 pb-2 text-center">POPULAR COMMUNITIES</p>
       <CommunityList />
       <p className="text-white opacity-75 text-sm py-4 text-center">
         <span className="hover:text-cyan-300 cursor-pointer ">
           ALL COMMUNITIES
         </span>
+      </p>
+      <p className="flex justify-center mt-4">
+        <CreateCommunityButton />
       </p>
     </div>
   );

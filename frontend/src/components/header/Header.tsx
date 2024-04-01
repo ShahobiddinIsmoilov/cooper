@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
-import ProfileNavbar from "./ProfileNavbar";
 import { useDisclosure } from "@mantine/hooks";
 import { Button, Modal, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import ProfileMenu from "./ProfileMenu";
 
 export default function Header() {
   return (
@@ -31,7 +31,7 @@ function Authenticated() {
   });
 
   return user ? (
-    <ProfileNavbar />
+    <ProfileMenu />
   ) : (
     <>
       <Modal

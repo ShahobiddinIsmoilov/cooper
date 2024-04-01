@@ -1,19 +1,25 @@
 import { Avatar, Modal, Stack, Text, Group, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import FancyTextEditor from "../../forms/post/FancyTextEditor";
-import CommunityCombobox from "../../forms/post/CommunityCombobox";
+import FancyTextEditor from "./FancyTextEditor";
+import CommunityCombobox from "./CommunityCombobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import { useState } from "react";
-import PostTitle from "../../forms/post/PostTitle";
-import useCredentials from "../../services/useCredentials";
+import PostTitle from "./PostTitle";
+import useCredentials from "../../../services/useCredentials";
 import { useNavigate } from "react-router-dom";
 
 interface CreatePostButtonProps {
-  com?: string; // initial value of the community
+  community: number;
+  community_name: string;
+  community_link: string;
 }
 
-export default function CreatePostButton({ com }: CreatePostButtonProps) {
+export default function CreatePostButton({
+  community,
+  community_name,
+  community_link,
+}: CreatePostButtonProps) {
   const api = useCredentials();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -32,7 +38,7 @@ export default function CreatePostButton({ com }: CreatePostButtonProps) {
 
   // initial values of form fields
   const username = useAuthContext().user?.username;
-  const [community, setCommunity] = useState<string | undefined>(com);
+  const [combobox, setCombobox] = useState<string | undefined>(community_name);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [HTMLbody, setHTMLbody] = useState({});
@@ -46,6 +52,8 @@ export default function CreatePostButton({ com }: CreatePostButtonProps) {
     const newPost = {
       username: username,
       community: community,
+      community_name: community_name,
+      community_link: community_link,
       title: title,
       body: HTMLbody,
     };
@@ -57,7 +65,7 @@ export default function CreatePostButton({ com }: CreatePostButtonProps) {
   // close modal and reset form values
   function closeModal() {
     close();
-    setCommunity(com);
+    setCombobox(community_name);
     setTitle("");
     setBody("");
     setFormDisabled(false);
@@ -88,8 +96,8 @@ export default function CreatePostButton({ com }: CreatePostButtonProps) {
                 <Text className="text-xl font-bold">New Post</Text>
               </Group>
               <CommunityCombobox
-                community={community}
-                setCommunity={setCommunity}
+                community={combobox}
+                setCommunity={setCombobox}
               />
             </Flex>
             <PostTitle

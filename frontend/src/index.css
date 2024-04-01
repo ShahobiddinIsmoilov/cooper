@@ -44,7 +44,7 @@
   }
 
   .post-detail {
-    @apply mx-2 mb-4 text-[rgba(256,256,256,0.80)] [&_hr]:my-4 [&_p]:mt-0
+    @apply text-[rgba(256,256,256,0.80)] [&_hr]:my-4 [&_p]:mt-0
           [&_a]:text-blue-400 [&_h2]:text-2xl [&_h2]:py-2;
   }
 
