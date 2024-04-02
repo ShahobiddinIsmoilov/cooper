@@ -48,7 +48,7 @@ function ProfilePageTabs({ username }: { username?: string }) {
         to={`/user/${username}`}
         onClick={() => setActive("activity")}
         className={`py-2 px-4 rounded-full hover:bg-dark-700 ${
-          active === "activity" && "bg-dark-600"
+          active === "activity" && "bg-dark-700 text-white"
         }`}
       >
         Activity
@@ -57,7 +57,7 @@ function ProfilePageTabs({ username }: { username?: string }) {
         to={`/user/${username}/posts`}
         onClick={() => setActive("posts")}
         className={`py-2 px-4 rounded-full hover:bg-dark-700 ${
-          active === "posts" && "bg-dark-600"
+          active === "posts" && "bg-dark-700 text-white"
         }`}
       >
         Posts
@@ -66,7 +66,7 @@ function ProfilePageTabs({ username }: { username?: string }) {
         to={`/user/${username}/comments`}
         onClick={() => setActive("comments")}
         className={`py-2 px-4 rounded-full hover:bg-dark-700 ${
-          active === "comments" && "bg-dark-600"
+          active === "comments" && "bg-dark-700 text-white"
         }`}
       >
         Comments

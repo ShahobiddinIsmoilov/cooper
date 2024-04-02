@@ -48,8 +48,8 @@ function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
           query.removeQueries({ queryKey: [`posts-${page}`] });
           setSortOption("hot");
         }}
-        className={`text-white text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
-          sortOption === "hot" && "bg-dark-600"
+        className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+          sortOption === "hot" && "bg-dark-700 text-orange-400"
         }`}
       >
         <div className="flex items-center gap-2">
@@ -62,8 +62,8 @@ function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
           query.removeQueries({ queryKey: [`posts-${page}`] });
           setSortOption("new");
         }}
-        className={`text-white text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
-          sortOption === "new" && "bg-dark-600"
+        className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+          sortOption === "new" && "bg-dark-700 text-orange-400"
         }`}
       >
         <div className="flex items-center gap-2">
@@ -76,8 +76,8 @@ function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
           query.removeQueries({ queryKey: [`posts-${page}`] });
           setSortOption("top");
         }}
-        className={`text-white text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
-          sortOption === "top" && "bg-dark-600"
+        className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+          sortOption === "top" && "bg-dark-700 text-orange-400"
         }`}
       >
         <div className="flex items-center gap-2">

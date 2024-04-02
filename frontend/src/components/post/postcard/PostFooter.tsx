@@ -38,6 +38,8 @@ function PostFooter({ post }: PostHeaderHomeProps) {
             <span className="xs:text-lg text-cyan-400 font-bold">
               {screenWidth < 576
                 ? post?.comments.toLocaleString()
+                : post?.comments === 1
+                ? "1 comment"
                 : post?.comments.toLocaleString() + " comments"}
             </span>
           </div>
