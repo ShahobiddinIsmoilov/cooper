@@ -1,79 +1,90 @@
 import { Stack } from "@mantine/core";
-import PostCard from "./postcard/PostCard";
-import { PostProps } from "../../interfaces/postProps";
 import { useWindowSize } from "../../contexts/WindowSizeContext";
-import Line from "../../utils/Line";
-import { useQuery } from "@tanstack/react-query";
-import getPosts from "../../services/post/getPosts";
+import PostList from "./PostList";
+import { useState } from "react";
+import { FaFire } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
+import { FaRocket } from "react-icons/fa6";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface PostFeedProps {
   page: number | "home" | "explore";
 }
 
-function PostFeed({ page }: PostFeedProps) {
-  let { screenWidth } = useWindowSize();
-
-  const { isPending, error, data } = useQuery({
-    queryKey: [`post-feed-${page}`],
-    queryFn: () => getPosts({ page: page }),
-  });
-
-  if (isPending) return "Loading...";
-
-  if (error) return "Error";
-
-  const posts = data.data;
-
-  let notCommunity = false;
-  if (page === "home" || page == "explore") notCommunity = true;
+export default function PostFeed({ page }: PostFeedProps) {
+  const [sortOption, setSortOption] = useState("hot");
 
   return (
-    <Stack gap={0} className="xs:p-1 max-w-3xl">
-      <Sortbar size={screenWidth} />
-      {posts.map((post: PostProps) => (
-        <div key={post.id}>
-          <PostCard post={post} notCommunity={notCommunity} />
-          <Line />
-        </div>
-      ))}
-      <div className="text-center text-white opacity-25 text-2xl py-8">
-        No more posts...
-      </div>
+    <Stack gap={0} className="xs:p-1 max-w-3xl mt-2">
+      <Sortbar
+        sortOption={sortOption}
+        setSortOption={setSortOption}
+        page={page}
+      />
+      <PostList page={page} sortOption={sortOption} />
     </Stack>
   );
 }
 
-export default PostFeed;
-
 interface SortbarProps {
-  size: number;
+  sortOption: string;
+  setSortOption: (value: string) => void;
+  page: number | "home" | "explore";
 }
 
-function Sortbar({ size }: SortbarProps) {
-  return size < 620 ? (
+function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
+  const { screenWidth } = useWindowSize();
+  const query = useQueryClient();
+
+  return screenWidth < 620 ? (
     <div className="flex justify-center gap-2 text-white">
       <p className="opacity-50 px-2 flex items-center text-center">SORT BY:</p>
-      <SortbarItem icon="🔥" text="TRENDING" />
+      {/* <SortbarItem icon="🔥" text="TRENDING" /> */}
     </div>
   ) : (
-    <div className="text-white flex justify-center py-2">
-      <SortbarItem icon="🔥" text="HOT" />
-      <SortbarItem icon="🕒" text="NEWEST" />
-      <SortbarItem icon="🚀" text="TOP" />
-      <SortbarItem icon="🚩" text="CONTROVERSIAL" />
+    <div className="flex justify-center gap-2">
+      <button
+        onClick={() => {
+          query.removeQueries({ queryKey: [`posts-${page}`] });
+          setSortOption("hot");
+        }}
+        className={`text-white text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+          sortOption === "hot" && "bg-dark-600"
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          <FaFire className="inline-block" />
+          <span>TRENDING</span>
+        </div>
+      </button>
+      <button
+        onClick={() => {
+          query.removeQueries({ queryKey: [`posts-${page}`] });
+          setSortOption("new");
+        }}
+        className={`text-white text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+          sortOption === "new" && "bg-dark-600"
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          <FaRegClock className="inline-block" />
+          <span>NEWEST</span>
+        </div>
+      </button>
+      <button
+        onClick={() => {
+          query.removeQueries({ queryKey: [`posts-${page}`] });
+          setSortOption("top");
+        }}
+        className={`text-white text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
+          sortOption === "top" && "bg-dark-600"
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          <FaRocket className="inline-block" />
+          <span>TOP</span>
+        </div>
+      </button>
     </div>
-  );
-}
-
-interface SortbarItemProps {
-  icon: string;
-  text?: string;
-}
-
-function SortbarItem({ icon, text }: SortbarItemProps) {
-  return (
-    <p className="hover:bg-dark-700 cursor-pointer text-lg text-orange-400 rounded-full py-2 px-4">
-      {icon + " " + text}
-    </p>
   );
 }

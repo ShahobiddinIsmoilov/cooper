@@ -22,8 +22,10 @@ def postListCommunity(request, community):
     
     if sort_by == '':
         posts = posts_raw.order_by('-created_at')
+    elif sort_by == 'hot':
+        posts = posts_raw.order_by('-score', '-created_at')
     elif sort_by == 'top':
-        posts = posts_raw.order_by('-votes')
+        posts = posts_raw.order_by('-votes', '-created_at')
     elif sort_by == 'new':
         posts = posts_raw.order_by('-created_at')
     
@@ -41,8 +43,10 @@ def postListUser(request, username):
     
     if sort_by == '':
         posts = posts_raw.order_by('-created_at')
+    elif sort_by == 'hot':
+        posts = posts_raw.order_by('-score', '-created_at')
     elif sort_by == 'top':
-        posts = posts_raw.order_by('-votes')
+        posts = posts_raw.order_by('-votes', '-created_at')
     elif sort_by == 'new':
         posts = posts_raw.order_by('-created_at')
         
@@ -60,8 +64,10 @@ def postListAll(request):
     
     if sort_by == '':
         posts = posts_raw.order_by('-created_at')
+    elif sort_by == 'hot':
+        posts = posts_raw.order_by('-score', '-created_at')
     elif sort_by == 'top':
-        posts = posts_raw.order_by('-votes')
+        posts = posts_raw.order_by('-votes', '-created_at')
     elif sort_by == 'new':
         posts = posts_raw.order_by('-created_at')
     

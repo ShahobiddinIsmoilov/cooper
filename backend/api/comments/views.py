@@ -1,3 +1,4 @@
+from itertools import chain
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -5,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 from .models import Comment
+from api.posts.models import Post
+from api.posts.serializers import ListPostSerializer
 from .serializers import (ListCommentSerializer,
                           CreateCommentSerializer,
                           UpdateCommentSerializer)
@@ -19,7 +22,7 @@ def commentListPost(request, post):
     if sort_by == '':
         comments = comments_raw.order_by('-created_at')
     elif sort_by == 'top':
-        comments = comments_raw.order_by('-votes')
+        comments = comments_raw.order_by('-votes', '-created_at')
     elif sort_by == 'new':
         comments = comments_raw.order_by('-created_at')
 
@@ -37,13 +40,40 @@ def commentListUser(request, username):
     if sort_by == '':
         comments = comments_raw.order_by('-created_at')
     elif sort_by == 'top':
-        comments = comments_raw.order_by('-votes')
+        comments = comments_raw.order_by('-votes', '-created_at')
     elif sort_by == 'new':
         comments = comments_raw.order_by('-created_at')
 
     serializer = ListCommentSerializer(comments, many=True)
         
     return Response(serializer.data)
+
+# Get activity of a user
+@api_view(['GET'])
+def activityListUser(request, username):
+    comments = Comment.objects.filter(username=username)
+    posts = Post.objects.filter(username=username)
+    
+    activity_raw = list(chain(comments, posts))
+
+    sort_by = request.GET.get('sort', '')
+    
+    if sort_by == '':
+        activity = sorted(activity_raw, key=lambda x: x.created_at, reverse=True)
+    elif sort_by == 'top':
+        activity = sorted(activity_raw, key=lambda x: x.votes, reverse=True)
+    elif sort_by == 'new':
+        activity = sorted(activity_raw, key=lambda x: x.created_at, reverse=True)
+    
+    activity_serializer = []
+    for item in activity:
+        if hasattr(item, 'title'):
+            serializer = ListPostSerializer(item, many=False)
+        else:
+            serializer = ListCommentSerializer(item, many=False)
+        activity_serializer.append(serializer.data)
+
+    return Response(activity_serializer)
 
 # Get all comments -- for testing
 @api_view(['GET'])
@@ -55,7 +85,7 @@ def commentListAll(request):
     if sort_by == '':
         comments = comments_raw.order_by('-created_at')
     elif sort_by == 'top':
-        comments = comments_raw.order_by('-votes')
+        comments = comments_raw.order_by('-votes', '-created_at')
     elif sort_by == 'new':
         comments = comments_raw.order_by('-created_at')
 

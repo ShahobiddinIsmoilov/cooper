@@ -9,6 +9,7 @@ import { useComments } from "../../contexts/CommentContext";
 interface CommentFormProps {
   post: number;
   parent: number;
+  parent_user?: number;
   parent_username?: string;
   placeholder?: string;
   setShowReply?: (value: boolean) => void;
@@ -18,6 +19,7 @@ interface CommentFormProps {
 function CommentForm({
   post,
   parent,
+  parent_user,
   parent_username,
   placeholder,
   autofocus,
@@ -61,6 +63,7 @@ function CommentForm({
       community_link: community_link,
       username: username,
       parent: parent,
+      parent_user: parent_user,
       parent_username: parent_username,
       body: HTMLComment,
     };

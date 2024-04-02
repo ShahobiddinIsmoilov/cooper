@@ -1,47 +1,40 @@
 import { CommentProps } from "../../../interfaces/commentProps";
-import { Group, Select, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import UserCommentCard from "./UserCommentCard";
 import Line from "../../../utils/Line";
-import { useQueryClient } from "@tanstack/react-query";
-
-interface CommentListProps {
-  comments: CommentProps[];
-  sortOption: string;
-  setSortOption: (value: string) => void;
-}
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { getComments } from "../../../services/comment/getComments";
 
 export default function UserCommentList({
-  comments,
   sortOption,
-  setSortOption,
-}: CommentListProps) {
-  const query = useQueryClient();
+}: {
+  sortOption: string;
+}) {
+  const { username } = useParams();
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["user-comments"],
+    queryFn: () =>
+      getComments(
+        `/api/comment/user/${username}/?sort=${sortOption.toLowerCase()}`
+      ),
+  });
+
+  if (isPending) return "Loading";
+
+  if (error) return "Couldn't load data";
+
+  const comments = data.data;
 
   return (
-    <Stack gap={0} className="xs:p-1 flex-grow max-w-3xl">
-      <Group className="p-2 pb-3">
-        <span>SORT BY:</span>
-        <Select
-          w={100}
-          data={["NEW", "TOP"]}
-          value={sortOption}
-          onOptionSubmit={(value) => {
-            query.removeQueries({ queryKey: ["user-comments"] });
-            setSortOption(value);
-            console.log(value);
-          }}
-        />
-      </Group>
-      <Line />
-      {comments?.length > 0 &&
-        comments.map((comment: CommentProps) => {
-          return (
-            <div key={comment.id}>
-              <UserCommentCard comment={comment} />
-              <Line />
-            </div>
-          );
-        })}
+    <Stack gap={0}>
+      {comments.map((comment: CommentProps) => (
+        <div key={`usercomment-${comment.id}`}>
+          <UserCommentCard comment={comment} />
+          <Line />
+        </div>
+      ))}
     </Stack>
   );
 }

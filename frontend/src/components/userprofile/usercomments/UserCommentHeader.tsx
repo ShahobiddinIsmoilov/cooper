@@ -27,7 +27,7 @@ export default function CommentHeader({ comment }: CommentCardProps) {
           to={`/community/${comment.community_link}/post/${comment.post}`}
           className="hover:underline"
         >
-          <span className="font-bold">{comment.post_title}</span>
+          <span className="font-bold text-white">{comment.post_title}</span>
         </Link>
         <div className="w-[38px]" />
         <div className="inline-block mr-2">

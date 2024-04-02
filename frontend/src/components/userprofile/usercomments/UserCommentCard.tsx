@@ -10,7 +10,7 @@ interface UserCommentCardProps {
 
 export default function UserCommentCard({ comment }: UserCommentCardProps) {
   return (
-    <div className="p-2">
+    <div className="py-4 px-5">
       <UserCommentHeader comment={comment} />
       <Flex gap={0}>
         <div className="w-[38px] min-w-[38px]" />

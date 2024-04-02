@@ -46,12 +46,7 @@ export default function Layout() {
                 path="/community/:community_name/post/:post_id"
                 element={<PostDetailPage />}
               />
-              <Route path="/user/:username" element={<ProfilePage />} />
-              <Route path="/user/:username/:posts" element={<ProfilePage />} />
-              <Route
-                path="/user/:username/:comments"
-                element={<ProfilePage />}
-              />
+              <Route path="/user/:username/*" element={<ProfilePage />} />
             </Routes>
           </Container>
         </Flex>

@@ -51,7 +51,7 @@ export default function FancyTextEditor({
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Placeholder.configure({ placeholder: "Text (optional)" }),
       CharacterCount.configure({
-        limit: 4000,
+        limit: 10000,
       }),
     ],
     content,
@@ -108,7 +108,7 @@ export default function FancyTextEditor({
         <RichTextEditor.Content bg={"dark"} className="text-lg" mih={95} />
       </RichTextEditor>
       <span className={`inline-block w-full text-end opacity-75`}>
-        {content?.length}/4000
+        {content?.length}/10000
       </span>
     </div>
   );

@@ -12,10 +12,7 @@ export interface PostCardProps {
 
 function PostCard({ post, notCommunity }: PostCardProps) {
   return (
-    <div
-      key={post.id}
-      className="text-white hover:bg-dark-750 xs:rounded-xl my-2"
-    >
+    <div className="text-white hover:bg-dark-750 xs:rounded-xl my-2">
       {notCommunity ? (
         <PostHeaderHome post={post} />
       ) : (

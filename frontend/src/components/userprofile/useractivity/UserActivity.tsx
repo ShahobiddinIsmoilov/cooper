@@ -1,10 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import UserActivityList from "./UserActivityList";
 import { Group, Select } from "@mantine/core";
+import { useState } from "react";
 import Line from "../../../utils/Line";
-import UserCommentList from "./UserCommentList";
 
-export default function UserComments() {
+export default function UserActivity() {
   const [sortOption, setSortOption] = useState("NEW");
   const query = useQueryClient();
 
@@ -17,13 +17,13 @@ export default function UserComments() {
           data={["NEW", "TOP"]}
           value={sortOption}
           onOptionSubmit={(value) => {
-            query.removeQueries({ queryKey: ["user-comments"] });
+            query.removeQueries({ queryKey: ["user-activity"] });
             setSortOption(value);
           }}
         />
       </Group>
       <Line />
-      <UserCommentList sortOption={sortOption} />
+      <UserActivityList sortOption={sortOption} />
     </>
   );
 }

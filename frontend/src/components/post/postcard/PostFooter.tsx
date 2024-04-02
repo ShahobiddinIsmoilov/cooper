@@ -21,6 +21,8 @@ function PostFooter({ post }: PostHeaderHomeProps) {
             className={
               post.votes > 0
                 ? "text-green-400 xs:text-lg font-bold"
+                : post.votes === 0
+                ? "xs:text-lg font-bold"
                 : "text-red-400 xs:text-lg font-bold"
             }
           >
