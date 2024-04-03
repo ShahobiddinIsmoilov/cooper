@@ -1,12 +1,20 @@
 import { useQueryClient } from "@tanstack/react-query";
 import UserActivityList from "./UserActivityList";
 import { Group, Select } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Line from "../../../utils/Line";
 
-export default function UserActivity() {
+interface Props {
+  setActive: (value: string) => void;
+}
+
+export default function UserActivity({ setActive }: Props) {
   const [sortOption, setSortOption] = useState("NEW");
   const query = useQueryClient();
+
+  useEffect(() => {
+    setActive("activity");
+  }, []);
 
   return (
     <>

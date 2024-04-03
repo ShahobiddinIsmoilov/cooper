@@ -91,6 +91,26 @@ def postDetail(request, pk):
     return Response(data)
 
 
+# Post actions
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def postAction(request, pk):
+    post = Post.objects.get(pk=pk)
+    
+    action = request.GET.get('action', '')
+    
+    if action == 'upvote':
+        post.upvotes += 1
+        post.save()
+        return Response(status=status.HTTP_200_OK)
+    elif action == 'downvote':
+        post.downvotes += 1
+        post.save()
+        return Response(status=status.HTTP_200_OK)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 # Create new post
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -106,6 +126,7 @@ def postCreate(request):
 
 # Update post
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def postUpdate(request, pk):
     post = Post.objects.get(pk=pk)
     serializer = UpdatePostSerializer(instance=post, data=request.data)
@@ -118,6 +139,7 @@ def postUpdate(request, pk):
 
 # Delete post
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def postDelete(request, pk):
     post = Post.objects.get(pk=pk)
     post.delete()

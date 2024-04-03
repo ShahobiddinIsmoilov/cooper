@@ -1,19 +1,35 @@
-import { useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
 import { Avatar, Flex, Group, Stack } from "@mantine/core";
-import { useAuthContext } from "../contexts/AuthContext";
-import Line from "../utils/Line";
-import MyUserNavbar from "../components/userprofile/usernavbar/MyUserNavbar";
 import UserActivity from "../components/userprofile/useractivity/UserActivity";
 import UserPosts from "../components/userprofile/userposts/UserPosts";
 import UserComments from "../components/userprofile/usercomments/UserComments";
-import UserSettings from "../components/userprofile/usersettings/UserSettings";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import Line from "../utils/Line";
+import UserNavbar from "../components/userprofile/usernavbar/UserNavbar";
+import { useAuthContext } from "../contexts/AuthContext";
+import { useLayoutEffect, useState } from "react";
 
-export default function ProfilePage() {
-  const username = useAuthContext().user?.username;
+export default function UserPage() {
+  const username = useParams().username;
+  const user = useAuthContext().user;
   const navigate = useNavigate();
+  const path = useLocation().pathname;
+  const pattern_activity = /^\/user\/[^\/]+$/;
+  const pattern_posts = /^\/user\/[^\/]+\/posts$/;
+  const pattern_comemnts = /^\/user\/[^\/]+\/comments$/;
 
-  !username && navigate("/");
+  useLayoutEffect(() => {
+    if (username === user?.username) {
+      if (pattern_activity.test(path)) navigate("/profile");
+      else if (pattern_posts.test(path)) navigate("/profile/posts");
+      else if (pattern_comemnts.test(path)) navigate("/profile/comments");
+    }
+  });
 
   const [active, setActive] = useState("activity");
 
@@ -32,7 +48,7 @@ export default function ProfilePage() {
           {/* <p className="text-white text-3xl font-bold">Socials</p> */}
         </Stack>
       </Flex>
-      <MyUserNavbar active={active} />
+      <UserNavbar active={active} />
       <Line />
       <div className="flex justify-center">
         <div className="xs:p-1 flex-grow max-w-3xl">
@@ -45,10 +61,6 @@ export default function ProfilePage() {
             <Route
               path="/comments"
               element={<UserComments setActive={setActive} />}
-            />
-            <Route
-              path="/settings"
-              element={<UserSettings setActive={setActive} />}
             />
           </Routes>
         </div>

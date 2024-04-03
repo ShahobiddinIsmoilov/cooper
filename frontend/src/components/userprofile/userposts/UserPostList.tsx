@@ -5,9 +5,12 @@ import PostCard from "../../post/postcard/PostCard";
 import getUserPosts from "../../../services/post/getUserPosts";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 export default function UserPostList({ sortOption }: { sortOption: string }) {
-  const { username } = useParams();
+  let { username } = useParams();
+
+  if (!username) username = useAuthContext().user?.username;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["user-posts"],

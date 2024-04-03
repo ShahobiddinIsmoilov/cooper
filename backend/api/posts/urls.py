@@ -9,6 +9,7 @@ urlpatterns = [
     path('list/all/', views.postListAll, name='post-list-all'),
     path('list/home/', views.postListAll, name='post-list-home'),
     path('list/<int:pk>/', views.postDetail, name='post-detail'),
+    path('action/<int:pk>/', views.postAction, name='post-action'),
     path('create/', views.postCreate, name='post-create'),
     path('update/<int:pk>/', views.postUpdate, name='post-update'),
     path('delete/<int:pk>/', views.postDelete, name='post-delete'),

@@ -26,7 +26,7 @@ export default function PostList({ page, sortOption }: PostFeedProps) {
   if (page === "home" || page == "explore") notCommunity = true;
 
   return (
-    <Stack gap={0} className="xs:p-1 max-w-3xl">
+    <Stack gap={0} className="max-w-3xl">
       <div className="mt-2">
         <Line />
       </div>

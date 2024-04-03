@@ -12,19 +12,25 @@ export interface PostCardProps {
 
 function PostCard({ post, notCommunity }: PostCardProps) {
   return (
-    <div className="text-white hover:bg-dark-750 xs:rounded-xl my-2">
-      {notCommunity ? (
-        <PostHeaderHome post={post} />
-      ) : (
-        <PostHeaderCommunity post={post} />
-      )}
+    <div className="text-white xs:rounded-xl my-2">
+      <div className="mx-4">
+        {notCommunity ? (
+          <PostHeaderHome post={post} />
+        ) : (
+          <PostHeaderCommunity post={post} />
+        )}
+      </div>
       <Link to={`/community/${post.community}/post/${post.id}`}>
-        <p className="xs:text-xl font-bold pt-1 px-1 xs:px-5 xs:pt-1">
+        <p className="xs:text-xl font-bold py-2 px-4 hover:text-indigo-400">
           {post.title}
         </p>
       </Link>
-      <div className="post-card line-clamp-3">{ReactHtmlParser(post.body)}</div>
-      <PostFooter post={post} />
+      <div className="post-card mx-4 line-clamp-3">
+        {ReactHtmlParser(post.body)}
+      </div>
+      <div className="mx-4">
+        <PostFooter post={post} />
+      </div>
     </div>
   );
 }

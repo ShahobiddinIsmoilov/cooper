@@ -8,7 +8,7 @@ export interface PostHeaderHomeProps {
 
 export default function PostHeaderHome({ post }: PostHeaderHomeProps) {
   return (
-    <div className="flex justify-between px-1 pt-1 xs:px-5 xs:py-2">
+    <div className="flex justify-between">
       <div className="flex items-center gap-2">
         <Avatar
           src={`../../../../src/assets/avatar_${post.community_link}.jpg`}

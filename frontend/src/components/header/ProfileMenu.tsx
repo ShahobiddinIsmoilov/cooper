@@ -7,21 +7,11 @@ import profilePicture from "../../assets/gordon.jpg";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { Avatar, Button, Group, Menu, Modal, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function ProfileMenu() {
   const [opened, { open, close }] = useDisclosure();
-  const navigate = useNavigate();
-  const username = useAuthContext().user?.username;
   const logout = useAuthContext().logoutUser;
-
-  function goToProfilePage() {
-    navigate(`/user/${username}`);
-  }
-
-  function goToSettings() {
-    navigate(`/user/${username}/settings`);
-  }
 
   return (
     <div>
@@ -29,7 +19,7 @@ export default function ProfileMenu() {
         <Menu.Target>
           <button className="rounded-full">
             <Avatar
-              size={55}
+              size={50}
               src={profilePicture}
               className="border-4 border-white border-opacity-0 hover:border-opacity-50 cursor-pointer"
             />
@@ -38,18 +28,14 @@ export default function ProfileMenu() {
         <Menu.Dropdown>
           <ProfileInfoMenu />
           <Menu.Item p={0}>
-            <MenuItem
-              onClick={goToProfilePage}
-              icon={<FaUserCircle size={30} />}
-              text="View Profile"
-            />
+            <Link to="/profile">
+              <MenuItem icon={<FaUserCircle size={30} />} text="View Profile" />
+            </Link>
           </Menu.Item>
           <Menu.Item p={0}>
-            <MenuItem
-              onClick={goToSettings}
-              icon={<IoMdSettings size={30} />}
-              text="Settings"
-            />
+            <Link to="/profile/settings">
+              <MenuItem icon={<IoMdSettings size={30} />} text="Settings" />
+            </Link>
           </Menu.Item>
           <Menu.Item p={0}>
             <MenuItem
@@ -96,18 +82,18 @@ export default function ProfileMenu() {
 interface MenuItemProps {
   icon: ReactNode;
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 function MenuItem({ icon, text, onClick }: MenuItemProps) {
   return (
-    <button
+    <div
       onClick={onClick}
       className="w-full flex gap-2 text-lg hover:bg-dark-600 p-4 cursor-pointer items-center rounded-lg"
     >
       {icon}
       {text}
-    </button>
+    </div>
   );
 }
 

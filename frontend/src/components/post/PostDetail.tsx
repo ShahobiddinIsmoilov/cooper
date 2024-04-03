@@ -1,10 +1,10 @@
 import { PostProps } from "../../interfaces/postProps";
 import PostDetailHeader from "./PostDetailHeader";
 import Line from "../../utils/Line";
-import PostDetailFooter from "./PostDetailFooter";
 import CommentFeed from "../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
 import CommentProvider from "../../contexts/CommentContext";
+import PostFooter from "./postcard/PostFooter";
 
 interface PostDetailProps {
   post: PostProps;
@@ -25,10 +25,10 @@ function PostDetail({
       <div className="text-xl xs:text-2xl font-bold text-white p-2">
         {post.title}
       </div>
-      <div className="post-detail mt-2 mb-4 mx-2 overflow-hidden break-words">
+      <div className="post-detail mt-2 mx-2 overflow-hidden break-words">
         {ReactHtmlParser(post.body)}
       </div>
-      <PostDetailFooter post={post} />
+      <PostFooter post={post} />
       <Line />
       {post && (
         <CommentProvider

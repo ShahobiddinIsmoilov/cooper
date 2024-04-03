@@ -8,6 +8,7 @@ import Header from "./components/header/Header";
 import Navbar from "./components/Navbar";
 import { AppShell, Container, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import UserPage from "./pages/UserPage";
 import ProfilePage from "./pages/ProfilePage";
 
 export default function Layout() {
@@ -46,7 +47,8 @@ export default function Layout() {
                 path="/community/:community_name/post/:post_id"
                 element={<PostDetailPage />}
               />
-              <Route path="/user/:username/*" element={<ProfilePage />} />
+              <Route path="/user/:username/*" element={<UserPage />} />
+              <Route path="/profile/*" element={<ProfilePage />} />
             </Routes>
           </Container>
         </Flex>

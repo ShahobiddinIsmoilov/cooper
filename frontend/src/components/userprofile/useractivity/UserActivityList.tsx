@@ -7,13 +7,16 @@ import UserCommentCard from "../usercomments/UserCommentCard";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getUserActivity from "../../../services/getUserActivity";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 export default function UserActivityList({
   sortOption,
 }: {
   sortOption: string;
 }) {
-  const { username } = useParams();
+  let { username } = useParams();
+
+  if (!username) username = useAuthContext().user?.username;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["user-activity"],

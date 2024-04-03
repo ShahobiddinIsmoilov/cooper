@@ -1,12 +1,20 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Group, Select } from "@mantine/core";
 import Line from "../../../utils/Line";
 import UserCommentList from "./UserCommentList";
 
-export default function UserComments() {
+interface Props {
+  setActive: (value: string) => void;
+}
+
+export default function UserComments({ setActive }: Props) {
   const [sortOption, setSortOption] = useState("NEW");
   const query = useQueryClient();
+
+  useEffect(() => {
+    setActive("comments");
+  }, []);
 
   return (
     <>

@@ -1,35 +1,68 @@
 import { Link } from "react-router-dom";
 import { PostHeaderHomeProps } from "./postheader/PostHeaderHome";
-import { BiDislike, BiLike } from "react-icons/bi";
+import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { FaFlag, FaBookmark } from "react-icons/fa6";
+import postAction from "../../../services/post/postAction";
+import { useState } from "react";
 
-function PostFooter({ post }: PostHeaderHomeProps) {
+export default function PostFooter({ post }: PostHeaderHomeProps) {
   const { screenWidth } = useWindowSize();
+  const [upvoted, setUpvoted] = useState(false);
+  const [downvoted, setDownvoted] = useState(false);
+  const [votes, setVotes] = useState(post.votes);
+
+  function handleUpvote() {
+    setUpvoted(true);
+    setDownvoted(false);
+    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
+    postAction(post.id, "upvote");
+  }
+
+  function handleDownvote() {
+    setDownvoted(true);
+    setUpvoted(false);
+    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
+    postAction(post.id, "downvote");
+  }
 
   return (
-    <div className="flex justify-between items-center xs:pr-3 pt-2 xs:pb-1">
-      <div className="xs:mx-5 flex items-center justify-space gap-1 xs:gap-4">
+    <div className="flex justify-between items-center mt-2">
+      <div className="flex items-center justify-space gap-1 xs:gap-4">
         <div className="flex items-center gap-1 bg-dark-900 xs:bg-transparent rounded-full">
-          <button className="p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-green-400">
-            <BiLike className="text-xl xs:text-2xl" />
+          <button
+            onClick={handleUpvote}
+            className={`p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-green-400`}
+          >
+            {upvoted ? (
+              <BiSolidLike className={`text-xl xs:text-2xl text-green-400`} />
+            ) : (
+              <BiLike className={`text-xl xs:text-2xl`} />
+            )}
           </button>
           <span
             className={
-              post.votes > 0
+              votes > 0
                 ? "text-green-400 xs:text-lg font-bold"
-                : post.votes === 0
+                : votes === 0
                 ? "xs:text-lg font-bold"
                 : "text-red-400 xs:text-lg font-bold"
             }
           >
-            {post.votes > 0 ? "+" + post.votes.toLocaleString() : post.votes}
+            {votes > 0 ? "+" + votes.toLocaleString() : votes}
           </span>
-          <button className="p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-red-400">
-            <BiDislike className="text-xl xs:text-2xl" />
+          <button
+            onClick={handleDownvote}
+            className="p-2 rounded-full cursor-pointer hover:bg-dark-600 text-yellow-400 hover:text-red-400"
+          >
+            {downvoted ? (
+              <BiSolidDislike className={`text-xl xs:text-2xl text-red-400`} />
+            ) : (
+              <BiDislike className={`text-xl xs:text-2xl`} />
+            )}
           </button>
         </div>
         <Link to={`/community/${post.community}/post/${post.id}`}>
@@ -49,8 +82,6 @@ function PostFooter({ post }: PostHeaderHomeProps) {
     </div>
   );
 }
-
-export default PostFooter;
 
 function PostCardDots() {
   return (

@@ -5,13 +5,16 @@ import Line from "../../../utils/Line";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getComments } from "../../../services/comment/getComments";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 export default function UserCommentList({
   sortOption,
 }: {
   sortOption: string;
 }) {
-  const { username } = useParams();
+  let { username } = useParams();
+
+  if (!username) username = useAuthContext().user?.username;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["user-comments"],
