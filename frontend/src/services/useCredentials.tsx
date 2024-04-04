@@ -19,6 +19,7 @@ function useCredentials() {
     baseURL,
     headers: {
       Authorization: `Bearer ${authTokens?.access}`,
+      "Content-Type": "multipart/form-data",
     },
   });
 

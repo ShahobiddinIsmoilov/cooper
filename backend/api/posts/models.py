@@ -9,6 +9,12 @@ User = get_user_model()
 
 
 class Post(models.Model):
+    POST_TYPES = [
+        ('text', 'Text'),
+        ('image', 'Image'),
+        ('link', 'Link'),
+    ]
+    
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', default=1, null=True,
                                   on_delete=models.CASCADE)
@@ -16,7 +22,9 @@ class Post(models.Model):
     community_name = models.CharField(max_length=32, default=None, null=True)
     community_link = models.CharField(max_length=32, default=None, null=True)
     title = models.CharField(max_length=200, default=None, null=True)
+    type = models.CharField(max_length=5, default='text', null=True, choices=POST_TYPES)
     body = models.TextField(max_length=10000, default=None, null=True)
+    image = models.ImageField(upload_to='post/', default='post/gordon.png', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     visits = models.IntegerField(default=0, null=True)
     upvotes = models.IntegerField(default=0, null=True)

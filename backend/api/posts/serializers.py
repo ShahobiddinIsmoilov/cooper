@@ -25,6 +25,8 @@ class CreatePostSerializer(serializers.ModelSerializer):
     """
     Create post serializer
     """
+    body = serializers.CharField(required=False)
+    
     class Meta:
         model = Post
         fields = ['community',
@@ -32,7 +34,9 @@ class CreatePostSerializer(serializers.ModelSerializer):
                   'community_name',
                   'community_link',
                   'title',
-                  'body']
+                  'type',
+                  'body',
+                  'image']
 
 
 class UpdatePostSerializer(serializers.ModelSerializer):

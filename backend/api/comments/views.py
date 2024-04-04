@@ -12,6 +12,7 @@ from .serializers import (ListCommentSerializer,
                           CreateCommentSerializer,
                           UpdateCommentSerializer)
 
+
 # Get comments of a post
 @api_view(['GET'])
 def commentListPost(request, post):
@@ -30,6 +31,7 @@ def commentListPost(request, post):
         
     return Response(serializer.data)
 
+
 # Get comments of a user
 @api_view(['GET'])
 def commentListUser(request, username):
@@ -47,6 +49,7 @@ def commentListUser(request, username):
     serializer = ListCommentSerializer(comments, many=True)
         
     return Response(serializer.data)
+
 
 # Get activity of a user
 @api_view(['GET'])
@@ -75,6 +78,7 @@ def activityListUser(request, username):
 
     return Response(activity_serializer)
 
+
 # Get all comments -- for testing
 @api_view(['GET'])
 def commentListAll(request):
@@ -93,6 +97,27 @@ def commentListAll(request):
 
     return Response(serializer.data)
 
+
+# Comment actions
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def commentAction(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    
+    action = request.GET.get('action', '')
+    
+    if action == 'upvote':
+        comment.upvotes += 1
+        comment.save()
+        return Response(status=status.HTTP_200_OK)
+    elif action == 'downvote':
+        comment.downvotes += 1
+        comment.save()
+        return Response(status=status.HTTP_200_OK)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 # Create comment
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -102,6 +127,7 @@ def commentCreate(request):
         serializer.save(user=request.user)
     return Response(serializer.data)
 
+
 # Update comment
 @api_view(['POST'])
 def commentUpdate(request, pk):
@@ -110,6 +136,7 @@ def commentUpdate(request, pk):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
     return Response(serializer.data)
+
 
 # Delete comment
 @api_view(['DELETE'])

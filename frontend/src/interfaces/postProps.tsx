@@ -3,6 +3,8 @@ export interface PostProps {
   username: string;
   community_name: string;
   community_link: string;
+  type: string;
+  image: string;
   title: string;
   body: string;
   created_at: string;

@@ -8,7 +8,9 @@ export interface CommentProps {
   parent_username: string;
   upvotes: number;
   downvotes: number;
+  votes: number;
   created_at: string;
+  updated_at: string;
   community: number;
   community_name: string;
   community_link: string;

@@ -1,13 +1,13 @@
 import "@mantine/core/styles.css";
-import "./index.css";
 import "@mantine/tiptap/styles.css";
+import "@mantine/dropzone/styles.css";
+import "./index.css";
 import Layout from "./Layout";
 import { theme } from "./theme";
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./contexts/AuthContext";
 import DialogProvider from "./contexts/DialogContext";
-import CommentProvider from "./contexts/CommentContext";
 import WindowSizeProvider from "./contexts/WindowSizeContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -21,10 +21,8 @@ export default function App() {
           <DialogProvider>
             <AuthProvider>
               <BrowserRouter>
-                <CommentProvider>
-                  <Layout />
-                  <div id="portal" />
-                </CommentProvider>
+                <Layout />
+                <div id="portal" />
               </BrowserRouter>
             </AuthProvider>
           </DialogProvider>

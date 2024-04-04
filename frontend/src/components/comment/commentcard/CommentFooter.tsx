@@ -1,8 +1,9 @@
-import { BiDislike, BiLike } from "react-icons/bi";
+import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
 import { FaReply } from "react-icons/fa6";
-
 import { CommentProps } from "../../../interfaces/commentProps";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
+import { useState } from "react";
+import commentAction from "../../../services/comment/commentAction";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -10,22 +11,53 @@ interface CommentCardProps {
   setShowReply: (value: boolean) => void;
 }
 
-function CommentFooter({
+export default function CommentFooter({
   comment,
   replyCount,
   setShowReply,
 }: CommentCardProps) {
-  let { screenWidth } = useWindowSize();
+  const { screenWidth } = useWindowSize();
+  const [upvoted, setUpvoted] = useState(false);
+  const [downvoted, setDownvoted] = useState(false);
+  const [votes, setVotes] = useState(comment.votes);
+
+  function handleUpvote() {
+    setUpvoted(true);
+    setDownvoted(false);
+    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
+    commentAction(comment.id, "upvote");
+  }
+
+  function handleDownvote() {
+    setDownvoted(true);
+    setUpvoted(false);
+    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
+    commentAction(comment.id, "downvote");
+  }
 
   return (
     <div className="flex mt-1 xs:mt-2 ml-2 xs:ml-4">
       <div className="flex items-center gap-1 xs:gap-2">
-        <div className="p-1 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-green-400">
-          <BiLike className="xs:text-lg" />
+        <div
+          onClick={handleUpvote}
+          className="p-1 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-green-400"
+        >
+          {upvoted ? (
+            <BiSolidLike className={`xs:text-lg text-green-400`} />
+          ) : (
+            <BiLike className="xs:text-lg" />
+          )}
         </div>
-        <span className="font-bold">{comment.upvotes}</span>
-        <div className="p-1 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-red-400">
-          <BiDislike className="xs:text-lg" />
+        <span className="font-bold">{votes}</span>
+        <div
+          onClick={handleDownvote}
+          className="p-1 rounded-full cursor-pointer hover:bg-dark-700 text-yellow-400 hover:text-red-400"
+        >
+          {downvoted ? (
+            <BiSolidDislike className={`xs:text-lg text-red-400`} />
+          ) : (
+            <BiDislike className="xs:text-lg" />
+          )}
         </div>
         <button
           onClick={() => setShowReply(true)}
@@ -44,5 +76,3 @@ function CommentFooter({
     </div>
   );
 }
-
-export default CommentFooter;

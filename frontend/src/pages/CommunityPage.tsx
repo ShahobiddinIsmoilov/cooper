@@ -5,10 +5,10 @@ import { ImSpinner4 } from "react-icons/im";
 import { IoCloudOffline } from "react-icons/io5";
 import { useWindowSize } from "../contexts/WindowSizeContext";
 import Infobar from "../components/Infobar";
-import CreatePostButton from "../components/modals/post/CreatePostButton";
 import { Avatar, Image } from "@mantine/core";
 import getCommunityDetail from "../services/community/getCommunityDetail";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
+import CreatePost from "../components/modals/post/CreatePost";
 
 function CommunityPage() {
   const { screenWidth } = useWindowSize();
@@ -55,7 +55,7 @@ function CommunityPage() {
               <button className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8">
                 Join
               </button>
-              <CreatePostButton
+              <CreatePost
                 community={community.id}
                 community_name={community.name}
                 community_link={community.link}

@@ -1,0 +1,80 @@
+import { Stack, Flex, Group, Avatar, Button, Text } from "@mantine/core";
+import CommunityCombobox from "./CommunityCombobox";
+import FancyTextEditor from "./FancyTextEditor";
+import PostTitle from "./PostTitle";
+import ImageDrop from "./ImageDrop";
+import { FileWithPath } from "@mantine/dropzone";
+
+interface Props {
+  postType: string;
+  combobox: string | undefined;
+  title: string;
+  body: string;
+  formDisabled: boolean;
+  setTitle: (value: string) => void;
+  setBody: (value: string) => void;
+  setHTMLbody: (value: string) => void;
+  setCombobox: (value: string) => void;
+  handleSubmit: (value: any) => void;
+  closeModal: () => void;
+  image: FileWithPath | null;
+  setImage: (image: FileWithPath) => void;
+}
+
+export default function CreatePostForm(props: Props) {
+  return (
+    <form onSubmit={(e) => props.handleSubmit(e)}>
+      <Stack gap="lg" pt="md" px="md">
+        <Flex className="justify-between items-center">
+          <Group>
+            <Avatar
+              src={`../../../../src/Assets/gordon.jpg`}
+              size={48}
+              maw={48}
+            />
+            <Text className="text-xl font-bold">New Post</Text>
+          </Group>
+          <CommunityCombobox
+            community={props.combobox}
+            setCommunity={props.setCombobox}
+          />
+        </Flex>
+        <PostTitle
+          title={props.title}
+          setTitle={props.setTitle}
+          formDisabled={props.formDisabled}
+        />
+        {props.postType === "text" ? (
+          <FancyTextEditor
+            content={props.body}
+            setContent={props.setBody}
+            setHTMLbody={props.setHTMLbody}
+            formDisabled={props.formDisabled}
+          />
+        ) : props.postType === "image" ? (
+          <ImageDrop image={props.image} setImage={props.setImage} />
+        ) : (
+          "Link Post - Coming Soon (Today?)"
+        )}
+        <Group justify="flex-end">
+          <Button
+            variant="default"
+            onClick={props.closeModal}
+            size="md"
+            className="rounded-xl w-32"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            size="md"
+            disabled={props.title.length === 0 ? true : false}
+            className={`bg-cyan-700 hover:bg-cyan-600 rounded-xl w-32`}
+          >
+            Create Post
+          </Button>
+        </Group>
+      </Stack>
+    </form>
+  );
+}

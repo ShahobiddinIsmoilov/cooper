@@ -20,10 +20,11 @@ export default function CommunityCombobox({
   setCommunity,
 }: CommunityComboboxProps) {
   const communities = [
-    ["O'zbeklar", "../../../../src/Assets/O'zbeklar.jpg"],
-    ["texnologiya", "../../../../src/Assets/texnologiya.jpg"],
-    ["cars", "../../../../src/Assets/cars.jpg"],
-    ["games", "../../../../src/Assets/games.jpg"],
+    ["all", "../../../../src/Assets/avatar_all.jpg"],
+    ["O'zbeklar", "../../../../src/Assets/avatar_O'zbeklar.jpg"],
+    ["texnologiya", "../../../../src/Assets/avatar_texnologiya.jpg"],
+    ["Mashinalar", "../../../../src/Assets/avatar_Mashinalar.jpg"],
+    ["O'yinlar", "../../../../src/Assets/avatar_O'yinlar.jpg"],
   ];
 
   const combobox = useCombobox({
@@ -76,7 +77,7 @@ export default function CommunityCombobox({
             {community ? (
               <Flex gap="xs" className="overflow-hidden items-center">
                 <Avatar
-                  src={`games", "../../../../src/Assets/${community}.jpg`}
+                  src={`games", "../../../../src/Assets/avatar_${community}.jpg`}
                   radius={8}
                   size={28}
                   maw={28}

@@ -4,6 +4,7 @@ import PostHeaderHome from "./postheader/PostHeaderHome";
 import PostFooter from "./PostFooter";
 import PostHeaderCommunity from "./postheader/PostHeaderCommunity";
 import ReactHtmlParser from "react-html-parser";
+import ImageViewer from "../ImageViewer";
 
 export interface PostCardProps {
   post: PostProps;
@@ -11,8 +12,9 @@ export interface PostCardProps {
 }
 
 function PostCard({ post, notCommunity }: PostCardProps) {
+  console.log(post.type, post.id);
   return (
-    <div className="text-white xs:rounded-xl my-2">
+    <div className="text-white xs:rounded-xl my-[6px] py-[6px] hover:bg-dark-750">
       <div className="mx-4">
         {notCommunity ? (
           <PostHeaderHome post={post} />
@@ -25,9 +27,15 @@ function PostCard({ post, notCommunity }: PostCardProps) {
           {post.title}
         </p>
       </Link>
-      <div className="post-card mx-4 line-clamp-3">
-        {ReactHtmlParser(post.body)}
-      </div>
+      {post.type === "text" ? (
+        <div className="post-card mx-4 line-clamp-3">
+          {ReactHtmlParser(post.body)}
+        </div>
+      ) : (
+        <div className="mx-4">
+          <ImageViewer imageUrl={post.image} />
+        </div>
+      )}
       <div className="mx-4">
         <PostFooter post={post} />
       </div>
