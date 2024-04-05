@@ -3,23 +3,41 @@ import { IconUpload, IconX } from "@tabler/icons-react";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { MdFileUpload } from "react-icons/md";
 import { useState } from "react";
+import imageCompression from "browser-image-compression";
 
 interface Props {
   image: FileWithPath | null;
-  setImage: (file: FileWithPath) => void;
+  setImage: (image: FileWithPath) => void;
 }
 
 export default function ImageDrop({ image, setImage }: Props) {
   const [imageUrl, setImageUrl] = useState("");
 
+  async function handleDrop(file: any) {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1024,
+      useWebWorker: true,
+    };
+    try {
+      const compressedBlob = await imageCompression(file, options);
+      const compressedFile = new File([compressedBlob], compressedBlob.name);
+      setImage(compressedFile);
+      setImageUrl(URL.createObjectURL(file));
+    } catch (error) {
+      alert("Something went wrong during image processing");
+    }
+  }
+
   return !image ? (
     <Dropzone
       multiple={false}
       maxFiles={1}
-      onDrop={(files) => {
-        setImage(files[0]);
-        setImageUrl(URL.createObjectURL(files[0]));
-      }}
+      onDrop={(files) => handleDrop(files[0])}
+      // onDrop={(files) => {
+      //   setImage(files[0]);
+      //   setImageUrl(URL.createObjectURL(files[0]));
+      // }}
       onReject={(files) => console.log("rejected files", files)}
       maxSize={5 * 1024 ** 2}
       accept={IMAGE_MIME_TYPE}
@@ -55,13 +73,13 @@ export default function ImageDrop({ image, setImage }: Props) {
           <Flex className="items-center gap-2">
             <MdFileUpload
               style={{
-                width: rem(60),
-                height: rem(60),
+                width: rem(55),
+                height: rem(55),
                 color: "var(--mantine-color-dimmed)",
               }}
             />
             <div>
-              <Text size="xl" inline>
+              <Text size="lg" inline>
                 Drag your image here or click to select
               </Text>
               <Text c="dimmed" inline mt={7}>
@@ -74,15 +92,19 @@ export default function ImageDrop({ image, setImage }: Props) {
     </Dropzone>
   ) : (
     <div className="bg-dark-900 rounded-md relative overflow-hidden">
-      <Image src={imageUrl} radius={4} mih={50} mah={700} className="blur-md" />
+      <Image
+        src={imageUrl}
+        mih={50}
+        mah={700}
+        className="blur-3xl opacity-50 border rounded-md"
+      />
       <Image
         src={imageUrl}
         onLoad={() => URL.revokeObjectURL(imageUrl)}
-        radius={4}
         mih={50}
         mah={700}
         fit="contain"
-        className="absolute top-0 left-0"
+        className="absolute top-0 left-0 border border-white border-opacity-25 rounded-md"
       />
     </div>
   );

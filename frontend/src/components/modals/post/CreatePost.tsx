@@ -7,9 +7,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { GrTextAlignLeft } from "react-icons/gr";
 import { FiLink } from "react-icons/fi";
 import { FaRegImage } from "react-icons/fa6";
+import { FileWithPath } from "@mantine/dropzone";
 import useCredentials from "../../../services/useCredentials";
 import CreatePostForm from "./CreatePostForm";
-import { FileWithPath } from "@mantine/dropzone";
 
 interface Props {
   community: number;
@@ -48,6 +48,7 @@ export default function CreatePostButton(props: Props) {
   const [formDisabled, setFormDisabled] = useState(false);
   const [postType, setPostType] = useState("");
   const [image, setImage] = useState<FileWithPath | null>(null);
+  const [link, setLink] = useState("");
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -59,6 +60,7 @@ export default function CreatePostButton(props: Props) {
       title: title,
       body: HTMLbody,
       image: image,
+      link: link,
       type: postType,
     };
     setFormDisabled(true);
@@ -147,6 +149,8 @@ export default function CreatePostButton(props: Props) {
           closeModal={closeModal}
           image={image}
           setImage={setImage}
+          link={link}
+          setLink={setLink}
         />
       </Modal>
     </>

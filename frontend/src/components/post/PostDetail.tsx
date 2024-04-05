@@ -5,6 +5,7 @@ import CommentFeed from "../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
 import CommentProvider from "../../contexts/CommentContext";
 import PostFooter from "./postcard/PostFooter";
+import ImageViewer from "./ImageContainer";
 
 interface PostDetailProps {
   post: PostProps;
@@ -20,13 +21,19 @@ function PostDetail({
   community_link,
 }: PostDetailProps) {
   return (
-    <div className="p-2">
+    <div className="my-2 mx-2">
       <PostDetailHeader post={post} />
-      <div className="text-xl xs:text-2xl font-bold text-white p-2">
+      <div className="text-xl xs:text-2xl font-bold text-white py-2">
         {post.title}
       </div>
-      <div className="post-detail mt-2 mx-2 overflow-hidden break-words">
-        {ReactHtmlParser(post.body)}
+      <div className="mt-2">
+        {post.type === "text" ? (
+          <div className="post-detail overflow-hidden break-words">
+            {ReactHtmlParser(post.body)}
+          </div>
+        ) : (
+          <ImageViewer imageUrl={post.image} />
+        )}
       </div>
       <PostFooter post={post} />
       <Line />

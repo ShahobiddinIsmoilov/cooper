@@ -4,6 +4,7 @@ import FancyTextEditor from "./FancyTextEditor";
 import PostTitle from "./PostTitle";
 import ImageDrop from "./ImageDrop";
 import { FileWithPath } from "@mantine/dropzone";
+import LinkInput from "./LinkInput";
 
 interface Props {
   postType: string;
@@ -11,14 +12,16 @@ interface Props {
   title: string;
   body: string;
   formDisabled: boolean;
+  image: FileWithPath | null;
+  link: string;
   setTitle: (value: string) => void;
   setBody: (value: string) => void;
   setHTMLbody: (value: string) => void;
   setCombobox: (value: string) => void;
   handleSubmit: (value: any) => void;
   closeModal: () => void;
-  image: FileWithPath | null;
   setImage: (image: FileWithPath) => void;
+  setLink: (link: string) => void;
 }
 
 export default function CreatePostForm(props: Props) {
@@ -54,7 +57,11 @@ export default function CreatePostForm(props: Props) {
         ) : props.postType === "image" ? (
           <ImageDrop image={props.image} setImage={props.setImage} />
         ) : (
-          "Link Post - Coming Soon (Today?)"
+          <LinkInput
+            link={props.link}
+            setLink={props.setLink}
+            formDisabled={props.formDisabled}
+          />
         )}
         <Group justify="flex-end">
           <Button

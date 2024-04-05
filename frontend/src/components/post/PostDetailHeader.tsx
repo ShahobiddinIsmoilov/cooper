@@ -11,7 +11,7 @@ function PostDetailHeader({ post }: PostDetailHeaderProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="p-2 flex justify-between text-white">
+    <div className="flex justify-between text-white">
       <div className="flex items-center">
         <div
           className="p-2 rounded-full cursor-pointer bg-dark-800 hover:bg-dark-700"

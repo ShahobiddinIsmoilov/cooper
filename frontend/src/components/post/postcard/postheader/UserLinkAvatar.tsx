@@ -7,6 +7,7 @@ import getUserDetail from "../../../../services/getUserDetail";
 import { IoIosMail } from "react-icons/io";
 import { BiSolidLike } from "react-icons/bi";
 import { Avatar } from "@mantine/core";
+import { useAuthContext } from "../../../../contexts/AuthContext";
 
 interface UserLinkProps {
   username?: string;
@@ -15,6 +16,7 @@ interface UserLinkProps {
 
 export default function UserLinkAvatar({ user_id, username }: UserLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
+  const user = useAuthContext().user;
 
   let showPreviewTimer: NodeJS.Timeout;
   let hidePreviewTimer: NodeJS.Timeout;
@@ -37,7 +39,7 @@ export default function UserLinkAvatar({ user_id, username }: UserLinkProps) {
     <div className="flex items-center gap-1">
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <Link
-          to={`/user/${username}`}
+          to={username === user?.username ? `/profile/` : `/user/${username}`}
           className="font-bold hover:underline text-orange-400"
         >
           {<Avatar size={32} src={`../../../../src/assets/gordon.jpg`} />}
@@ -81,6 +83,8 @@ interface UserPreviewProps {
 }
 
 function UserPreview({ userDetail }: UserPreviewProps) {
+  const user = useAuthContext().user;
+
   return (
     <div className="w-96">
       <div className="flex items-center gap-2 m-4">
@@ -91,7 +95,11 @@ function UserPreview({ userDetail }: UserPreviewProps) {
         <div className="mx-1 w-full">
           <div className="flex justify-between">
             <Link
-              to={`/community/${userDetail.username}`}
+              to={
+                userDetail.username === user?.username
+                  ? `/profile/`
+                  : `/user/${userDetail.username}`
+              }
               className="text-xl text-orange-400 hover:text-orange-300 font-bold overflow-hidden max-w-64 break-words"
             >
               {userDetail.username}
