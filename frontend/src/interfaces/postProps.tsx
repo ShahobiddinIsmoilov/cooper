@@ -5,6 +5,7 @@ export interface PostProps {
   community_link: string;
   type: string;
   image: string;
+  link: string;
   title: string;
   body: string;
   created_at: string;

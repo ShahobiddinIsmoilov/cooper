@@ -13,4 +13,5 @@ urlpatterns = [
     path('create/', views.postCreate, name='post-create'),
     path('update/<int:pk>/', views.postUpdate, name='post-update'),
     path('delete/<int:pk>/', views.postDelete, name='post-delete'),
+    path('utils/getLinkData/', views.getLinkData, name='post-get-metadata'),
 ]

@@ -6,6 +6,7 @@ import ReactHtmlParser from "react-html-parser";
 import CommentProvider from "../../contexts/CommentContext";
 import PostFooter from "./postcard/PostFooter";
 import ImageViewer from "./ImageViewer";
+import LinkPreview from "./LinkPreview";
 
 interface PostDetailProps {
   post: PostProps;
@@ -31,8 +32,10 @@ function PostDetail({
           <div className="post-detail overflow-hidden break-words">
             {ReactHtmlParser(post.body)}
           </div>
-        ) : (
+        ) : post.type === "image" ? (
           <ImageViewer imageUrl={post.image} />
+        ) : (
+          <LinkPreview link={post.link} />
         )}
       </div>
       <PostFooter post={post} />

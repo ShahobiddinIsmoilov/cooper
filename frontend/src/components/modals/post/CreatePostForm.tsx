@@ -15,6 +15,7 @@ interface Props {
   image: FileWithPath | null;
   link: string;
   setTitle: (value: string) => void;
+  titleChanged: boolean;
   setBody: (value: string) => void;
   setHTMLbody: (value: string) => void;
   setCombobox: (value: string) => void;
@@ -22,13 +23,14 @@ interface Props {
   closeModal: () => void;
   setImage: (image: FileWithPath) => void;
   setLink: (link: string) => void;
+  setTitleChanged: (value: boolean) => void;
 }
 
 export default function CreatePostForm(props: Props) {
   return (
     <form onSubmit={(e) => props.handleSubmit(e)}>
-      <Stack gap="lg" pt="md" px="md">
-        <Flex className="justify-between items-center">
+      <Stack gap={0} pt="md" px="md">
+        <Flex className="justify-between items-center mb-6">
           <Group>
             <Avatar
               src={`../../../../src/Assets/gordon.jpg`}
@@ -42,27 +44,35 @@ export default function CreatePostForm(props: Props) {
             setCommunity={props.setCombobox}
           />
         </Flex>
-        <PostTitle
-          title={props.title}
-          setTitle={props.setTitle}
-          formDisabled={props.formDisabled}
-        />
-        {props.postType === "text" ? (
-          <FancyTextEditor
-            content={props.body}
-            setContent={props.setBody}
-            setHTMLbody={props.setHTMLbody}
+        <div className="mb-4">
+          <PostTitle
+            title={props.title}
+            setTitle={props.setTitle}
+            setTitleChanged={props.setTitleChanged}
             formDisabled={props.formDisabled}
           />
-        ) : props.postType === "image" ? (
-          <ImageDrop image={props.image} setImage={props.setImage} />
-        ) : (
-          <LinkInput
-            link={props.link}
-            setLink={props.setLink}
-            formDisabled={props.formDisabled}
-          />
-        )}
+        </div>
+        <div className="mb-4">
+          {props.postType === "text" ? (
+            <FancyTextEditor
+              content={props.body}
+              setContent={props.setBody}
+              setHTMLbody={props.setHTMLbody}
+              formDisabled={props.formDisabled}
+            />
+          ) : props.postType === "image" ? (
+            <ImageDrop image={props.image} setImage={props.setImage} />
+          ) : (
+            <LinkInput
+              link={props.link}
+              setLink={props.setLink}
+              title={props.title}
+              setTitle={props.setTitle}
+              titleChanged={props.titleChanged}
+              formDisabled={props.formDisabled}
+            />
+          )}
+        </div>
         <Group justify="flex-end">
           <Button
             variant="default"

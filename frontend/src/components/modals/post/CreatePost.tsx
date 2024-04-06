@@ -48,6 +48,7 @@ export default function CreatePostButton(props: Props) {
   const [formDisabled, setFormDisabled] = useState(false);
   const [postType, setPostType] = useState("");
   const [image, setImage] = useState<FileWithPath | null>(null);
+  const [titleChanged, setTitleChanged] = useState(false);
   const [link, setLink] = useState("");
 
   async function handleSubmit(e: any) {
@@ -72,6 +73,7 @@ export default function CreatePostButton(props: Props) {
     close();
     setCombobox(props.community_name);
     setTitle("");
+    setTitleChanged(false);
     setBody("");
     setImage(null);
     setFormDisabled(false);
@@ -151,6 +153,8 @@ export default function CreatePostButton(props: Props) {
           setImage={setImage}
           link={link}
           setLink={setLink}
+          titleChanged={titleChanged}
+          setTitleChanged={setTitleChanged}
         />
       </Modal>
     </>

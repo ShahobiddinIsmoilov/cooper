@@ -36,7 +36,8 @@ class CreatePostSerializer(serializers.ModelSerializer):
                   'title',
                   'type',
                   'body',
-                  'image']
+                  'image',
+                  'link']
 
 
 class UpdatePostSerializer(serializers.ModelSerializer):

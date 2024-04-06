@@ -5,6 +5,7 @@ import PostFooter from "./PostFooter";
 import PostHeaderCommunity from "./postheader/PostHeaderCommunity";
 import ReactHtmlParser from "react-html-parser";
 import ImageViewer from "../ImageViewer";
+import LinkPreview from "../LinkPreview";
 
 export interface PostCardProps {
   post: PostProps;
@@ -26,13 +27,15 @@ function PostCard({ post, notCommunity }: PostCardProps) {
           {post.title}
         </p>
       </Link>
-      <div className="mx-4">
+      <div className="mx-4 mt-1">
         {post.type === "text" ? (
           <div className="post-card line-clamp-5">
             {ReactHtmlParser(post.body)}
           </div>
-        ) : (
+        ) : post.type === "image" ? (
           <ImageViewer imageUrl={post.image} />
+        ) : (
+          <LinkPreview link={post.link} />
         )}
       </div>
       <div className="mx-4">

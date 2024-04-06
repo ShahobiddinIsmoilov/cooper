@@ -3,6 +3,7 @@ import { Textarea } from "@mantine/core";
 interface PostTitleProps {
   title: string;
   setTitle: (title: string) => void;
+  setTitleChanged: (value: boolean) => void;
   formDisabled: boolean;
 }
 
@@ -10,6 +11,7 @@ export default function PostTitle({
   title,
   setTitle,
   formDisabled,
+  setTitleChanged,
 }: PostTitleProps) {
   return (
     <div>
@@ -17,7 +19,11 @@ export default function PostTitle({
         onKeyDown={(e) => {
           e.key === "Enter" && e.preventDefault();
         }}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e) => {
+          setTitleChanged(true);
+          setTitle(e.target.value);
+        }}
+        value={title}
         readOnly={formDisabled}
         variant="unstyled"
         maxLength={200}
