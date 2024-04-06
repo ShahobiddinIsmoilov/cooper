@@ -4,7 +4,7 @@ import PostHeaderHome from "./postheader/PostHeaderHome";
 import PostFooter from "./PostFooter";
 import PostHeaderCommunity from "./postheader/PostHeaderCommunity";
 import ReactHtmlParser from "react-html-parser";
-import ImageViewer from "../ImageContainer";
+import ImageViewer from "../ImageViewer";
 
 export interface PostCardProps {
   post: PostProps;

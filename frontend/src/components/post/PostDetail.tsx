@@ -5,7 +5,7 @@ import CommentFeed from "../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
 import CommentProvider from "../../contexts/CommentContext";
 import PostFooter from "./postcard/PostFooter";
-import ImageViewer from "./ImageContainer";
+import ImageViewer from "./ImageViewer";
 
 interface PostDetailProps {
   post: PostProps;

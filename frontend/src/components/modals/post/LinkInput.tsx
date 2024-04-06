@@ -1,7 +1,7 @@
 import { Textarea } from "@mantine/core";
 import { useState } from "react";
 import validator from "validator";
-import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import LinkPreview from "../../post/LinkPreview";
 
 interface Props {
   link: string;
@@ -35,10 +35,7 @@ export default function LinkInput({ link, setLink, formDisabled }: Props) {
         className="flex-grow border border-[#424242] rounded-[4px] px-4 read-only:"
       />
       {isUrl ? (
-        <LinkPreview
-          url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          width="400px"
-        />
+        <LinkPreview />
       ) : (
         <span className="text-red-400">Incorrect URL address</span>
       )}
