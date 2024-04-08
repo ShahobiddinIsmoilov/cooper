@@ -4,19 +4,20 @@ import Line from "../../../utils/Line";
 import PostCard from "../../post/postcard/PostCard";
 import getUserPosts from "../../../services/post/getUserPosts";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
 
-export default function UserPostList({ sortOption }: { sortOption: string }) {
-  let { username } = useParams();
-
-  if (!username) username = useAuthContext().user?.username;
+export default function UserUpvotedList({
+  sortOption,
+}: {
+  sortOption: string;
+}) {
+  const user = useAuthContext().user?.user_id;
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["user-posts"],
+    queryKey: ["user-upvoted"],
     queryFn: () =>
       getUserPosts(
-        `/api/post/list/?filter=user&username=${username}&sort=${sortOption.toLowerCase()}`
+        `/api/post/list/?filter=upvoted&user=${user}&sort=${sortOption.toLowerCase()}`
       ),
   });
 
@@ -29,8 +30,8 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
   return (
     <Stack gap={0}>
       {posts.map((post: PostProps) => (
-        <div key={`userpost-${post.id}`}>
-          <PostCard post={post} notCommunity={true} />
+        <div key={`userupvoted-${post.id}`}>
+          <PostCard post={post} />
           <Line />
         </div>
       ))}

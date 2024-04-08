@@ -19,7 +19,9 @@ function CommunityCard({ community }: CommunityCardProps) {
         <div className="truncate">
           <p className="text-lg font-bold">{community.name}</p>
           <p className="text-gray-400 truncate">
-            {community.members.toLocaleString()} members
+            {community.members === 1
+              ? "1 member"
+              : community.members.toLocaleString() + " members"}
           </p>
         </div>
       </div>

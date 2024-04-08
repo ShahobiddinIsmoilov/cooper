@@ -2,18 +2,18 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Group, Select } from "@mantine/core";
 import Line from "../../../utils/Line";
-import UserPostList from "./UserPostList";
+import UserSavedList from "./UserSavedList";
 
 interface Props {
   setActive: (value: string) => void;
 }
 
-export default function UserPosts({ setActive }: Props) {
+export default function UserSaved({ setActive }: Props) {
   const [sortOption, setSortOption] = useState("NEW");
   const query = useQueryClient();
 
   useEffect(() => {
-    setActive("posts");
+    setActive("saved");
   }, []);
 
   return (
@@ -22,16 +22,16 @@ export default function UserPosts({ setActive }: Props) {
         <span>SORT BY:</span>
         <Select
           w={100}
-          data={["NEW", "TOP", "BEST"]}
+          data={["NEW", "TOP"]}
           value={sortOption}
           onOptionSubmit={(value) => {
-            query.removeQueries({ queryKey: ["user-posts"] });
+            query.removeQueries({ queryKey: ["user-saved"] });
             setSortOption(value);
           }}
         />
       </Group>
       <Line />
-      <UserPostList sortOption={sortOption} />
+      <UserSavedList sortOption={sortOption} />
     </>
   );
 }

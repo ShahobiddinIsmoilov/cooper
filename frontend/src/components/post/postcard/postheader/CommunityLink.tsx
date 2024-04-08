@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { ImSpinner4 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
 import { CommunityDetailProps } from "../../../../interfaces/communityDetailProps";
-import getCommunityDetail from "../../../../services/community/getCommunityDetail";
 import { Avatar, Image } from "@mantine/core";
+import getCommunityDetail from "../../../../services/community/getCommunityDetail";
 
 interface CommunityLinkProps {
   community_name?: string;
@@ -50,7 +50,8 @@ export default function CommunityLink({
 function Preview({ community_link }: CommunityLinkProps) {
   const { isPending, error, data } = useQuery({
     queryKey: [`community-preview-${community_link}`],
-    queryFn: () => getCommunityDetail(community_link),
+    queryFn: () =>
+      getCommunityDetail(`/api/community/detail/${community_link}`),
     retry: false,
   });
 

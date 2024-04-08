@@ -1,5 +1,4 @@
 interface Props {
-  username?: string;
   value: string;
   active: string;
 }

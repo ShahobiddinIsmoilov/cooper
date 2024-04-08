@@ -19,21 +19,27 @@ def postAction(request):
         post.upvotes += 1
         post.save()
         return Response(status=status.HTTP_200_OK)
+    elif action == 'undo_upvote':
+        UpvotePost.objects.filter(user=user, post=post).delete()
+        post.upvotes -= 1
+        post.save()
+        return Response(status=status.HTTP_200_OK)
     elif action == 'downvote':
         DownvotePost.objects.create(user=user, post=post).save()
         UpvotePost.objects.filter(user=user, post=post).delete()
         post.downvotes += 1
         post.save()
         return Response(status=status.HTTP_200_OK)
-    elif action == 'undo_upvote':
-        UpvotePost.objects.filter(user=user, post=post).delete()
-        post.upvotes -= 1
-        post.save()
-        return Response(status=status.HTTP_200_OK)
     elif action == 'undo_downvote':
         DownvotePost.objects.filter(user=user, post=post).delete()
         post.downvotes -= 1
         post.save()
+        return Response(status=status.HTTP_200_OK)
+    elif action == "save":
+        SavePost.objects.create(user=user, post=post).save()
+        return Response(status=status.HTTP_200_OK)
+    elif action == "undo_save":
+        SavePost.objects.filter(user=user, post=post).delete()
         return Response(status=status.HTTP_200_OK)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)

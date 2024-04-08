@@ -70,7 +70,7 @@ export default function PostFooter({ post }: PostHeaderHomeProps) {
             )}
           </button>
         </div>
-        <Link to={`/community/${post.community}/post/${post.id}`}>
+        <Link to={`/community/${post.community_link}/post/${post.id}`}>
           <div className="py-1 px-3 rounded-full cursor-pointer flex justify-center bg-dark-900 xs:bg-transparent items-center hover:bg-dark-600 text-white gap-2">
             <FaComment className="text-lg xs:text-xl" />
             <span className="xs:text-lg text-cyan-400 font-bold">

@@ -20,7 +20,7 @@ export default function UserCommentList({
     queryKey: ["user-comments"],
     queryFn: () =>
       getComments(
-        `/api/comment/user/${username}/?sort=${sortOption.toLowerCase()}`
+        `/api/comment/list/?filter=user&username=${username}&sort=${sortOption.toLowerCase()}`
       ),
   });
 
