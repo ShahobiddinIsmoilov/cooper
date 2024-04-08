@@ -53,9 +53,11 @@ function CommentProvider({
 
   useEffect(() => {
     post_id &&
-      getComments(`api/comment/post/${post_id}/`).then((response) => {
-        setComments(response.data);
-      });
+      getComments(`api/comment/list/?filter=post&post=${post_id}`).then(
+        (response) => {
+          setComments(response.data);
+        }
+      );
   }, []);
 
   // critical piece of code to get an array of a parent comment

@@ -1,9 +1,18 @@
 import { BsThreeDots } from "react-icons/bs";
-import { FaRegBookmark, FaRegFlag } from "react-icons/fa6";
+import { FaRegBookmark, FaBookmark, FaRegFlag } from "react-icons/fa6";
 import { Menu } from "@mantine/core";
+import useCredentials from "../../../../services/useCredentials";
+import { useState } from "react";
 
 export function PostCardDots({ post_id }: { post_id: number }) {
-  function savePost() {}
+  const api = useCredentials();
+  const [saved, setSaved] = useState(false);
+
+  function savePost() {
+    api
+      .post("/api/post/action/", { action: "save", post: post_id })
+      .then(() => setSaved(true));
+  }
 
   return (
     <div>
@@ -14,17 +23,17 @@ export function PostCardDots({ post_id }: { post_id: number }) {
           </button>
         </Menu.Target>
         <Menu.Dropdown className="bg-dark-850">
-          <Menu.Item p={0}>
-            <p className="text-lg flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
-              <FaRegBookmark />
-              <span>Save</span>
-            </p>
+          <Menu.Item p={0} onClick={savePost}>
+            <div className="text-lg flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
+              {saved ? <FaBookmark size={22} /> : <FaRegBookmark size={22} />}
+              <span>{saved ? "Remove from Saved" : "Save"}</span>
+            </div>
           </Menu.Item>
           <Menu.Item p={0}>
-            <p className="text-lg flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
-              <FaRegFlag />
+            <div className="text-lg flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
+              <FaRegFlag size={22} />
               <span>Report</span>
-            </p>
+            </div>
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>

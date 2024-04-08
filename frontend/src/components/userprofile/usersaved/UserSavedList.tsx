@@ -13,7 +13,7 @@ export default function UserSavedList({ sortOption }: { sortOption: string }) {
     queryKey: ["user-saved"],
     queryFn: () =>
       getUserPosts(
-        `/api/post/list/?filter=saved&user=${user}&sort=${sortOption.toLowerCase()}`
+        `/api/post/privatelist/?filter=saved&user=${user}&sort=${sortOption.toLowerCase()}`
       ),
   });
 

@@ -1,11 +1,11 @@
 import { CommentProps } from "../../../interfaces/commentProps";
 import { Stack } from "@mantine/core";
-import UserCommentCard from "./UserCommentCard";
-import Line from "../../../utils/Line";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getComments } from "../../../services/comment/getComments";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import UserCommentCard from "./UserCommentCard";
+import Line from "../../../utils/Line";
 
 export default function UserCommentList({
   sortOption,

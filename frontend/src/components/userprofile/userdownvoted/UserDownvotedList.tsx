@@ -17,7 +17,7 @@ export default function UserDownvotedList({
     queryKey: ["user-downvoted"],
     queryFn: () =>
       getUserPosts(
-        `/api/post/list/?filter=downvoted&user=${user}&sort=${sortOption.toLowerCase()}`
+        `/api/post/privatelist/?filter=downvoted&user=${user}&sort=${sortOption.toLowerCase()}`
       ),
   });
 

@@ -17,7 +17,7 @@ export default function UserUpvotedList({
     queryKey: ["user-upvoted"],
     queryFn: () =>
       getUserPosts(
-        `/api/post/list/?filter=upvoted&user=${user}&sort=${sortOption.toLowerCase()}`
+        `/api/post/privatelist/?filter=upvoted&user=${user}&sort=${sortOption.toLowerCase()}`
       ),
   });
 

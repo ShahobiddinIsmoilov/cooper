@@ -22,7 +22,7 @@ export default function UserSaved({ setActive }: Props) {
         <span>SORT BY:</span>
         <Select
           w={100}
-          data={["NEW", "TOP"]}
+          data={["NEW", "TOP", "BEST"]}
           value={sortOption}
           onOptionSubmit={(value) => {
             query.removeQueries({ queryKey: ["user-saved"] });

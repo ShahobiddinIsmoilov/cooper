@@ -1,0 +1,43 @@
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+
+from ..models import Post
+from ..serializers import CreatePostSerializer, UpdatePostSerializer
+
+
+# Create new post
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def postCreate(request):
+    serializer = CreatePostSerializer(data=request.data)
+
+    if serializer.is_valid(raise_exception=True):
+        post = serializer.save()
+        return Response(post.id, status=status.HTTP_201_CREATED)
+        
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Update post
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def postUpdate(request, pk):
+    post = Post.objects.get(pk=pk)
+    serializer = UpdatePostSerializer(instance=post, data=request.data)
+
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+
+    return Response(serializer.data)
+
+
+# Delete post
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def postDelete(request, pk):
+    post = Post.objects.get(pk=pk)
+    post.delete()
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
