@@ -3,14 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  ul {
-    @apply pl-8 list-disc;
-  }
-
-  ol {
-    @apply pl-8 list-decimal;
-  }
-
   code {
     @apply bg-dark-900 p-1 rounded-md text-sm text-emerald-400;
   }

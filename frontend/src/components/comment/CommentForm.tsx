@@ -12,11 +12,11 @@ interface CommentFormProps {
   parent_user?: number;
   parent_username?: string;
   placeholder?: string;
-  setShowReply?: (value: boolean) => void;
   autofocus?: boolean;
+  setShowReply?: (value: boolean) => void;
 }
 
-function CommentForm({
+export default function CommentForm({
   post,
   parent,
   parent_user,
@@ -111,5 +111,3 @@ function CommentForm({
     </form>
   );
 }
-
-export default CommentForm;

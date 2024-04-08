@@ -1,21 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
-import PostFeed from "../components/post/PostFeed";
 import { useParams } from "react-router-dom";
 import { ImSpinner4 } from "react-icons/im";
 import { IoCloudOffline } from "react-icons/io5";
 import { useWindowSize } from "../contexts/WindowSizeContext";
-import Infobar from "../components/Infobar";
 import { Avatar, Image } from "@mantine/core";
-import getCommunityDetail from "../services/community/getCommunityDetail";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
+import { useAuthContext } from "../contexts/AuthContext";
+import Infobar from "../components/Infobar";
+import getCommunityDetail from "../services/community/getCommunityDetail";
+import PostFeed from "../components/post/PostFeed";
 import CreatePost from "../components/modals/post/CreatePost";
+import JoinButton from "../components/community/JoinButton";
 
-function CommunityPage() {
+export default function CommunityPage() {
+  const user = useAuthContext().user;
   const { screenWidth } = useWindowSize();
-  const { community_name } = useParams();
+  const { community_link } = useParams();
+
   const { isPending, error, data } = useQuery({
-    queryKey: [`community-page-${community_name}`],
-    queryFn: () => getCommunityDetail(community_name!),
+    queryKey: [`community-page-${community_link}`],
+    queryFn: () =>
+      user
+        ? getCommunityDetail(
+            `/api/community/detail/${community_link}/?auth=true&user=${user.user_id}`
+          )
+        : getCommunityDetail(
+            `/api/community/detail/${community_link}/?auth=false`
+          ),
   });
 
   if (isPending)
@@ -38,23 +49,25 @@ function CommunityPage() {
   return (
     <>
       <Image
-        src={`../../../src/assets/banner_${community_name}.jpg`}
+        src={`../../../src/assets/banner_${community_link}.jpg`}
         className="h-24 xs:h-48 bg-white w-[1088px] object-cover rounded-xl"
       />
       <div className="flex">
         <div className="flex-grow -translate-y-10 xs:-translate-y-14">
           <div className="flex ml-4 xs:ml-8">
             <Avatar
-              src={`../../../src/assets/avatar_${community_name}.jpg`}
+              src={`../../../src/assets/avatar_${community_link}.jpg`}
               className="w-24 h-24 xs:w-32 xs:h-32 rounded-full object-cover border-4 xs:border-8 border-dark-800"
             />
             <div className="flex justify-between items-center mt-10 xs:mt-14 ml-2">
               <p className="text-blue-400 text-lg xs:text-3xl font-bold break-words">
-                {community_name}
+                {community_link}
               </p>
-              <button className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8">
-                Join
-              </button>
+              <JoinButton
+                isJoined={community.is_joined}
+                community_id={community.id}
+                community_link={community.link}
+              />
               <CreatePost
                 community={community.id}
                 community_name={community.name}
@@ -62,7 +75,7 @@ function CommunityPage() {
               />
             </div>
           </div>
-          <PostFeed page={community.id} />
+          <PostFeed filter="community" community={community.id} />
         </div>
         <div className="mt-4">
           {screenWidth >= 920 && <Infobar community={community} />}
@@ -71,5 +84,3 @@ function CommunityPage() {
     </>
   );
 }
-
-export default CommunityPage;

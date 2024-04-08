@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PostDetail from "../components/post/PostDetail";
 import { useQuery } from "@tanstack/react-query";
 import getPostDetail from "../services/post/getPostDetail";
@@ -10,9 +10,11 @@ import { Flex } from "@mantine/core";
 import { PostProps } from "../interfaces/postProps";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 
-function PostDetailPage() {
+export default function PostDetailPage() {
   const { screenWidth } = useWindowSize();
   const { post_id } = useParams();
+  const { community_link } = useParams();
+  const navigate = useNavigate();
   const { isPending, error, data } = useQuery({
     queryKey: [`post-detail-${post_id}`],
     queryFn: () => getPostDetail(Number(post_id)),
@@ -36,6 +38,9 @@ function PostDetailPage() {
   const post: PostProps = data.data.post_detail;
   const community: CommunityDetailProps = data.data.community_detail;
 
+  community_link !== community.link &&
+    navigate(`/community/${community.link}/post/${post_id}`);
+
   return (
     <Flex>
       <div className="flex-grow max-w-3xl xs:px-2">
@@ -50,5 +55,3 @@ function PostDetailPage() {
     </Flex>
   );
 }
-
-export default PostDetailPage;

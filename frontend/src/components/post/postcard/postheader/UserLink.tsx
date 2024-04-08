@@ -37,7 +37,7 @@ export default function UserLink({ username, user_id }: UserLinkProps) {
   return (
     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Link
-        to={username === user?.username ? `/profile/` : `/user/${username}`}
+        to={username === user?.username ? `/profile` : `/user/${username}`}
         className="font-bold hover:underline text-orange-400"
       >
         {username}

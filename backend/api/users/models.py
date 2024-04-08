@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     votes = models.IntegerField(default=0, null=True)
     avatar_url = models.URLField(max_length=10000, default=None, null=True)
-    joined_communities = models.ManyToManyField('communities.Community', related_name='joined_by')
+    joined = models.ManyToManyField('communities.Community', related_name='joined_by')
     saved_posts = models.ManyToManyField('posts.Post', related_name='saved_by')
     upvoted_posts = models.ManyToManyField('posts.Post', related_name='upvoted_by')
     downvoted_posts = models.ManyToManyField('posts.Post', related_name='downvoted_by')
@@ -71,6 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             'access': str(refresh.access_token)
         }
         
+
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()

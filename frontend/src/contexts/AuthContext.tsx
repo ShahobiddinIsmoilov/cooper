@@ -9,8 +9,8 @@ import { jwtDecode } from "jwt-decode";
 import { AuthContextProps } from "../interfaces/authContextProps";
 import { makeRequest } from "../services/makeRequest";
 import { useDialog } from "./DialogContext";
-import LoginForm from "../forms/LoginForm";
 import { LoginFormProps } from "../interfaces/loginFormProps";
+import LoginForm from "../forms/LoginForm";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 

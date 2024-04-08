@@ -16,6 +16,7 @@ from .serializers import (NoteSerializer,
 
 User = get_user_model()
 
+
 @api_view(['GET','HEAD'])
 def api_root(request, format=None):
     return Response({

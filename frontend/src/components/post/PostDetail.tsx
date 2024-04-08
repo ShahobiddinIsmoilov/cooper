@@ -4,7 +4,7 @@ import Line from "../../utils/Line";
 import CommentFeed from "../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
 import CommentProvider from "../../contexts/CommentContext";
-import PostFooter from "./postcard/PostFooter";
+import PostFooter from "./postcard/postfooter/PostFooter";
 import ImageViewer from "./ImageViewer";
 import LinkPreview from "./LinkPreview";
 
@@ -15,7 +15,7 @@ interface PostDetailProps {
   community_link: string;
 }
 
-function PostDetail({
+export default function PostDetail({
   post,
   community,
   community_name,
@@ -40,19 +40,15 @@ function PostDetail({
       </div>
       <PostFooter post={post} />
       <Line />
-      {post && (
-        <CommentProvider
-          post_id={post.id}
-          post_title={post.title}
-          community={community}
-          community_name={community_name}
-          community_link={community_link}
-        >
-          <CommentFeed />
-        </CommentProvider>
-      )}
+      <CommentProvider
+        post_id={post.id}
+        post_title={post.title}
+        community={community}
+        community_name={community_name}
+        community_link={community_link}
+      >
+        <CommentFeed />
+      </CommentProvider>
     </div>
   );
 }
-
-export default PostDetail;

@@ -77,7 +77,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     'https://127.0.0.1:8111',
 # ]
 
-# CORS_ALLOW_HEADERS = ['*']
+# CORS_ALLOW_HEADERS = [
+#     'Content-Type',
+#     'Authorization',
+#     'UserID',  # Custom header
+# ]
 
 # CORS_URLS_REGEX = r"^/user/.*"
 

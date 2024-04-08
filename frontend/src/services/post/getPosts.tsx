@@ -1,15 +1,36 @@
 import { makeRequest } from "../makeRequest";
 
 interface Props {
-  page: number | "home" | "explore";
+  filter: "home" | "explore" | "all" | "community" | "user";
   sortOption: string;
+  community?: number;
+  user?: number;
+  username?: string;
 }
 
-export default function getPosts({ page, sortOption }: Props) {
-  if (page === "home")
-    return makeRequest(`/api/post/list/home/?sort=${sortOption}`);
-  else if (page === "explore")
-    return makeRequest(`/api/post/list/all/?sort=${sortOption}`);
+export default function getPosts({
+  filter,
+  sortOption,
+  user,
+  username,
+  community,
+}: Props) {
+  if (filter === "home")
+    return makeRequest(
+      `/api/post/list/?filter=home&user=${user}&sort=${sortOption}`
+    );
+  else if (filter === "explore")
+    return makeRequest(
+      `/api/post/list/?filter=explore&user=${user}&sort=${sortOption}`
+    );
+  else if (filter === "all")
+    return makeRequest(`/api/post/list/?filter=all&sort=${sortOption}`);
+  else if (filter === "community")
+    return makeRequest(
+      `/api/post/list/?filter=community&community=${community}&sort=${sortOption}`
+    );
   else
-    return makeRequest(`/api/post/list/community/${page}/?sort=${sortOption}`);
+    return makeRequest(
+      `/api/post/list/?filter=user&community=${username}&sort=${sortOption}`
+    );
 }

@@ -57,7 +57,7 @@ export default function CreatePostButton(props: Props) {
       username: username,
       community: props.community,
       community_name: props.community_name,
-      community_link: props.community_link,
+      community_link: props.community_name,
       title: title,
       body: HTMLbody,
       image: image,
@@ -87,7 +87,7 @@ export default function CreatePostButton(props: Props) {
             + Create Post
           </button>
         </Menu.Target>
-        <Menu.Dropdown w={150}>
+        <Menu.Dropdown w={150} className="bg-dark-850">
           <Menu.Item
             p={0}
             onClick={() => {
@@ -95,7 +95,7 @@ export default function CreatePostButton(props: Props) {
               open();
             }}
           >
-            <div className="flex items-center gap-4 text-xl hover:bg-dark-700 p-2 rounded-xl font-bold">
+            <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 rounded-xl font-bold">
               <GrTextAlignLeft size={24} />
               <span>Text</span>
             </div>
@@ -107,7 +107,7 @@ export default function CreatePostButton(props: Props) {
               open();
             }}
           >
-            <div className="flex items-center gap-4 text-xl hover:bg-dark-700 p-2 rounded-xl font-bold">
+            <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 p-2 rounded-xl font-bold">
               <FaRegImage size={24} />
               <span>Image</span>
             </div>
@@ -119,7 +119,7 @@ export default function CreatePostButton(props: Props) {
               open();
             }}
           >
-            <div className="flex items-center gap-4 text-xl hover:bg-dark-700 p-2 rounded-xl font-bold">
+            <div className="py-2 px-4 text-xl flex items-center gap-4 hover:bg-dark-700 p-2 rounded-xl font-bold">
               <FiLink size={24} />
               <span>Link</span>
             </div>

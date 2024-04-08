@@ -5,15 +5,33 @@ import Line from "../../utils/Line";
 import { useQuery } from "@tanstack/react-query";
 import getPosts from "../../services/post/getPosts";
 
-interface PostFeedProps {
-  page: number | "home" | "explore";
+interface Props {
+  filter: "home" | "explore" | "all" | "community";
   sortOption: string;
+  community?: number;
+  user?: number;
 }
 
-export default function PostList({ page, sortOption }: PostFeedProps) {
+export default function PostList({
+  filter,
+  sortOption,
+  community,
+  user,
+}: Props) {
+  console.log(
+    "GENERATED QUERY KEY:",
+    `posts-${filter}${community && "-" + community}`
+  );
+
   const { isPending, error, data } = useQuery({
-    queryKey: [`posts-${page}`],
-    queryFn: () => getPosts({ page: page, sortOption: sortOption }),
+    queryKey: [`posts-${filter}${community && "-" + community}`],
+    queryFn: () =>
+      getPosts({
+        filter: filter,
+        sortOption: sortOption,
+        community: community,
+        user: user,
+      }),
   });
 
   if (isPending) return "Loading...";
@@ -23,7 +41,8 @@ export default function PostList({ page, sortOption }: PostFeedProps) {
   const posts = data.data;
 
   let notCommunity = false;
-  if (page === "home" || page == "explore") notCommunity = true;
+  if (filter === "home" || filter == "explore" || filter == "all")
+    notCommunity = true;
 
   return (
     <Stack gap={0} className="max-w-3xl">

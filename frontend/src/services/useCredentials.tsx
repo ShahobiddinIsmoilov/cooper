@@ -3,14 +3,15 @@
 // axios sends it with every request. Otherwise, token refreshes.
 
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
+import { jwtDecode } from "jwt-decode";
 import { useAuthContext } from "../contexts/AuthContext";
+import { makeRequest } from "./makeRequest";
 
 // API baseURL
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-function useCredentials() {
+export default function useCredentials() {
   // importing needed context values
   const { authTokens, setAuthTokens, setUser, logoutUser } = useAuthContext();
 
@@ -24,33 +25,36 @@ function useCredentials() {
   });
 
   // intercepting the request
-  axiosInstance.interceptors.request.use(async (req: any) => {
+  axiosInstance.interceptors.request.use(async (config: any) => {
     // decode access token and check the expiry
     const user = jwtDecode(authTokens.access);
     const isExpired = dayjs.unix(user.exp!).diff(dayjs()) < 1;
 
     // carry on with the request if valid
-    if (!isExpired) return req;
+    if (!isExpired) return config;
 
     // otherwise, refresh the tokens
     try {
       // request to refresh the tokens
-      const response = await axios.post(`${baseURL}/api/user/token/refresh/`, {
-        refresh: authTokens.refresh,
+      const response = await makeRequest("/api/user/token/refresh/", {
+        method: "post",
+        data: {
+          refresh: authTokens.refresh,
+        },
       });
 
       // save the new tokens
       localStorage.setItem("authTokens", JSON.stringify(response.data));
 
       // attach the new access token to the request
-      req.headers.Authorization = `Bearer ${response.data.access}`;
+      config.headers.Authorization = `Bearer ${response.data.access}`;
 
       // update authTokens and user states with the new tokens
       setAuthTokens(response.data);
       setUser(jwtDecode(response.data.access));
 
       // carry on with the request
-      return req;
+      return config;
     } catch (err: any) {
       // if refresh token is expired, logout the user
       if (err.response.status === 401) {
@@ -63,5 +67,3 @@ function useCredentials() {
 
   return axiosInstance;
 }
-
-export default useCredentials;

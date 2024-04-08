@@ -14,4 +14,5 @@ export interface CommunityDetailProps {
   comments: number;
   avatar_url: URL;
   banner_url: URL;
+  is_joined: boolean;
 }

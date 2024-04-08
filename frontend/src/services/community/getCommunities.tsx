@@ -1,7 +1,7 @@
 import { makeRequest } from "../makeRequest";
 
-function getCommunities(params?: string) {
-  return makeRequest(`/api/community/list/`);
+function getCommunities(url: string) {
+  return makeRequest(url);
 }
 
 export default getCommunities;

@@ -9,7 +9,7 @@ interface Props {
   link: string;
   title?: string;
   setTitle?: (title: string) => void;
-  titleChanged: boolean;
+  titleChanged?: boolean;
 }
 
 export default function LinkPreview({
@@ -77,9 +77,9 @@ export default function LinkPreview({
           <Stack gap={2} className="px-4 py-2 text-white">
             <p className="text-lg font-bold line-clamp-2">{metadata.title}</p>
             <p className="line-clamp-2">{metadata.description}</p>
-            <p className="flex items-center gap-1 line-clamp-1 text-cyan-400 opacity-75">
+            <p className="flex items-center gap-1 opacity-75">
               <FaLink size={14} />
-              {baseUrl}
+              <span className="line-clamp-1">{baseUrl}</span>
               <FaExternalLinkAlt size={14} />
             </p>
           </Stack>

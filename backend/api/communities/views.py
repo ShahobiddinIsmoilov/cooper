@@ -1,17 +1,45 @@
+from django.conf import settings
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.reverse import reverse
 
-from api.posts.models import Post
-from .models import Community
+from api.users.models import User
+from .models import Community, UserCommunity
 from .serializers import (ListCommunitySerializer,
                           DetailCommunitySerializer,
                           CreateCommunitySerializer)
 
 
 @api_view(['GET'])
-def communityList(request):
+def communityListJoined(request):
+    """
+    Function to get and return the list of a user's joined communities
+    """
+    relationships = UserCommunity.objects.filter(user=request.GET.get('user', ''))
+    communities = [item.community for item in relationships]
+    serializer = ListCommunitySerializer(communities, many=True)
+    
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def communityListDiscover(request):
+    """
+    Function to get and return the list of communities a user hasn't joined
+    """
+    relationships = UserCommunity.objects.filter(user=request.GET.get('user', ''))
+    joined = [item.community for item in relationships]
+    all = Community.objects.all()
+    communities = list(set(all) - set(joined))
+    serializer = ListCommunitySerializer(communities, many=True)
+    
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def communityListAll(request):
     """
     Function to get and return the list of all communities
     """
@@ -28,9 +56,37 @@ def communityDetail(request, link: str):
     provided in the request and returns it
     """
     community = Community.objects.get(link=link)
-    community_serializer = DetailCommunitySerializer(community, many=False)
+    serializer = DetailCommunitySerializer(community, many=False)
     
-    return Response(community_serializer.data)
+    exists = False
+    authenticated = request.GET.get('auth', '')
+    if authenticated == 'true':
+        user = request.GET.get('user', '')
+        exists = UserCommunity.objects.filter(user=user, community=community).exists()
+            
+    response = {'is_joined': exists, **serializer.data}
+    
+    return Response(response)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def communityAction(request, pk):
+    """
+    Handles user join and leave actions
+    """
+    action = request.GET.get('action', '')
+    user = request.user
+    community = Community.objects.get(pk=pk)
+    
+    if action == 'join':
+        new_instance = UserCommunity.objects.create(user=user, community=community)
+        new_instance.save()
+    elif action == 'leave':
+        existing_instance = UserCommunity.objects.get(user=user, community=community)
+        existing_instance.delete()
+    
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])

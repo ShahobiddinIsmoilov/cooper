@@ -1,32 +1,37 @@
 import { Link } from "react-router-dom";
-import { PostHeaderHomeProps } from "./postheader/PostHeaderHome";
+import { PostHeaderHomeProps } from "../postheader/PostHeaderHome";
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";
-import { BsThreeDots } from "react-icons/bs";
-import { useWindowSize } from "../../../contexts/WindowSizeContext";
-import { Menu, MenuItem } from "@szhsin/react-menu";
-import { FaFlag, FaBookmark } from "react-icons/fa6";
-import postAction from "../../../services/post/postAction";
+import { useWindowSize } from "../../../../contexts/WindowSizeContext";
 import { useState } from "react";
+import { PostCardDots } from "./PostCardDots";
+import useCredentials from "../../../../services/useCredentials";
 
 export default function PostFooter({ post }: PostHeaderHomeProps) {
   const { screenWidth } = useWindowSize();
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
   const [votes, setVotes] = useState(post.votes);
+  const api = useCredentials();
 
   function handleUpvote() {
     setUpvoted(true);
     setDownvoted(false);
     setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
-    postAction(post.id, "upvote");
+    api.post("/api/post/action/", {
+      action: "upvote",
+      post: post.id,
+    });
   }
 
   function handleDownvote() {
     setDownvoted(true);
     setUpvoted(false);
     setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
-    postAction(post.id, "downvote");
+    api.post("/api/post/action/", {
+      action: "downvote",
+      post: post.id,
+    });
   }
 
   return (
@@ -78,35 +83,7 @@ export default function PostFooter({ post }: PostHeaderHomeProps) {
           </div>
         </Link>
       </div>
-      <PostCardDots />
-    </div>
-  );
-}
-
-function PostCardDots() {
-  return (
-    <div>
-      <Menu
-        menuClassName="bg-dark-850 -translate-x-14 rounded-xl py-2 z-20"
-        menuButton={
-          <button className="hover:bg-dark-600 rounded-full text-white flex p-3 opacity-55 hover:opacity-100 cursor-pointer items-center">
-            <BsThreeDots />
-          </button>
-        }
-      >
-        <MenuItem>
-          <p className="flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
-            <FaBookmark />
-            <span>Save</span>
-          </p>
-        </MenuItem>
-        <MenuItem>
-          <p className="flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
-            <FaFlag />
-            <span>Report</span>
-          </p>
-        </MenuItem>
-      </Menu>
+      <PostCardDots post_id={post.id} />
     </div>
   );
 }

@@ -1,17 +1,20 @@
 import { Stack } from "@mantine/core";
 import { useWindowSize } from "../../contexts/WindowSizeContext";
-import PostList from "./PostList";
 import { useState } from "react";
 import { FaFire } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa";
 import { FaRocket } from "react-icons/fa6";
 import { useQueryClient } from "@tanstack/react-query";
+import { useLocation, useNavigate } from "react-router-dom";
+import PostList from "./PostList";
 
-interface PostFeedProps {
-  page: number | "home" | "explore";
+interface Props {
+  filter: "home" | "explore" | "all" | "community";
+  community?: number;
+  user?: number;
 }
 
-export default function PostFeed({ page }: PostFeedProps) {
+export default function PostFeed({ filter, community, user }: Props) {
   const [sortOption, setSortOption] = useState("hot");
 
   return (
@@ -19,9 +22,15 @@ export default function PostFeed({ page }: PostFeedProps) {
       <Sortbar
         sortOption={sortOption}
         setSortOption={setSortOption}
-        page={page}
+        filter={filter}
+        community={community}
       />
-      <PostList page={page} sortOption={sortOption} />
+      <PostList
+        filter={filter}
+        sortOption={sortOption}
+        community={community}
+        user={user}
+      />
     </Stack>
   );
 }
@@ -29,12 +38,20 @@ export default function PostFeed({ page }: PostFeedProps) {
 interface SortbarProps {
   sortOption: string;
   setSortOption: (value: string) => void;
-  page: number | "home" | "explore";
+  filter: "home" | "explore" | "all" | "community";
+  community?: number;
 }
 
-function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
+function Sortbar({
+  sortOption,
+  setSortOption,
+  filter,
+  community,
+}: SortbarProps) {
   const { screenWidth } = useWindowSize();
   const query = useQueryClient();
+  const navigate = useNavigate();
+  const path = useLocation().pathname;
 
   return screenWidth < 620 ? (
     <div className="flex justify-center gap-2 text-white">
@@ -45,7 +62,10 @@ function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
     <div className="flex justify-center gap-2">
       <button
         onClick={() => {
-          query.removeQueries({ queryKey: [`posts-${page}`] });
+          query.removeQueries({
+            queryKey: [`posts-${filter}${community && "-" + community}`],
+          });
+          // navigate(`${path}/?sort=hot`);
           setSortOption("hot");
         }}
         className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
@@ -59,7 +79,10 @@ function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
       </button>
       <button
         onClick={() => {
-          query.removeQueries({ queryKey: [`posts-${page}`] });
+          query.removeQueries({
+            queryKey: [`posts-${filter}${community && "-" + community}`],
+          });
+          // navigate(`${path}/?sort=new`);
           setSortOption("new");
         }}
         className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
@@ -73,7 +96,10 @@ function Sortbar({ sortOption, setSortOption, page }: SortbarProps) {
       </button>
       <button
         onClick={() => {
-          query.removeQueries({ queryKey: [`posts-${page}`] });
+          query.removeQueries({
+            queryKey: [`posts-${filter}${community && "-" + community}`],
+          });
+          // navigate(`${path}/?sort=top`);
           setSortOption("top");
         }}
         className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${

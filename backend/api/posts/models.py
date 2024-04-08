@@ -89,3 +89,36 @@ def decrement_posts(sender, instance, **kwargs):
     if community.posts > 0:
         community.posts -= 1
     community.save()
+    
+
+class UpvotePost(models.Model):
+    user = models.ForeignKey('users.User', default=1, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, default=1, on_delete=models.CASCADE)
+    
+    # class Meta:
+    #     unique_together = ('user', 'post')
+        
+    def __str__(self):
+        return str(self.user) + ' - ' + str(self.post)
+    
+    
+class DownvotePost(models.Model):
+    user = models.ForeignKey('users.User', default=1, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, default=1, on_delete=models.CASCADE)
+    
+    # class Meta:
+    #     unique_together = ('user', 'post')
+        
+    def __str__(self):
+        return str(self.user) + ' - ' + str(self.post)
+    
+    
+class SavePost(models.Model):
+    user = models.ForeignKey('users.User', default=1, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, default=1, on_delete=models.CASCADE)
+    
+    class Meta:
+        unique_together = ('user', 'post')
+        
+    def __str__(self):
+        return str(self.user) + ' - ' + str(self.post)

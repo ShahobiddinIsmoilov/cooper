@@ -16,7 +16,7 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
     queryKey: ["user-posts"],
     queryFn: () =>
       getUserPosts(
-        `/api/post/list/user/${username}/?sort=${sortOption.toLowerCase()}`
+        `/api/post/list/?filter=user&username=${username}&sort=${sortOption.toLowerCase()}`
       ),
   });
 

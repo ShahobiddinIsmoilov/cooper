@@ -2,11 +2,11 @@ import { Modal, Stack, Text, Group, Button } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { useState } from "react";
-import useCredentials from "../../../services/useCredentials";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
-import CommunityName from "./CommunityName";
+import useCredentials from "../../../services/useCredentials";
 import CommunityDescription from "./CommunityDescription";
+import CommunityName from "./CommunityName";
 
 export default function CreateCommunityForm() {
   const api = useCredentials();

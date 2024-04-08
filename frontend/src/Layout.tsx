@@ -10,12 +10,11 @@ import { AppShell, Container, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import UserPage from "./pages/UserPage";
 import ProfilePage from "./pages/ProfilePage";
-import { useDialog } from "./contexts/DialogContext";
-import { createPortal } from "react-dom";
+import ExplorePage from "./pages/ExplorePage";
+import AllPage from "./pages/AllPage";
 
 export default function Layout() {
   const [opened] = useDisclosure();
-  const { isDialogVisible, dialogContent } = useDialog();
 
   return (
     <>
@@ -26,7 +25,7 @@ export default function Layout() {
           breakpoint: "lg",
           collapsed: { mobile: !opened },
         }}
-        withBorder={false}
+        // withBorder={false}
       >
         <AppShell.Header>
           <Header />
@@ -42,14 +41,16 @@ export default function Layout() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/home" element={<HomePage />} />
+                <Route path="/explore" element={<ExplorePage />} />
+                <Route path="/all" element={<AllPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
                 <Route
-                  path="/community/:community_name"
+                  path="/community/:community_link"
                   element={<CommunityPage />}
                 />
                 <Route
-                  path="/community/:community_name/post/:post_id"
+                  path="/community/:community_link/post/:post_id"
                   element={<PostDetailPage />}
                 />
                 <Route path="/user/:username/*" element={<UserPage />} />
@@ -59,11 +60,6 @@ export default function Layout() {
           </Flex>
         </AppShell.Main>
       </AppShell>
-      {isDialogVisible &&
-        createPortal(
-          <div className="w-screen h-screen bg-black">{dialogContent}</div>,
-          document.getElementById("portal")!
-        )}
     </>
   );
 }

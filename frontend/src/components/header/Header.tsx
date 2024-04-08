@@ -8,7 +8,7 @@ import ProfileMenu from "./ProfileMenu";
 export default function Header() {
   return (
     <div className="flex justify-between bg-dark-900 h-full text-white px-4 xs:px-8 py-2 items-center">
-      <Link to="/" className="no-underline">
+      <Link to="/home" className="no-underline">
         <p className="text-base xs:text-2xl">Shredded</p>
       </Link>
       <Authenticated />
@@ -21,7 +21,8 @@ export default function Header() {
 // THAT IS WHY THIS LITTLE SHIT HAS ITS OWN IMPLEMENTATION OF INITIALIZING
 // THE USER FROM THE LOCALSTORAGE. THIS CAN'T BE A SOLUTION TO THAT BUG!!!
 function Authenticated() {
-  const { user, loginUser } = useAuthContext();
+  const loginUser = useAuthContext().loginUser;
+  const user = useAuthContext().user;
   const [opened, { open, close }] = useDisclosure();
   const loginForm = useForm({
     initialValues: {

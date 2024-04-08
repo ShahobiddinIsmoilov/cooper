@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { PostProps } from "../../../interfaces/postProps";
 import PostHeaderHome from "./postheader/PostHeaderHome";
-import PostFooter from "./PostFooter";
+import PostFooter from "./postfooter/PostFooter";
 import PostHeaderCommunity from "./postheader/PostHeaderCommunity";
 import ReactHtmlParser from "react-html-parser";
 import ImageViewer from "../ImageViewer";
@@ -22,7 +22,7 @@ function PostCard({ post, notCommunity }: PostCardProps) {
           <PostHeaderCommunity post={post} />
         )}
       </div>
-      <Link to={`/community/${post.community}/post/${post.id}`}>
+      <Link to={`/community/${post.community_link}/post/${post.id}`}>
         <p className="xs:text-xl font-bold py-2 px-4 hover:text-indigo-400">
           {post.title}
         </p>
