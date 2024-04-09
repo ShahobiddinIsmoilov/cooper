@@ -17,12 +17,14 @@ export default function UserActivityList({
   let { username } = useParams();
 
   if (!username) username = useAuthContext().user?.username;
+  const user = useAuthContext().user?.user_id;
+  const sort = sortOption.toLowerCase();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["user-activity"],
     queryFn: () =>
       getUserActivity(
-        `/api/comment/useractivity/${username}/?sort=${sortOption.toLowerCase()}`
+        `/api/comment/useractivity/${username}/?user=${user}&sort=${sort}`
       ),
   });
 

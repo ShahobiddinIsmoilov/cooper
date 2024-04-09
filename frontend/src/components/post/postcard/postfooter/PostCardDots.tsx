@@ -3,15 +3,20 @@ import { FaRegBookmark, FaBookmark, FaRegFlag } from "react-icons/fa6";
 import { Menu } from "@mantine/core";
 import useCredentials from "../../../../services/useCredentials";
 import { useState } from "react";
+import { PostProps } from "../../../../interfaces/postProps";
 
-export function PostCardDots({ post_id }: { post_id: number }) {
+export function PostCardDots({ post }: { post: PostProps }) {
   const api = useCredentials();
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(post.saved);
 
-  function savePost() {
-    api
-      .post("/api/post/action/", { action: "save", post: post_id })
-      .then(() => setSaved(true));
+  function handleClick() {
+    saved
+      ? api
+          .post("/api/post/action/", { action: "undo_save", post: post.id })
+          .then(() => setSaved(false))
+      : api
+          .post("/api/post/action/", { action: "save", post: post.id })
+          .then(() => setSaved(true));
   }
 
   return (
@@ -23,7 +28,7 @@ export function PostCardDots({ post_id }: { post_id: number }) {
           </button>
         </Menu.Target>
         <Menu.Dropdown className="bg-dark-850">
-          <Menu.Item p={0} onClick={savePost}>
+          <Menu.Item p={0} onClick={handleClick}>
             <div className="text-lg flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
               {saved ? <FaBookmark size={22} /> : <FaRegBookmark size={22} />}
               <span>{saved ? "Remove from Saved" : "Save"}</span>

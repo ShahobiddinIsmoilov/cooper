@@ -5,16 +5,14 @@ import { FaFire } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa";
 import { FaRocket } from "react-icons/fa6";
 import { useQueryClient } from "@tanstack/react-query";
-import { useLocation, useNavigate } from "react-router-dom";
 import PostList from "./PostList";
 
 interface Props {
   filter: "home" | "explore" | "all" | "community";
   community?: number;
-  user?: number;
 }
 
-export default function PostFeed({ filter, community, user }: Props) {
+export default function PostFeed({ filter, community }: Props) {
   const [sortOption, setSortOption] = useState("hot");
 
   return (
@@ -25,12 +23,7 @@ export default function PostFeed({ filter, community, user }: Props) {
         filter={filter}
         community={community}
       />
-      <PostList
-        filter={filter}
-        sortOption={sortOption}
-        community={community}
-        user={user}
-      />
+      <PostList filter={filter} sortOption={sortOption} community={community} />
     </Stack>
   );
 }
@@ -50,22 +43,20 @@ function Sortbar({
 }: SortbarProps) {
   const { screenWidth } = useWindowSize();
   const query = useQueryClient();
-  const navigate = useNavigate();
-  const path = useLocation().pathname;
 
   return screenWidth < 620 ? (
     <div className="flex justify-center gap-2 text-white">
       <p className="opacity-50 px-2 flex items-center text-center">SORT BY:</p>
-      {/* <SortbarItem icon="🔥" text="TRENDING" /> */}
     </div>
   ) : (
     <div className="flex justify-center gap-2">
       <button
         onClick={() => {
           query.removeQueries({
-            queryKey: [`posts-${filter}${community && "-" + community}`],
+            queryKey: community
+              ? [`posts-community-${community}`]
+              : [`posts-${filter}`],
           });
-          // navigate(`${path}/?sort=hot`);
           setSortOption("hot");
         }}
         className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
@@ -80,9 +71,10 @@ function Sortbar({
       <button
         onClick={() => {
           query.removeQueries({
-            queryKey: [`posts-${filter}${community && "-" + community}`],
+            queryKey: community
+              ? [`posts-community-${community}`]
+              : [`posts-${filter}`],
           });
-          // navigate(`${path}/?sort=new`);
           setSortOption("new");
         }}
         className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${
@@ -97,9 +89,10 @@ function Sortbar({
       <button
         onClick={() => {
           query.removeQueries({
-            queryKey: [`posts-${filter}${community && "-" + community}`],
+            queryKey: community
+              ? [`posts-community-${community}`]
+              : [`posts-${filter}`],
           });
-          // navigate(`${path}/?sort=top`);
           setSortOption("top");
         }}
         className={`text-lg py-2 px-4 rounded-full hover:bg-dark-700 ${

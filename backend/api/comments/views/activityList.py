@@ -2,8 +2,8 @@ from itertools import chain
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from ..models import Comment
-from api.posts.models import Post
+from ..models import Comment, UpvoteComment, DownvoteComment
+from api.posts.models import Post, UpvotePost, DownvotePost, SavePost
 from api.posts.serializers import ListPostSerializer
 from ..serializers import ListCommentSerializer
 
@@ -20,16 +20,30 @@ def activityList(request, username):
     if sort_by == 'top':
         activity = sorted(activity_raw, key=lambda x: (x.votes, x.created_at), reverse=True)
     elif sort_by == 'best':
-        activity = sorted(activity_raw, key=lambda x: (x.votes, x.created_at), reverse=True)
+        activity = sorted(activity_raw, key=lambda x: (x.ratio, x.created_at), reverse=True)
     else:
         activity = sorted(activity_raw, key=lambda x: x.created_at, reverse=True)
     
-    activity_serializer = []
+    user = request.GET.get('user')
+    data = []
+    
     for item in activity:
         if hasattr(item, 'title'):
-            serializer = ListPostSerializer(item, many=False)
+            serialized = ListPostSerializer(item, many=False).data
+            if user != 'undefined':
+                upvote = UpvotePost.objects.filter(post=item, user=user)
+                serialized['upvoted'] = upvote.exists()
+                downvote = DownvotePost.objects.filter(post=item, user=user)
+                serialized['downvoted'] = downvote.exists()
+                save = SavePost.objects.filter(post=item, user=user)
+                serialized['saved'] = save.exists()
         else:
-            serializer = ListCommentSerializer(item, many=False)
-        activity_serializer.append(serializer.data)
-
-    return Response(activity_serializer)
+            serialized = ListCommentSerializer(item, many=False).data
+            if user != 'undefined':
+                upvote = UpvoteComment.objects.filter(comment=item, user=user)
+                serialized['upvoted'] = upvote.exists()
+                downvote = DownvoteComment.objects.filter(comment=item, user=user)
+                serialized['downvoted'] = downvote.exists()
+        data.append(serialized)
+        
+    return Response(data)

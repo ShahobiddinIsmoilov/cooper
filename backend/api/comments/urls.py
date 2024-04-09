@@ -6,7 +6,7 @@ from .views import activityList, commentList, commentAction, misc
 urlpatterns = [
     path('list/', commentList.commentList, name='comment-list'),
     path('useractivity/<str:username>/', activityList.activityList, name='activity-list'),
-    path('action/<int:pk>/', commentAction.commentAction, name='comment-action'),
+    path('action/', commentAction.commentAction, name='comment-action'),
     path('create/', misc.commentCreate, name='comment-create'),
     path('update/<int:pk>/', misc.commentUpdate, name='comment-update'),
     path('delete/<int:pk>/', misc.commentDelete, name='comment-delete'),

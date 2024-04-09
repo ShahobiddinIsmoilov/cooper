@@ -11,12 +11,14 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
   let { username } = useParams();
 
   if (!username) username = useAuthContext().user?.username;
+  const user = useAuthContext().user?.user_id;
+  const sort = sortOption.toLowerCase();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["user-posts"],
     queryFn: () =>
       getUserPosts(
-        `/api/post/list/?filter=user&username=${username}&sort=${sortOption.toLowerCase()}`
+        `/api/post/list/?filter=user&username=${username}&user=${user}&sort=${sort}`
       ),
   });
 

@@ -10,6 +10,7 @@ import {
 } from "react";
 import { CommentProps } from "../interfaces/commentProps";
 import { getComments } from "../services/comment/getComments";
+import { useAuthContext } from "./AuthContext";
 
 export interface CommentContextProps {
   comments: CommentProps[];
@@ -50,14 +51,15 @@ function CommentProvider({
   community_link,
 }: CommentProviderProps) {
   const [comments, setComments] = useState([]);
+  const user = useAuthContext().user?.user_id;
 
   useEffect(() => {
     post_id &&
-      getComments(`api/comment/list/?filter=post&post=${post_id}`).then(
-        (response) => {
-          setComments(response.data);
-        }
-      );
+      getComments(
+        `api/comment/list/?filter=post&post=${post_id}&user=${user}`
+      ).then((response) => {
+        setComments(response.data);
+      });
   }, []);
 
   // critical piece of code to get an array of a parent comment

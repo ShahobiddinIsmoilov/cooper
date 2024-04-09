@@ -4,27 +4,21 @@ import { PostProps } from "../../interfaces/postProps";
 import Line from "../../utils/Line";
 import { useQuery } from "@tanstack/react-query";
 import getPosts from "../../services/post/getPosts";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 interface Props {
   filter: "home" | "explore" | "all" | "community";
   sortOption: string;
   community?: number;
-  user?: number;
 }
 
-export default function PostList({
-  filter,
-  sortOption,
-  community,
-  user,
-}: Props) {
-  console.log(
-    "GENERATED QUERY KEY:",
-    `posts-${filter}${community && "-" + community}`
-  );
+export default function PostList({ filter, sortOption, community }: Props) {
+  const user = useAuthContext().user?.user_id;
 
   const { isPending, error, data } = useQuery({
-    queryKey: [`posts-${filter}${community && "-" + community}`],
+    queryKey: community
+      ? [`posts-community-${community}`]
+      : [`posts-${filter}`],
     queryFn: () =>
       getPosts({
         filter: filter,
@@ -55,9 +49,6 @@ export default function PostList({
           <Line />
         </div>
       ))}
-      <div className="text-center text-white opacity-25 text-2xl py-8">
-        No more posts...
-      </div>
     </Stack>
   );
 }

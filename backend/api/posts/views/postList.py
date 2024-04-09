@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from ..models import Post
+from ..models import Post, SavePost, UpvotePost, DownvotePost
 from ..serializers import ListPostSerializer
 from api.communities.models import Community, UserCommunity
 
@@ -9,12 +9,11 @@ from api.communities.models import Community, UserCommunity
 @api_view(['GET'])
 def postList(request):
     filter = request.GET.get('filter', 'home')
+    user = request.GET.get('user')
 
     if filter == 'home':
-        user = request.GET.get('user', '')
         posts_raw = getHomePosts(user)
     elif filter == 'explore':
-        user = request.GET.get('user', '')
         posts_raw = getExplorePosts(user)
     elif filter == 'all':
         posts_raw = Post.objects.all()
@@ -37,8 +36,15 @@ def postList(request):
         posts = posts_raw.order_by('-created_at')
     
     serializer = ListPostSerializer(posts, many=True)
+    data = serializer.data
     
-    return Response(serializer.data)
+    if user != 'undefined':
+        for i in range(len(data)):
+            data[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()
+            data[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i], user=user).exists()
+            data[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()
+    
+    return Response(data)
 
 def getHomePosts(user):
     relationships = UserCommunity.objects.filter(user=user)

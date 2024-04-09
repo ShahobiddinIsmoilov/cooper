@@ -9,6 +9,7 @@ import { useWindowSize } from "../contexts/WindowSizeContext";
 import { Flex } from "@mantine/core";
 import { PostProps } from "../interfaces/postProps";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
+import { useLayoutEffect } from "react";
 
 export default function PostDetailPage() {
   const { screenWidth } = useWindowSize();
@@ -38,8 +39,10 @@ export default function PostDetailPage() {
   const post: PostProps = data.data.post_detail;
   const community: CommunityDetailProps = data.data.community_detail;
 
-  community_link !== community.link &&
-    navigate(`/community/${community.link}/post/${post_id}`);
+  useLayoutEffect(() => {
+    community_link !== community.link &&
+      navigate(`/community/${community.link}/post/${post_id}`);
+  });
 
   return (
     <Flex>

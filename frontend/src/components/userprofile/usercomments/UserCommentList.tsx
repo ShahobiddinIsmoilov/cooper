@@ -15,12 +15,14 @@ export default function UserCommentList({
   let { username } = useParams();
 
   if (!username) username = useAuthContext().user?.username;
+  const user = useAuthContext().user?.user_id;
+  const sort = sortOption.toLowerCase();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["user-comments"],
     queryFn: () =>
       getComments(
-        `/api/comment/list/?filter=user&username=${username}&sort=${sortOption.toLowerCase()}`
+        `/api/comment/list/?filter=user&username=${username}&user=${user}&sort=${sort}`
       ),
   });
 

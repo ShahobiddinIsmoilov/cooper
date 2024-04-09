@@ -9,15 +9,15 @@ import useCredentials from "../../../../services/useCredentials";
 
 export default function PostFooter({ post }: PostHeaderHomeProps) {
   const { screenWidth } = useWindowSize();
-  const [upvoted, setUpvoted] = useState(false);
-  const [downvoted, setDownvoted] = useState(false);
+  const [upvoted, setUpvoted] = useState(post.upvoted);
+  const [downvoted, setDownvoted] = useState(post.downvoted);
   const [votes, setVotes] = useState(post.votes);
   const api = useCredentials();
 
   function handleUpvote() {
+    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
     setUpvoted(true);
     setDownvoted(false);
-    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
     api.post("/api/post/action/", {
       action: "upvote",
       post: post.id,
@@ -25,9 +25,9 @@ export default function PostFooter({ post }: PostHeaderHomeProps) {
   }
 
   function handleDownvote() {
+    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
     setDownvoted(true);
     setUpvoted(false);
-    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
     api.post("/api/post/action/", {
       action: "downvote",
       post: post.id,
@@ -83,7 +83,7 @@ export default function PostFooter({ post }: PostHeaderHomeProps) {
           </div>
         </Link>
       </div>
-      <PostCardDots post_id={post.id} />
+      <PostCardDots post={post} />
     </div>
   );
 }

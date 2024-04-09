@@ -37,8 +37,9 @@ class Post(models.Model):
     
     class Meta:
         indexes = [
-            models.Index(fields=['user']),
-            models.Index(fields=['community']),
+            models.Index(fields=['score']),
+            models.Index(fields=['votes']),
+            models.Index(fields=['ratio']),
             models.Index(fields=['created_at'])
         ]
         

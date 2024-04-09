@@ -24,13 +24,15 @@ export default function getPosts({
       `/api/post/list/?filter=explore&user=${user}&sort=${sortOption}`
     );
   else if (filter === "all")
-    return makeRequest(`/api/post/list/?filter=all&sort=${sortOption}`);
+    return makeRequest(
+      `/api/post/list/?filter=all&user=${user}&sort=${sortOption}`
+    );
   else if (filter === "community")
     return makeRequest(
-      `/api/post/list/?filter=community&community=${community}&sort=${sortOption}`
+      `/api/post/list/?filter=community&user=${user}&community=${community}&sort=${sortOption}`
     );
   else
     return makeRequest(
-      `/api/post/list/?filter=user&community=${username}&sort=${sortOption}`
+      `/api/post/list/?filter=user&user=${user}&community=${username}&sort=${sortOption}`
     );
 }

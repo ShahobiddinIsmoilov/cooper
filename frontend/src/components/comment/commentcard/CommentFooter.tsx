@@ -3,7 +3,7 @@ import { FaReply } from "react-icons/fa6";
 import { CommentProps } from "../../../interfaces/commentProps";
 import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useState } from "react";
-import commentAction from "../../../services/comment/commentAction";
+import useCredentials from "../../../services/useCredentials";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -17,22 +17,29 @@ export default function CommentFooter({
   setShowReply,
 }: CommentCardProps) {
   const { screenWidth } = useWindowSize();
-  const [upvoted, setUpvoted] = useState(false);
-  const [downvoted, setDownvoted] = useState(false);
+  const [upvoted, setUpvoted] = useState(comment.upvoted);
+  const [downvoted, setDownvoted] = useState(comment.downvoted);
   const [votes, setVotes] = useState(comment.votes);
+  const api = useCredentials();
 
   function handleUpvote() {
+    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
     setUpvoted(true);
     setDownvoted(false);
-    setVotes((votes) => (downvoted ? votes + 2 : votes + 1));
-    commentAction(comment.id, "upvote");
+    api.post("/api/comment/action/", {
+      action: "upvote",
+      comment: comment.id,
+    });
   }
 
   function handleDownvote() {
+    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
     setDownvoted(true);
     setUpvoted(false);
-    setVotes((votes) => (upvoted ? votes - 2 : votes - 1));
-    commentAction(comment.id, "downvote");
+    api.post("/api/comment/action/", {
+      action: "downvote",
+      comment: comment.id,
+    });
   }
 
   return (

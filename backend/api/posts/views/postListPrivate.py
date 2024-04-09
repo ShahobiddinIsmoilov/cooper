@@ -28,14 +28,14 @@ def postListPrivate(request):
     else:
         posts = sorted(posts_raw, key=lambda x: x.created_at, reverse=True)
         
-    serializer = ListPostSerializer(posts, many=True)
+    serialized = ListPostSerializer(posts, many=True).data
     
-    return Response(serializer.data)
-
-def getSavedPosts(user):
-    relationships = SavePost.objects.filter(user=user)
-    posts = [item.post for item in relationships]
-    return posts
+    for i in range(len(serialized)):
+        serialized[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i]).exists()
+        serialized[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i]).exists()
+        serialized[i]['saved'] = SavePost.objects.filter(post=posts[i]).exists()
+    
+    return Response(serialized)
 
 def getUpvotedPosts(user):
     relationships = UpvotePost.objects.filter(user=user)
@@ -45,4 +45,9 @@ def getUpvotedPosts(user):
 def getDownvotedPosts(user):
     relationships = DownvotePost.objects.filter(user=user)
     posts = list(set([item.post for item in relationships]))
+    return posts
+
+def getSavedPosts(user):
+    relationships = SavePost.objects.filter(user=user)
+    posts = [item.post for item in relationships]
     return posts

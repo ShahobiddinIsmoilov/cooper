@@ -18,4 +18,8 @@ export interface PostProps {
   score: number;
   user: number;
   community: number;
+  upvoted: boolean;
+  downvoted: boolean;
+  saved: boolean;
+  hidden: boolean;
 }

@@ -16,4 +16,6 @@ export interface CommentProps {
   community_link: string;
   username: string;
   body: string;
+  upvoted: boolean;
+  downvoted: boolean;
 }

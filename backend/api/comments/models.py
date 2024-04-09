@@ -23,23 +23,37 @@ class Comment(models.Model):
     upvotes = models.IntegerField(default=0, null=True)
     downvotes = models.IntegerField(default=0, null=True)
     votes = models.IntegerField(default=0, null=True)
+    ratio = models.FloatField(default=0, null=True)
+    ratio = models.FloatField(default=0, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
         indexes = [
-            models.Index(fields=['user']),
-            models.Index(fields=['post']),
             models.Index(fields=['votes']),
+            models.Index(fields=['ratio']),
             models.Index(fields=['created_at'])
         ]
     
     def save(self, *args, **kwargs):
-        self.votes = self.upvotes - self.downvotes
+        self.votes = self.calculateVotes(self.upvotes, self.downvotes)
+        self.ratio = self.calculateRatio(self.upvotes, self.downvotes)
         super().save(*args, **kwargs)
         
     def __str__(self):
         return self.body
+    
+    @staticmethod
+    def calculateVotes(upvotes, downvotes):
+        return upvotes - downvotes
+    
+    @staticmethod
+    def calculateRatio(upvotes, downvotes):
+        if not upvotes:
+            upvotes = 1
+        if not downvotes:
+            downvotes = 1
+        return upvotes / downvotes
     
     
 @receiver(post_save, sender=Comment)
@@ -69,3 +83,25 @@ def decrement_comments(sender, instance, **kwargs):
     if community.comments > 0:
         community.comments -= 1
     community.save()
+    
+    
+class UpvoteComment(models.Model):
+    user = models.ForeignKey('users.User', default=1, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, default=1, on_delete=models.CASCADE)
+    
+    # class Meta:
+    #     unique_together = ('user', 'post')
+        
+    def __str__(self):
+        return str(self.user) + ' - ' + str(self.comment)
+    
+    
+class DownvoteComment(models.Model):
+    user = models.ForeignKey('users.User', default=1, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, default=1, on_delete=models.CASCADE)
+    
+    # class Meta:
+    #     unique_together = ('user', 'post')
+        
+    def __str__(self):
+        return str(self.user) + ' - ' + str(self.comment)
