@@ -1,9 +1,11 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from api.users.models import User
+from api.communities.models import Community, UserCommunity
 from ..models import Post, SavePost, UpvotePost, DownvotePost
 from ..serializers import ListPostSerializer
-from api.communities.models import Community, UserCommunity
 
 
 @api_view(['GET'])
@@ -22,7 +24,8 @@ def postList(request):
         posts_raw = Post.objects.filter(community=community)
     else:
         username = request.GET.get('username', '')
-        posts_raw = Post.objects.filter(username=username)
+        user = get_object_or_404(User, username=username)
+        posts_raw = Post.objects.filter(user=user)
         
     sort_by = request.GET.get('sort', '')
     

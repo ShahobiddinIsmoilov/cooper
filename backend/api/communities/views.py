@@ -1,11 +1,10 @@
-from django.conf import settings
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.reverse import reverse
 
-from api.users.models import User
 from .models import Community, UserCommunity
 from .serializers import (ListCommunitySerializer,
                           DetailCommunitySerializer,
@@ -55,7 +54,7 @@ def communityDetail(request, link: str):
     Retrieves the details of a community with the name parameter
     provided in the request and returns it
     """
-    community = Community.objects.get(link=link)
+    community = get_object_or_404(Community, link=link)
     serializer = DetailCommunitySerializer(community, many=False)
     
     exists = False

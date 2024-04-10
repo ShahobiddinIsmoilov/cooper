@@ -1,6 +1,8 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from api.users.models import User
 from ..models import Comment, UpvoteComment, DownvoteComment
 from ..serializers import ListCommentSerializer
 
@@ -15,6 +17,7 @@ def commentList(request):
         comments_raw = Comment.objects.filter(post=post)
     else:
         username = request.GET.get('username', '')
+        user = get_object_or_404(User, username=username)
         comments_raw = Comment.objects.filter(username=username)
     
     sort_by = request.GET.get('sort', '')

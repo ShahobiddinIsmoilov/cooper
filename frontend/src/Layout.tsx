@@ -12,6 +12,7 @@ import UserPage from "./pages/UserPage";
 import ProfilePage from "./pages/ProfilePage";
 import ExplorePage from "./pages/ExplorePage";
 import AllPage from "./pages/AllPage";
+import LostPage from "./pages/LostPage";
 
 export default function Layout() {
   const [opened] = useDisclosure();
@@ -19,7 +20,7 @@ export default function Layout() {
   return (
     <>
       <AppShell
-        header={{ height: 70 }}
+        header={{ height: 60 }}
         navbar={{
           width: 320,
           breakpoint: "lg",
@@ -55,6 +56,7 @@ export default function Layout() {
                 />
                 <Route path="/user/:username/*" element={<UserPage />} />
                 <Route path="/profile/*" element={<ProfilePage />} />
+                <Route path="*" element={<LostPage />} />
               </Routes>
             </Container>
           </Flex>

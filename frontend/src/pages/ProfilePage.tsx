@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { Avatar, Flex, Group, Stack } from "@mantine/core";
 import { useAuthContext } from "../contexts/AuthContext";
 import Line from "../utils/Line";
@@ -65,6 +65,7 @@ export default function ProfilePage() {
               path="/settings"
               element={<UserSettings setActive={setActive} />}
             />
+            <Route path="*" element={<Navigate to="" replace />} />
           </Routes>
         </div>
       </div>

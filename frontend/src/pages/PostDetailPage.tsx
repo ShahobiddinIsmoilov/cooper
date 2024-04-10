@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PostDetail from "../components/post/PostDetail";
 import { useQuery } from "@tanstack/react-query";
 import getPostDetail from "../services/post/getPostDetail";
@@ -9,40 +9,43 @@ import { useWindowSize } from "../contexts/WindowSizeContext";
 import { Flex } from "@mantine/core";
 import { PostProps } from "../interfaces/postProps";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
-import { useLayoutEffect } from "react";
 
 export default function PostDetailPage() {
   const { screenWidth } = useWindowSize();
   const { post_id } = useParams();
   const { community_link } = useParams();
-  const navigate = useNavigate();
+
   const { isPending, error, data } = useQuery({
     queryKey: [`post-detail-${post_id}`],
     queryFn: () => getPostDetail(Number(post_id)),
+    retry: 2,
   });
 
   if (isPending)
     return (
-      <div className="flex justify-center items-center mt-16 text-white text-2xl">
+      <div className="mt-24 flex justify-center items-center text-white text-2xl">
         <ImSpinner4 className="animate-spin" />
       </div>
     );
 
-  if (error)
+  if (error) {
     return (
-      <div className="flex justify-center items-center mt-16 text-white text-xl gap-2">
+      <div className="mt-24 flex justify-center items-center text-white text-xl gap-2">
         <IoCloudOffline />
         Couldn't load data
       </div>
     );
+  }
 
   const post: PostProps = data.data.post_detail;
   const community: CommunityDetailProps = data.data.community_detail;
 
-  useLayoutEffect(() => {
-    community_link !== community.link &&
-      navigate(`/community/${community.link}/post/${post_id}`);
-  });
+  if (community_link !== community.link)
+    history.replaceState(
+      null,
+      "",
+      `/community/${community.link}/post/${post_id}`
+    );
 
   return (
     <Flex>

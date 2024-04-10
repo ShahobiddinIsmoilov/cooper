@@ -1,17 +1,20 @@
 from itertools import chain
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from ..models import Comment, UpvoteComment, DownvoteComment
+from api.users.models import User
 from api.posts.models import Post, UpvotePost, DownvotePost, SavePost
 from api.posts.serializers import ListPostSerializer
+from ..models import Comment, UpvoteComment, DownvoteComment
 from ..serializers import ListCommentSerializer
 
 
 @api_view(['GET'])
 def activityList(request, username):
     comments = Comment.objects.filter(username=username)
-    posts = Post.objects.filter(username=username)
+    user = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(user=user)
     
     activity_raw = list(chain(comments, posts))
 
