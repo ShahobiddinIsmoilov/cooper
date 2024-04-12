@@ -8,15 +8,13 @@ from ..serializers import ListPostSerializer
 @api_view(['GET'])
 def postListPrivate(request):
     filter = request.GET.get('filter', '')
+    user = request.GET.get('user', '')
 
     if filter == 'saved':
-        user = request.GET.get('user', '')
         posts_raw = getSavedPosts(user)
     elif filter == 'upvoted':
-        user = request.GET.get('user', '')
         posts_raw = getUpvotedPosts(user)
     elif filter == 'downvoted':
-        user = request.GET.get('user', '')
         posts_raw = getDownvotedPosts(user)
         
     sort_by = request.GET.get('sort', '')
@@ -31,9 +29,9 @@ def postListPrivate(request):
     serialized = ListPostSerializer(posts, many=True).data
     
     for i in range(len(serialized)):
-        serialized[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i]).exists()
-        serialized[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i]).exists()
-        serialized[i]['saved'] = SavePost.objects.filter(post=posts[i]).exists()
+        serialized[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()
+        serialized[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i], user=user).exists()
+        serialized[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()
     
     return Response(serialized)
 

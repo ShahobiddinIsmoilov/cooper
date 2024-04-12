@@ -13,7 +13,7 @@ function Navbar() {
   const user = useAuthContext().user;
 
   return (
-    <div className="bg-dark-850 text-white overflow-hidden h-full">
+    <div className="bg-dark-850 text-white h-full overflow-x-hidden overflow-y-scroll">
       <Link to="/home">
         <SidebarItem icon={<FaHome size={30} />} text="Home" />
       </Link>
@@ -23,37 +23,39 @@ function Navbar() {
       <Link to="/all">
         <SidebarItem icon={<FaGlobe size={30} />} text="All" />
       </Link>
-      {user && (
-        <>
-          <CustomLine />
-          <p className="flex justify-center">
-            <CreateCommunityButton />
-          </p>
-        </>
-      )}
-      {!user && (
-        <>
-          <CustomLine />
-          <AllCommunities />
-        </>
-      )}
-      {user && (
-        <>
-          <CustomLine />
-          <JoinedCommunities user={user.user_id} />
-        </>
-      )}
-      {user && (
-        <>
-          <CustomLine />
-          <DiscoverCommunities user={user.user_id} />
-        </>
-      )}
-      <p className="text-white opacity-75 text-sm py-4 text-center">
-        <span className="hover:text-cyan-300 cursor-pointer">
-          ALL COMMUNITIES
-        </span>
-      </p>
+      <div>
+        {user && (
+          <>
+            <CustomLine />
+            <p className="flex justify-center">
+              <CreateCommunityButton />
+            </p>
+          </>
+        )}
+        {!user && (
+          <>
+            <CustomLine />
+            <AllCommunities />
+          </>
+        )}
+        {user && (
+          <>
+            <CustomLine />
+            <JoinedCommunities user={user.user_id} />
+          </>
+        )}
+        {user && (
+          <>
+            <CustomLine />
+            <DiscoverCommunities user={user.user_id} />
+          </>
+        )}
+        <p className="text-white opacity-75 text-sm py-4 text-center">
+          <span className="hover:text-cyan-300 cursor-pointer">
+            ALL COMMUNITIES
+          </span>
+        </p>
+      </div>
     </div>
   );
 }

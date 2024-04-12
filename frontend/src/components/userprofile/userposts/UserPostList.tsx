@@ -15,7 +15,7 @@ export default function UserPostList({ sortOption }: { sortOption: string }) {
   const sort = sortOption.toLowerCase();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["user-posts"],
+    queryKey: [`userposts-${username}`],
     queryFn: () =>
       getUserPosts(
         `/api/post/list/?filter=user&username=${username}&user=${user}&sort=${sort}`

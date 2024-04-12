@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import { AppShell, Container, Flex } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
@@ -6,8 +8,6 @@ import PostDetailPage from "./pages/PostDetailPage";
 import CommunityPage from "./pages/CommunityPage";
 import Header from "./components/header/Header";
 import Navbar from "./components/Navbar";
-import { AppShell, Container, Flex } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import UserPage from "./pages/UserPage";
 import ProfilePage from "./pages/ProfilePage";
 import ExplorePage from "./pages/ExplorePage";
@@ -26,7 +26,6 @@ export default function Layout() {
           breakpoint: "lg",
           collapsed: { mobile: !opened },
         }}
-        // withBorder={false}
       >
         <AppShell.Header>
           <Header />

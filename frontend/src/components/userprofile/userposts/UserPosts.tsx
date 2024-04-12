@@ -1,6 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Group, Select } from "@mantine/core";
+import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import Line from "../../../utils/Line";
 import UserPostList from "./UserPostList";
 
@@ -11,6 +13,8 @@ interface Props {
 export default function UserPosts({ setActive }: Props) {
   const [sortOption, setSortOption] = useState("NEW");
   const query = useQueryClient();
+  let { username } = useParams();
+  if (!username) username = useAuthContext().user?.username;
 
   useEffect(() => {
     setActive("posts");
@@ -25,7 +29,7 @@ export default function UserPosts({ setActive }: Props) {
           data={["NEW", "TOP", "BEST"]}
           value={sortOption}
           onOptionSubmit={(value) => {
-            query.removeQueries({ queryKey: ["user-posts"] });
+            query.removeQueries({ queryKey: [`userposts-${username}`] });
             setSortOption(value);
           }}
         />

@@ -26,7 +26,7 @@ export default function CommunityName({
         autosize
         placeholder="Name"
         size="lg"
-        className="flex-grow border border-[#424242] rounded-[4px] px-4 read-only:"
+        className="flex-grow border border-line rounded-[4px] px-4"
       />
       <span className={`opacity-75 inline-block w-full text-end`}>
         {name.length}/32

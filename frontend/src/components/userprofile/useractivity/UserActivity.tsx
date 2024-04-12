@@ -3,6 +3,8 @@ import UserActivityList from "./UserActivityList";
 import { Group, Select } from "@mantine/core";
 import { useEffect, useState } from "react";
 import Line from "../../../utils/Line";
+import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 interface Props {
   setActive: (value: string) => void;
@@ -11,6 +13,8 @@ interface Props {
 export default function UserActivity({ setActive }: Props) {
   const [sortOption, setSortOption] = useState("NEW");
   const query = useQueryClient();
+  let { username } = useParams();
+  if (!username) username = useAuthContext().user?.username;
 
   useEffect(() => {
     setActive("activity");
@@ -25,7 +29,7 @@ export default function UserActivity({ setActive }: Props) {
           data={["NEW", "TOP", "BEST"]}
           value={sortOption}
           onOptionSubmit={(value) => {
-            query.removeQueries({ queryKey: ["user-activity"] });
+            query.removeQueries({ queryKey: [`useractivity-${username}`] });
             setSortOption(value);
           }}
         />

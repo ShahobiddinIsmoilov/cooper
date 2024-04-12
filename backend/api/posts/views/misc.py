@@ -14,7 +14,7 @@ def postCreate(request):
     serializer = CreatePostSerializer(data=request.data)
 
     if serializer.is_valid(raise_exception=True):
-        post = serializer.save()
+        post = serializer.save(user=request.user)
         return Response(post.id, status=status.HTTP_201_CREATED)
         
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

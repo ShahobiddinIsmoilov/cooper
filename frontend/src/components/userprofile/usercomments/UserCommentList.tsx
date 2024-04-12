@@ -19,7 +19,7 @@ export default function UserCommentList({
   const sort = sortOption.toLowerCase();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["user-comments"],
+    queryKey: [`usercomments-${username}`],
     queryFn: () =>
       getComments(
         `/api/comment/list/?filter=user&username=${username}&user=${user}&sort=${sort}`

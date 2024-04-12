@@ -22,7 +22,6 @@ export default function App() {
             <AuthProvider>
               <BrowserRouter>
                 <Layout />
-                <div id="portal" />
               </BrowserRouter>
             </AuthProvider>
           </DialogProvider>

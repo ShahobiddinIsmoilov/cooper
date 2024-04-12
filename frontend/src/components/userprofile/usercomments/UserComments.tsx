@@ -1,6 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Group, Select } from "@mantine/core";
+import { useAuthContext } from "../../../contexts/AuthContext";
+import { useParams } from "react-router-dom";
 import Line from "../../../utils/Line";
 import UserCommentList from "./UserCommentList";
 
@@ -11,6 +13,8 @@ interface Props {
 export default function UserComments({ setActive }: Props) {
   const [sortOption, setSortOption] = useState("NEW");
   const query = useQueryClient();
+  let { username } = useParams();
+  if (!username) username = useAuthContext().user?.username;
 
   useEffect(() => {
     setActive("comments");
@@ -25,7 +29,7 @@ export default function UserComments({ setActive }: Props) {
           data={["NEW", "TOP", "BEST"]}
           value={sortOption}
           onOptionSubmit={(value) => {
-            query.removeQueries({ queryKey: ["user-comments"] });
+            query.removeQueries({ queryKey: [`usercomments-${username}`] });
             setSortOption(value);
           }}
         />

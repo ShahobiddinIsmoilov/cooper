@@ -8,9 +8,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import { AuthContextProps } from "../interfaces/authContextProps";
 import { makeRequest } from "../services/makeRequest";
-import { useDialog } from "./DialogContext";
-import { LoginFormProps } from "../interfaces/loginFormProps";
-import LoginForm from "../forms/LoginForm";
+import { FaCheckCircle } from "react-icons/fa";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
@@ -36,37 +34,32 @@ function AuthProvider({ children }: AuthProviderProps) {
   );
 
   const [loading, setLoading] = useState(true);
-
-  const { setDialogContent } = useDialog();
-  async function register(values: LoginFormProps) {
-    // e.preventDefault();
-    // const element = e.target;
-
-    const userData = {
-      username: values.username,
-      password: values.password,
-    };
-
+  const [showLogin, setShowLogin] = useState(true);
+  const [loginMessage, setLoginMessage] = useState<React.ReactNode>(
+    <p className="text-2xl text-center">Welcome back</p>
+  );
+  const [showRegisterButton, setShowRegisterButton] = useState(true);
+  async function register(userData: {}) {
     try {
       await makeRequest("/api/user/register/", {
         method: "post",
         data: userData,
       });
-      setDialogContent(<LoginForm />);
+      setShowLogin(true);
+      setShowRegisterButton(false);
+      setLoginMessage(
+        <div className="flex flex-col items-center text-2xl">
+          <FaCheckCircle size={40} className="text-green-400" />
+          <p className="text-green-400">Account created successfully</p>
+          <p> You can now log in</p>
+        </div>
+      );
     } catch {
       console.log("Shit's gone downhill in register function bruh");
     }
   }
 
-  async function login(values: LoginFormProps) {
-    // e.preventDefault();
-    // const element = e.target;
-
-    const userData = {
-      username: values.username,
-      password: values.password,
-    };
-
+  async function login(userData: {}) {
     try {
       const response = await makeRequest("/api/user/token/", {
         method: "post",
@@ -94,6 +87,12 @@ function AuthProvider({ children }: AuthProviderProps) {
     logoutUser: logout,
     setAuthTokens: setAuthTokens,
     setUser: setUser,
+    showLogin: showLogin,
+    setShowLogin: setShowLogin,
+    loginMessage: loginMessage,
+    setLoginMessage: setLoginMessage,
+    showRegisterButton: showRegisterButton,
+    setShowRegisterButton: setShowRegisterButton,
   };
 
   useEffect(() => {

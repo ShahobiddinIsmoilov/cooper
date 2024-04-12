@@ -12,9 +12,9 @@ from ..serializers import ListCommentSerializer
 
 @api_view(['GET'])
 def activityList(request, username):
-    comments = Comment.objects.filter(username=username)
-    user = get_object_or_404(User, username=username)
-    posts = Post.objects.filter(user=user)
+    activity_user = get_object_or_404(User, username=username)
+    comments = Comment.objects.filter(user=activity_user)
+    posts = Post.objects.filter(user=activity_user)
     
     activity_raw = list(chain(comments, posts))
 
