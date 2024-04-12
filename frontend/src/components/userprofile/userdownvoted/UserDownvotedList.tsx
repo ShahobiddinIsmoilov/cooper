@@ -1,10 +1,10 @@
 import { Stack } from "@mantine/core";
 import { PostProps } from "../../../interfaces/postProps";
+import { useQuery } from "@tanstack/react-query";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import Line from "../../../utils/Line";
 import PostCard from "../../post/postcard/PostCard";
 import getUserPosts from "../../../services/post/getUserPosts";
-import { useQuery } from "@tanstack/react-query";
-import { useAuthContext } from "../../../contexts/AuthContext";
 
 export default function UserDownvotedList({
   sortOption,
