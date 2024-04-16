@@ -43,14 +43,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_warned = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     votes = models.IntegerField(default=0, null=True)
-    avatar_url = models.URLField(max_length=10000, default=None, null=True)
-    joined = models.ManyToManyField('communities.Community', related_name='joined_by')
-    saved_posts = models.ManyToManyField('posts.Post', related_name='saved_by')
-    upvoted_posts = models.ManyToManyField('posts.Post', related_name='upvoted_by')
-    downvoted_posts = models.ManyToManyField('posts.Post', related_name='downvoted_by')
-    saved_comments = models.ManyToManyField('comments.Comment', related_name='saved_by')
-    upvoted_comments = models.ManyToManyField('comments.Comment', related_name='upvoted_by')
-    downvoted_comments = models.ManyToManyField('comments.Comment', related_name='downvoted_by')
+    display_name = models.CharField(max_length=32, default=None, null=True)
+    avatar = models.URLField(max_length=10000, default=None, null=True)
+    telegram = models.URLField(max_length=10000, default=None, null=True)
+    instagram = models.URLField(max_length=10000, default=None, null=True)
+    facebook = models.URLField(max_length=10000, default=None, null=True)
+    twitter = models.URLField(max_length=10000, default=None, null=True)
     
     class Meta:
         indexes = [

@@ -1,4 +1,4 @@
-import { Avatar, Flex, Group, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import UserActivity from "../components/userprofile/useractivity/UserActivity";
 import UserPosts from "../components/userprofile/userposts/UserPosts";
 import UserComments from "../components/userprofile/usercomments/UserComments";
@@ -14,6 +14,10 @@ import Line from "../utils/Line";
 import UserNavbar from "../components/userprofile/usernavbar/UserNavbar";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../services/makeRequest";
+import { UserDetailProps } from "../interfaces/userDetailProps";
+import UserProfile from "../components/userprofile/userinfo/UserProfile";
 
 export default function UserPage() {
   const username = useParams().username;
@@ -44,21 +48,20 @@ export default function UserPage() {
 
   const [active, setActive] = useState("activity");
 
+  const { isPending, error, data } = useQuery({
+    queryKey: [`userpage-${username}`],
+    queryFn: () => makeRequest(`/api/user/detail/${username}`),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "Error";
+
+  const userdetail: UserDetailProps = data.data;
+
   return (
     <Stack p={32} gap={8}>
-      <Flex justify={"space-between"} mb={32}>
-        <Group>
-          <Avatar
-            src={`../../../../src/assets/gordon.jpg`}
-            radius={16}
-            size={150}
-          />
-          <p className="text-white text-3xl font-bold">{username}</p>
-        </Group>
-        <Stack>
-          {/* <p className="text-white text-3xl font-bold">Socials</p> */}
-        </Stack>
-      </Flex>
+      <UserProfile user={userdetail} />
       <UserNavbar active={active} />
       <Line />
       <div className="flex justify-center">

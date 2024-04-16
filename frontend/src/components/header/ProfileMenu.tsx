@@ -3,11 +3,11 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { BiSolidLike } from "react-icons/bi";
-import profilePicture from "../../assets/gordon.jpg";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { Avatar, Button, Group, Menu, Modal, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
+import profilePicture from "../../assets/gordon.jpg";
 
 export default function ProfileMenu() {
   const [opened, { open, close }] = useDisclosure();

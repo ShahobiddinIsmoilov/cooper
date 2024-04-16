@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -95,9 +96,12 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
-class UserDetail(generics.RetrieveAPIView):
+@api_view(['GET'])
+def UserDetail(request, username):
     """
     Retrieving the details about a user
     """
-    queryset = User.objects.all()
-    serializer_class = UserDetailSerializer
+    user = get_object_or_404(User, username=username)
+    serializer = UserDetailSerializer(user, many=False)
+    
+    return Response(serializer.data)

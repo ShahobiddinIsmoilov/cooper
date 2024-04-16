@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import { Avatar, Flex, Group, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../services/makeRequest";
+import { UserDetailProps } from "../interfaces/userDetailProps";
 import Line from "../utils/Line";
 import MyUserNavbar from "../components/userprofile/usernavbar/MyUserNavbar";
 import UserActivity from "../components/userprofile/useractivity/UserActivity";
@@ -11,30 +14,28 @@ import UserSettings from "../components/userprofile/usersettings/UserSettings";
 import UserSaved from "../components/userprofile/usersaved/UserSaved";
 import UserUpvoted from "../components/userprofile/userupvoted/UserUpvoted";
 import UserDownvoted from "../components/userprofile/userdownvoted/UserDownvoted";
+import UserProfile from "../components/userprofile/userinfo/UserProfile";
 
 export default function ProfilePage() {
   const username = useAuthContext().user?.username;
   const navigate = useNavigate();
-
   !username && navigate("/");
-
   const [active, setActive] = useState("activity");
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["profile-page"],
+    queryFn: () => makeRequest(`/api/user/detail/${username}`),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "Error";
+
+  const userdetail: UserDetailProps = data.data;
 
   return (
     <Stack p={32} gap={8}>
-      <Flex justify={"space-between"} mb={32}>
-        <Group>
-          <Avatar
-            src={`../../../../src/assets/gordon.jpg`}
-            radius={16}
-            size={150}
-          />
-          <p className="text-white text-3xl font-bold">{username}</p>
-        </Group>
-        <Stack>
-          {/* <p className="text-white text-3xl font-bold">Socials</p> */}
-        </Stack>
-      </Flex>
+      <UserProfile user={userdetail} />
       <MyUserNavbar active={active} />
       <Line />
       <div className="flex justify-center">
@@ -63,7 +64,7 @@ export default function ProfilePage() {
             />
             <Route
               path="/settings"
-              element={<UserSettings setActive={setActive} />}
+              element={<UserSettings setActive={setActive} user={userdetail} />}
             />
             <Route path="*" element={<Navigate to="" replace />} />
           </Routes>
