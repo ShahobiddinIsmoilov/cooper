@@ -3,7 +3,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from api.users.models import User
+from api.users.serializers import UserDetailSerializer
 from api.communities.models import Community, UserCommunity
+from api.communities.serializers import DetailCommunitySerializer
 from ..models import Post, SavePost, UpvotePost, DownvotePost
 from ..serializers import ListPostSerializer
 
@@ -41,12 +43,20 @@ def postList(request):
     serializer = ListPostSerializer(posts, many=True)
     data = serializer.data
     
-    if user != 'undefined':
-        for i in range(len(data)):
+    for i in range(len(data)):
+        post_user = getattr(posts[i], 'user')
+        user_serializer = UserDetailSerializer(post_user, many=False)
+        data[i]['user_avatar'] = user_serializer.data['avatar']
+        
+        post_community = getattr(getattr(posts[i], 'community'), 'avatar')
+        community_serializer = DetailCommunitySerializer(post_community, many=False)
+        data[i]['community_avatar'] = community_serializer.data['avatar']
+        
+        if user != 'undefined':
             data[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()
             data[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i], user=user).exists()
             data[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()
-    
+            
     return Response(data)
 
 def getHomePosts(user):

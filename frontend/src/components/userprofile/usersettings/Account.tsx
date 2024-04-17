@@ -24,12 +24,12 @@ export default function AccountSettings({
   setPhone,
   enableButtons,
 }: Props) {
-  function handleDisplayNameChange(value: any) {
+  function handleDisplayNameChange(value: string) {
     setDisplayName(value);
     enableButtons();
   }
 
-  function handlePhoneChange(value: any) {
+  function handlePhoneChange(value: string) {
     setPhone(value);
     enableButtons();
   }

@@ -1,7 +1,7 @@
 import { makeRequest } from "./makeRequest";
 
-function getUserDetail(user_id: number) {
-  return makeRequest(`/api/user/users/${user_id}`);
+function getUserDetail(username: number) {
+  return makeRequest(`/api/user/detail/${username}`);
 }
 
 export default getUserDetail;

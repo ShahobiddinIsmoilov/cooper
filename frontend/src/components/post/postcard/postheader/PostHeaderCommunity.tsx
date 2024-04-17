@@ -12,8 +12,8 @@ export default function PostHeaderCommunity({
   return (
     <div className="flex justify-between">
       <div className="flex items-center gap-2">
-        <UserLinkAvatar username={post.username} user_id={post.user} />
-        <UserLink username={post.username} user_id={post.user} />
+        <UserLinkAvatar username={post.username} avatar={post.user_avatar} />
+        <UserLink username={post.username} />
         <span className="opacity-50 text-xs xs:text-base"> ∙ 8 soat oldin</span>
       </div>
       <span className="cursor-pointer flex items-center opacity-50 pr-1 hover:opacity-100 xs:p-0">

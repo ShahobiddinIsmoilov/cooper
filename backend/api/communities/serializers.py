@@ -13,7 +13,8 @@ class ListCommunitySerializer(serializers.ModelSerializer):
                   'link',
                   'description',
                   'members',
-                  'avatar_url']
+                  'avatar',
+                  'banner']
 
 
 class DetailCommunitySerializer(serializers.ModelSerializer):
@@ -45,5 +46,5 @@ class UpdateCommunitySerializer(serializers.ModelSerializer):
         model = Community
         fields = ['description',
                   'rules',
-                  'avatar_url',
-                  'banner_url']
+                  'avatar',
+                  'banner']

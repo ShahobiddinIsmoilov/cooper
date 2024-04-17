@@ -1,6 +1,8 @@
 export interface PostProps {
   id: number;
   username: string;
+  user_avatar: string;
+  community_avatar: string;
   community_name: string;
   community_link: string;
   type: string;

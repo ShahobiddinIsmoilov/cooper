@@ -13,7 +13,8 @@ from .serializers import (NoteSerializer,
                           LoginSerializer,
                           LogoutSerializer,
                           UserSerializer,
-                          UserDetailSerializer)
+                          UserDetailSerializer,
+                          UserUpdateSerializer)
 
 User = get_user_model()
 
@@ -97,7 +98,7 @@ class UserList(generics.ListAPIView):
 
 
 @api_view(['GET'])
-def UserDetail(request, username):
+def userDetail(request, username):
     """
     Retrieving the details about a user
     """
@@ -105,3 +106,28 @@ def UserDetail(request, username):
     serializer = UserDetailSerializer(user, many=False)
     
     return Response(serializer.data)
+
+
+@api_view(['PUT', 'PATCH'])
+def userUpdate(request, pk):
+    """
+    Updating user settings
+    """
+    user = get_object_or_404(User, pk=pk)
+    serializer = UserUpdateSerializer(instance=user, data=request.data)
+    
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+    
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def userDelete(request, pk):
+    """
+    Deleting a user
+    """
+    user = get_object_or_404(User, pk=pk)
+    user.delete()
+    
+    return Response(status=status.HTTP_204_NO_CONTENT)

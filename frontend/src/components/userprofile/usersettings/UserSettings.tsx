@@ -2,9 +2,11 @@ import { Button, Stack } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { UserDetailProps } from "../../../interfaces/userDetailProps";
 import { FaTrashAlt } from "react-icons/fa";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Account from "./Account";
 import Social from "./Social";
 import Line from "../../../utils/Line";
+import useCredentials from "../../../services/useCredentials";
 
 interface Props {
   user: UserDetailProps;
@@ -21,7 +23,7 @@ export default function UserComments({ setActive, user }: Props) {
   const initialTelegram = user.telegram ? user.telegram : "";
   const initialInstagram = user.instagram ? user.instagram : "";
   const initialFacebook = user.facebook ? user.facebook : "";
-  const initialTwitter = user.twitter ? user.display_name : "";
+  const initialTwitter = user.twitter ? user.twitter : "";
 
   const [displayName, setDisplayName] = useState(initialDisplayName);
   const [phone, setPhone] = useState(initialPhone);
@@ -49,9 +51,34 @@ export default function UserComments({ setActive, user }: Props) {
     setTwitter(initialTwitter);
   }
 
+  const api = useCredentials();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (newSettings: {}) =>
+      api.put(`/api/user/update/${user.id}/`, newSettings),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["profile-page"],
+      });
+    },
+  });
+
+  function handleSave() {
+    const newSettings = {
+      display_name: displayName,
+      phone: phone,
+      telegram: telegram,
+      instagram: instagram,
+      facebook: facebook,
+      twitter: twitter,
+    };
+    mutation.mutate(newSettings);
+  }
+
   return (
     <Stack gap={32}>
-      <div className="gap-2 flex justify-end items-center -mb-4">
+      <div className="gap-2 flex justify-end items-center -mb-8">
         <Button
           onClick={discard}
           disabled={!enableButtons()}
@@ -62,6 +89,7 @@ export default function UserComments({ setActive, user }: Props) {
           Discard changes
         </Button>
         <Button
+          onClick={handleSave}
           disabled={!enableButtons()}
           className={`px-3 rounded-xl ${
             enableButtons()
@@ -80,9 +108,20 @@ export default function UserComments({ setActive, user }: Props) {
         setPhone={setPhone}
         enableButtons={enableButtons}
       />
-      <Social user={user} />
+      <Social
+        user={user}
+        telegram={telegram}
+        instagram={instagram}
+        facebook={facebook}
+        twitter={twitter}
+        setTelegram={setTelegram}
+        setInstagram={setInstagram}
+        setFacebook={setFacebook}
+        setTwitter={setTwitter}
+        enableButtons={enableButtons}
+      />
       <div>
-        <p className="mb-2 text-xs font-bold tracking-widest">DELETE ACCOUNT</p>
+        <p className="mb-2 text-xs font-bold tracking-widest">DANGER ZONE</p>
         <Line />
       </div>
       <button className="w-fit text-red-400 flex items-center gap-1">

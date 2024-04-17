@@ -5,9 +5,49 @@ import { span } from "./Account";
 
 interface Props {
   user: UserDetailProps;
+  telegram: string;
+  instagram: string;
+  facebook: string;
+  twitter: string;
+  setTelegram: (value: string) => void;
+  setInstagram: (value: string) => void;
+  setFacebook: (value: string) => void;
+  setTwitter: (value: string) => void;
+  enableButtons: () => boolean;
 }
 
-export default function Social({ user }: Props) {
+export default function Social({
+  user,
+  telegram,
+  instagram,
+  facebook,
+  twitter,
+  setTelegram,
+  setInstagram,
+  setFacebook,
+  setTwitter,
+  enableButtons,
+}: Props) {
+  function handleTelegramChange(value: string) {
+    setTelegram(value);
+    enableButtons();
+  }
+
+  function handleInstagramChange(value: string) {
+    setInstagram(value);
+    enableButtons();
+  }
+
+  function handleFacebookChange(value: string) {
+    setFacebook(value);
+    enableButtons();
+  }
+
+  function handleTwitterChange(value: string) {
+    setTwitter(value);
+    enableButtons();
+  }
+
   return (
     <Stack>
       <div>
@@ -18,6 +58,8 @@ export default function Social({ user }: Props) {
         <Grid.Col span={span}>
           <p className="m-1">Telegram:</p>
           <input
+            onChange={(e) => handleTelegramChange(e.target.value)}
+            value={telegram}
             type="text"
             maxLength={200}
             id="telegram"
@@ -29,6 +71,8 @@ export default function Social({ user }: Props) {
         <Grid.Col span={span}>
           <p className="m-1">Instagram:</p>
           <input
+            onChange={(e) => handleInstagramChange(e.target.value)}
+            value={instagram}
             type="text"
             maxLength={200}
             id="instagram"
@@ -40,6 +84,8 @@ export default function Social({ user }: Props) {
         <Grid.Col span={span}>
           <p className="m-1">Facebook:</p>
           <input
+            onChange={(e) => handleFacebookChange(e.target.value)}
+            value={facebook}
             type="text"
             maxLength={200}
             id="facebook"
@@ -51,6 +97,8 @@ export default function Social({ user }: Props) {
         <Grid.Col span={span}>
           <p className="m-1">Twitter / X:</p>
           <input
+            onChange={(e) => handleTwitterChange(e.target.value)}
+            value={twitter}
             type="text"
             maxLength={200}
             id="twitter"

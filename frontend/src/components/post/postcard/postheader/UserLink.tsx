@@ -3,17 +3,16 @@ import { Link } from "react-router-dom";
 import { ImSpinner4 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
 import { UserDetailProps } from "../../../../interfaces/userDetailProps";
-import getUserDetail from "../../../../services/getUserDetail";
-import { IoIosMail } from "react-icons/io";
 import { BiSolidLike } from "react-icons/bi";
 import { useAuthContext } from "../../../../contexts/AuthContext";
+import { makeRequest } from "../../../../services/makeRequest";
+import { Avatar } from "@mantine/core";
 
 interface UserLinkProps {
-  username?: string;
-  user_id: number;
+  username: string;
 }
 
-export default function UserLink({ username, user_id }: UserLinkProps) {
+export default function UserLink({ username }: UserLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
   const user = useAuthContext().user;
 
@@ -42,16 +41,16 @@ export default function UserLink({ username, user_id }: UserLinkProps) {
       >
         {username}
       </Link>
-      {showPreview && <Preview user_id={user_id} />}
+      {showPreview && <Preview username={username} />}
     </div>
   );
 }
 
-function Preview({ user_id }: UserLinkProps) {
+function Preview({ username }: UserLinkProps) {
   const { isPending, error, data } = useQuery({
-    queryKey: [`user-preview-${user_id}`],
-    queryFn: () => getUserDetail(user_id),
-    retry: false,
+    queryKey: [`user-preview-${username}`],
+    queryFn: () => makeRequest(`/api/user/detail/${username}`),
+    retry: 2,
   });
 
   if (isPending)
@@ -85,8 +84,9 @@ function UserPreview({ userDetail }: UserPreviewProps) {
   return (
     <div className="w-96">
       <div className="flex items-center gap-2 m-4">
-        <img
-          src={`../../../../src/assets/gordon.jpg`}
+        <Avatar
+          radius={12}
+          src={`../../../../src/assets/${userDetail.avatar}`}
           className="w-20 h-20 min-w-20 min-h-20 object-cover rounded-lg"
         />
         <div className="mx-1 w-full">
@@ -97,15 +97,14 @@ function UserPreview({ userDetail }: UserPreviewProps) {
                   ? `/profile/`
                   : `/user/${userDetail.username}`
               }
-              className="text-xl text-orange-400 hover:text-orange-300 font-bold overflow-hidden max-w-64 break-words"
+              className="font-bold overflow-hidden max-w-64 break-words"
             >
-              {userDetail.username}
+              <p className="text-xl hover:text-indigo-400">
+                {userDetail.display_name}
+              </p>
+              <p className="text-orange-400">{userDetail.username}</p>
             </Link>
           </div>
-          <button className="bg-cyan-700 hover:bg-cyan-600 mt-2 rounded-full text-white px-2 py-1 flex items-center gap-1 text-sm">
-            <IoIosMail size={20} />
-            Xabar yozish
-          </button>
         </div>
       </div>
       <div className="flex justify-center w-96 px-6 pb-4">

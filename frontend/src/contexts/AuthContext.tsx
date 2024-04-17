@@ -39,6 +39,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     <p className="text-2xl text-center">Welcome back</p>
   );
   const [showRegisterButton, setShowRegisterButton] = useState(true);
+
   async function register(userData: {}) {
     try {
       await makeRequest("/api/user/register/", {

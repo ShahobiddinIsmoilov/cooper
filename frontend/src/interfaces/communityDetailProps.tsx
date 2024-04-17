@@ -12,7 +12,7 @@ export interface CommunityDetailProps {
   members: number;
   posts: number;
   comments: number;
-  avatar_url: URL;
+  avatar: URL;
   banner_url: URL;
   is_joined: boolean;
 }

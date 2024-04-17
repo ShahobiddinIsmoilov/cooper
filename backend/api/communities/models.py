@@ -18,8 +18,8 @@ class Community(models.Model):
     upvotes = models.IntegerField(default=0, null=True)
     downvotes = models.IntegerField(default=0, null=True)
     rules = models.TextField(max_length=5000, default=None, null=True)
-    avatar_url = models.URLField(max_length=10000, default=None, null=True)
-    banner_url = models.URLField(max_length=10000, default=None, null=True)
+    avatar = models.ImageField(upload_to='community/', default='community/default.png', null=True)
+    banner = models.ImageField(upload_to='community/', default='community/default.png', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:

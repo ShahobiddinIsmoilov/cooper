@@ -7,11 +7,24 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { Avatar, Button, Group, Menu, Modal, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
-import profilePicture from "../../assets/gordon.jpg";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../services/makeRequest";
+import { UserDetailProps } from "../../interfaces/userDetailProps";
 
-export default function ProfileMenu() {
+export default function ProfileMenu({ username }: { username: string }) {
   const [opened, { open, close }] = useDisclosure();
   const logout = useAuthContext().logoutUser;
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["profile-menu"],
+    queryFn: () => makeRequest(`/api/user/detail/${username}`),
+  });
+
+  if (isPending) return null;
+
+  if (error) return null;
+
+  const user = data.data;
 
   return (
     <div>
@@ -20,13 +33,13 @@ export default function ProfileMenu() {
           <button className="rounded-full">
             <Avatar
               size={50}
-              src={profilePicture}
+              src={`../../../../src/assets/${user.avatar}`}
               className="border-4 border-white border-opacity-0 hover:border-opacity-50 cursor-pointer"
             />
           </button>
         </Menu.Target>
         <Menu.Dropdown>
-          <ProfileInfoMenu />
+          <ProfileInfoMenu user={user} />
           <Menu.Item p={0}>
             <Link to="/profile">
               <MenuItem icon={<FaUserCircle size={30} />} text="View Profile" />
@@ -97,14 +110,16 @@ function MenuItem({ icon, text, onClick }: MenuItemProps) {
   );
 }
 
-function ProfileInfoMenu() {
-  const { user } = useAuthContext();
-
+function ProfileInfoMenu({ user }: { user: UserDetailProps }) {
   return (
     <div className="gap-2 px-4 py-2 flex items-center">
-      <img src={profilePicture} className="rounded-lg w-14 h-14 min-w-14" />
+      <Avatar
+        radius={12}
+        src={`../../../../src/assets/${user.avatar}`}
+        className="rounded-lg w-14 h-14 min-w-14"
+      />
       <div className="overflow-hidden">
-        <p className="text-orange-400 text-lg truncate">{user?.username}</p>
+        <p className="text-orange-400 text-lg truncate">{user.username}</p>
         <p className="flex items-center gap-1">
           <BiSolidLike className="text-yellow-400" />
           <span className="opacity-75">{(2458).toLocaleString()} likes</span>

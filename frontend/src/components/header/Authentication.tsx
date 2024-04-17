@@ -39,6 +39,7 @@ export function Authentication() {
     e.preventDefault();
     const userData = {
       username: username,
+      display_name: username,
       password: password,
     };
     registerUser(userData);
@@ -66,7 +67,7 @@ export function Authentication() {
   }
 
   return user ? (
-    <ProfileMenu />
+    <ProfileMenu username={user.username} />
   ) : (
     <>
       <Modal
