@@ -3,11 +3,12 @@ import { useDisclosure } from "@mantine/hooks";
 import { Modal, Stack } from "@mantine/core";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import ProfileMenu from "./ProfileMenu";
 import UsernameLogin from "../modals/auth/UsernameLogin";
 import PasswordLogin from "../modals/auth/PasswordLogin";
 import UsernameRegister from "../modals/auth/UsernameRegister";
 import PasswordRegister from "../modals/auth/PasswordRegister";
+import { FaPlus } from "react-icons/fa6";
+import Dashboard from "./Dashboard";
 
 export function Authentication() {
   const {
@@ -67,7 +68,7 @@ export function Authentication() {
   }
 
   return user ? (
-    <ProfileMenu username={user.username} />
+    <Dashboard username={user.username} />
   ) : (
     <>
       <Modal
@@ -135,7 +136,19 @@ export function Authentication() {
           </form>
         )}
       </Modal>
-      <button onClick={handleOpen}>Log in</button>
+      <button
+        onClick={handleOpen}
+        className="py-2 px-3 flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full"
+      >
+        <FaPlus size={20} />
+        Create
+      </button>
+      <button
+        onClick={handleOpen}
+        className="bg-cyan-700 hover:bg-cyan-600 rounded-full py-2 px-3"
+      >
+        Log in
+      </button>
     </>
   );
 }

@@ -49,6 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     instagram = models.URLField(max_length=10000, default=None, null=True)
     facebook = models.URLField(max_length=10000, default=None, null=True)
     twitter = models.URLField(max_length=10000, default=None, null=True)
+    notifications = models.IntegerField(default=0, null=True)
     
     class Meta:
         indexes = [

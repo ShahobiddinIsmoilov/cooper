@@ -10,4 +10,5 @@ export interface UserDetailProps {
   instagram: string;
   facebook: string;
   twitter: string;
+  notifications: number;
 }

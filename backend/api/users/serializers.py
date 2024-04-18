@@ -104,7 +104,8 @@ class UserDetailSerializer(serializers.ModelSerializer):
                   'telegram',
                   'instagram',
                   'facebook',
-                  'twitter']
+                  'twitter',
+                  'notifications']
         
         
 class UserUpdateSerializer(serializers.ModelSerializer):

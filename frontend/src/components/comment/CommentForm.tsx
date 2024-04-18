@@ -1,10 +1,10 @@
 import { useState } from "react";
-import FancyCommentEditor from "./FancyCommentEditor";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { Button, Stack } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import useCredentials from "../../services/useCredentials";
 import { useComments } from "../../contexts/CommentContext";
+import FancyCommentEditor from "./FancyCommentEditor";
+import useCredentials from "../../services/useCredentials";
 
 interface CommentFormProps {
   post: number;
@@ -67,6 +67,7 @@ export default function CommentForm({
       parent_username: parent_username,
       body: HTMLComment,
     };
+    console.log(newComment);
     mutatation.mutate(newComment);
   }
 

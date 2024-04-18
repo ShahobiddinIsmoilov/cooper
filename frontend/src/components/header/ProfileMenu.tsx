@@ -7,34 +7,21 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { Avatar, Button, Group, Menu, Modal, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { makeRequest } from "../../services/makeRequest";
 import { UserDetailProps } from "../../interfaces/userDetailProps";
 
-export default function ProfileMenu({ username }: { username: string }) {
+export default function ProfileMenu({ user }: { user: UserDetailProps }) {
   const [opened, { open, close }] = useDisclosure();
   const logout = useAuthContext().logoutUser;
-
-  const { isPending, error, data } = useQuery({
-    queryKey: ["profile-menu"],
-    queryFn: () => makeRequest(`/api/user/detail/${username}`),
-  });
-
-  if (isPending) return null;
-
-  if (error) return null;
-
-  const user = data.data;
 
   return (
     <div>
       <Menu width={250} position="bottom-end" offset={4} radius={12}>
         <Menu.Target>
-          <button className="rounded-full">
+          <button className="hover:bg-dark-700 rounded-full p-1">
             <Avatar
-              size={50}
+              size={36}
               src={`../../../../src/assets/${user.avatar}`}
-              className="border-4 border-white border-opacity-0 hover:border-opacity-50 cursor-pointer"
+              className="hover:border-opacity-50 cursor-pointer"
             />
           </button>
         </Menu.Target>

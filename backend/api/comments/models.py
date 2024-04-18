@@ -68,6 +68,19 @@ def increment_comments(sender, instance, created, **kwargs):
         community = Community.objects.get(id=instance.community_id)
         community.comments += 1
         community.save()
+        
+        Notification = apps.get_model('inbox', 'Notification')
+        parent_user = User.objects.get(pk=instance.parent_user)
+        Notification.objects.create(
+            parent_user=parent_user,
+            parent_comment=instance.parent,
+            comment=instance,
+            user=instance.user_id,
+            username=instance.username,
+            parent_post=instance.post_id,
+            community=instance.community_id,
+            type='reply'
+        ).save()
 
         
 @receiver(post_delete, sender=Comment)
@@ -83,6 +96,11 @@ def decrement_comments(sender, instance, **kwargs):
     if community.comments > 0:
         community.comments -= 1
     community.save()
+    
+    Notification = apps.get_model('inbox', 'Notification')
+    notification = Notification.objects.filter(comment=instance.pk)
+    if notification.exists():
+        notification.delete()
     
     
 class UpvoteComment(models.Model):

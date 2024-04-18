@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'api.posts',
     'api.communities',
     'api.comments',
+    'api.inbox',
 ]
 
 MIDDLEWARE = [
@@ -70,12 +71,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://127.0.0.1:8111',
-#     'https://127.0.0.1:8111',
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'http://192.168.43.213:3000',
+]
 
 # CORS_ALLOW_HEADERS = [
 #     'Content-Type',
@@ -141,7 +141,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 

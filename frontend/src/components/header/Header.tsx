@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
 import { Authentication } from "./Authentication";
+import { Flex } from "@mantine/core";
+import { FaCubes } from "react-icons/fa";
 
 export default function Header() {
   return (
-    <div className="flex justify-between bg-dark-900 h-full text-white px-4 xs:px-8 py-2 items-center">
-      <Link to="/home" className="no-underline">
-        <p className="text-base xs:text-2xl">Shredded</p>
+    <div className="flex justify-between bg-dark-900 h-full text-white px-4 xs:px-8 py-2">
+      <Link to="/home" className="flex items-center">
+        <FaCubes size={32} />
       </Link>
-      <Authentication />
+      <Flex align="center" gap={8}>
+        <Authentication />
+      </Flex>
     </div>
   );
 }
