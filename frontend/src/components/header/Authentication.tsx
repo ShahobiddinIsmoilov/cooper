@@ -3,11 +3,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { Modal, Stack } from "@mantine/core";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { FaPlus } from "react-icons/fa6";
 import UsernameLogin from "../modals/auth/UsernameLogin";
 import PasswordLogin from "../modals/auth/PasswordLogin";
 import UsernameRegister from "../modals/auth/UsernameRegister";
 import PasswordRegister from "../modals/auth/PasswordRegister";
-import { FaPlus } from "react-icons/fa6";
 import Dashboard from "./Dashboard";
 
 export function Authentication() {

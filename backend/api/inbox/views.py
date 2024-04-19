@@ -38,10 +38,10 @@ def notificationList(request):
 
 
 # Updating notification "is_read" state
-@api_view(['PATCH'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def notificationAction(request):
-    user = request.user
+    parent_user = request.user.id
     action = request.data.get('action')
     
     if action == 'read_one':
@@ -49,8 +49,9 @@ def notificationAction(request):
         notification = Notification.objects.get(pk=pk)
         notification.is_read = True
         notification.save()
-    elif action == 'read_many':
-        notifications = Notification.objects.filter(user=user, is_read=False)
+    elif action == 'read_all':
+        notifications = Notification.objects.filter(parent_user=parent_user, is_read=False)
+        print(notifications)
         for notification in notifications:
             notification.is_read = True
             notification.save()

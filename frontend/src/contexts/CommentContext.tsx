@@ -18,6 +18,7 @@ export interface CommentContextProps {
   rootComments: {};
   post_id: number;
   post_title: string;
+  post_user: number;
   community: number;
   community_name: string;
   community_link: string;
@@ -33,6 +34,7 @@ interface CommentProviderProps {
   children: ReactNode;
   post_id: number;
   post_title: string;
+  post_user: number;
   community: number;
   community_name: string;
   community_link: string;
@@ -46,6 +48,7 @@ function CommentProvider({
   children,
   post_id,
   post_title,
+  post_user,
   community,
   community_name,
   community_link,
@@ -82,6 +85,7 @@ function CommentProvider({
     rootComments: commentsByParent[0],
     post_id: post_id,
     post_title: post_title,
+    post_user: post_user,
     community: community,
     community_name: community_name,
     community_link: community_link,

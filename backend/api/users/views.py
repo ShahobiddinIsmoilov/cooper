@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.apps import apps
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -103,9 +104,14 @@ def userDetail(request, username):
     Retrieving the details about a user
     """
     user = get_object_or_404(User, username=username)
-    serializer = UserDetailSerializer(user, many=False)
+    data = UserDetailSerializer(user, many=False).data
     
-    return Response(serializer.data)
+    Notification = apps.get_model('inbox', 'Notification')
+    notifications = Notification.objects.filter(parent_user=user.id, is_read=False)
+    
+    data['notifications'] = len(notifications)
+    
+    return Response(data)
 
 
 @api_view(['PUT', 'PATCH'])

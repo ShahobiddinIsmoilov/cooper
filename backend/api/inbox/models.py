@@ -30,20 +30,3 @@ class Notification(models.Model):
         if self.type == 'reply':
             return 'Reply: ' + str(self.username) + ' -> ' + str(self.parent_user)
         return self.type
-    
-
-@receiver(post_save, sender=Comment)
-def increment_comments(sender, instance, created, **kwargs):
-    if created:
-        user = User.objects.get(id=instance.parent_user)
-        user.notifications += 1
-        user.save()
-        
-        
-@receiver(post_delete, sender=Comment)
-def decrement_comments(sender, instance, **kwargs):
-    user = User.objects.get(id=instance.parent_user)
-    if user.notifications > 0:
-        user.notifications -= 1
-    user.save()
-        

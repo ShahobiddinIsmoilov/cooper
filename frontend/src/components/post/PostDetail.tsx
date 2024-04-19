@@ -43,6 +43,7 @@ export default function PostDetail({
       <CommentProvider
         post_id={post.id}
         post_title={post.title}
+        post_user={post.user}
         community={community}
         community_name={community_name}
         community_link={community_link}

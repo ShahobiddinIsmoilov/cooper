@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { CommentProps } from "../../../interfaces/commentProps";
+import { useComments } from "../../../contexts/CommentContext";
 import CommentHeader from "./CommentHeader";
 import CommentFooter from "./CommentFooter";
 import CommentList from "../CommentList";
-import { useComments } from "../../../contexts/CommentContext";
 import ReactHtmlParser from "react-html-parser";
 import CommentForm from "../CommentForm";
 
@@ -37,7 +37,7 @@ export default function CommentCard({ comment, last }: CommentCardProps) {
               setHidden={setHidden}
             />
             <div className="flex">
-              <div>
+              <div className="overflow-hidden">
                 {!hidden && (
                   <div className="post-detail mx-2 xs:mx-4 mt-2">
                     {ReactHtmlParser(comment.body)}

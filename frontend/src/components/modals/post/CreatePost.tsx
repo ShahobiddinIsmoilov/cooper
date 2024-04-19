@@ -6,18 +6,18 @@ import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import { GrTextAlignLeft } from "react-icons/gr";
 import { FiLink } from "react-icons/fi";
-import { FaRegImage } from "react-icons/fa6";
+import { FaPlus, FaRegImage } from "react-icons/fa6";
 import { FileWithPath } from "@mantine/dropzone";
 import useCredentials from "../../../services/useCredentials";
 import CreatePostForm from "./CreatePostForm";
 
 interface Props {
-  community: number;
-  community_name: string;
-  community_link: string;
+  community?: number;
+  community_name?: string;
+  community_link?: string;
 }
 
-export default function CreatePostButton(props: Props) {
+export default function CreatePost(props: Props) {
   const api = useCredentials();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -83,8 +83,9 @@ export default function CreatePostButton(props: Props) {
     <>
       <Menu radius={12}>
         <Menu.Target>
-          <button className="text-white rounded-full px-4 py-1 border text-base ml-4 hover:bg-dark-600 h-8">
-            + Create Post
+          <button className="p-[10px] flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full">
+            <FaPlus size={20} />
+            Create
           </button>
         </Menu.Target>
         <Menu.Dropdown w={150} className="bg-dark-850">

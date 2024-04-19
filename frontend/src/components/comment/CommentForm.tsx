@@ -9,6 +9,7 @@ import useCredentials from "../../services/useCredentials";
 interface CommentFormProps {
   post: number;
   parent: number;
+  post_user?: number;
   parent_user?: number;
   parent_username?: string;
   placeholder?: string;
@@ -18,6 +19,7 @@ interface CommentFormProps {
 
 export default function CommentForm({
   post,
+  post_user,
   parent,
   parent_user,
   parent_username,
@@ -63,7 +65,7 @@ export default function CommentForm({
       community_link: community_link,
       username: username,
       parent: parent,
-      parent_user: parent_user,
+      parent_user: parent_user ? parent_user : post_user,
       parent_username: parent_username,
       body: HTMLComment,
     };

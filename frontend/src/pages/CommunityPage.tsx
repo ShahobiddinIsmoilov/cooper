@@ -68,11 +68,13 @@ export default function CommunityPage() {
                 community_id={community.id}
                 community_link={community.link}
               />
-              <CreatePost
-                community={community.id}
-                community_name={community.name}
-                community_link={community.link}
-              />
+              <div className="rounded-full border">
+                <CreatePost
+                  community={community.id}
+                  community_name={community.name}
+                  community_link={community.link}
+                />
+              </div>
             </div>
           </div>
           <PostFeed filter="community" community={community.id} />
