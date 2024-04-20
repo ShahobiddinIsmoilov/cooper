@@ -1,7 +1,10 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { AppShell, Container, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useWindowSize } from "./contexts/WindowSizeContext";
+import { MdMenu } from "react-icons/md";
+import { useState } from "react";
+import { FaRedditAlien } from "react-icons/fa6";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
@@ -14,10 +17,17 @@ import ProfilePage from "./pages/ProfilePage";
 import ExplorePage from "./pages/ExplorePage";
 import AllPage from "./pages/AllPage";
 import LostPage from "./pages/LostPage";
+import Drawer from "react-modern-drawer";
+import "react-modern-drawer/dist/index.css";
 
 export default function Layout() {
   const [opened] = useDisclosure();
   const { screenHeight } = useWindowSize();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
   return (
     <>
@@ -30,12 +40,42 @@ export default function Layout() {
         }}
       >
         <AppShell.Header>
-          <Header />
+          <Flex className="bg-dark-900 items-center h-full">
+            <button onClick={toggleDrawer} className="ml-4 lg:hidden">
+              <MdMenu size={28} />
+            </button>
+            <div className="flex-grow h-full">
+              <Header />
+            </div>
+          </Flex>
         </AppShell.Header>
 
         <AppShell.Navbar>
           <Navbar />
         </AppShell.Navbar>
+
+        <div className="lg:hidden">
+          <Drawer
+            open={isOpen}
+            onClose={toggleDrawer}
+            direction="left"
+            duration={200}
+          >
+            <div
+              className={`flex items-center gap-8 bg-dark-850 w-[280px] ${
+                screenHeight >= 700 ? "h-[60px]" : "h-[50px]"
+              }`}
+            >
+              <button onClick={toggleDrawer} className="ml-4">
+                <MdMenu size={28} />
+              </button>
+              <Link to="/home">
+                <FaRedditAlien size={32} />
+              </Link>
+            </div>
+            <Navbar />
+          </Drawer>
+        </div>
 
         <AppShell.Main>
           <Flex justify={{ xs: "flex-center" }}>

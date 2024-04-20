@@ -79,7 +79,7 @@ export default function UserProfile({ user }: Props) {
           <SocialIcons user={user} />
         </div>
       </Flex>
-      <Stack w={200} miw={200} justify="center" align="end">
+      {/* <Stack w={200} miw={200} justify="center" align="end">
         <div className="text-end">
           <p className="opacity-75">Date joined:</p>
           <p className="text-white text-lg">12-aprel, 2024</p>
@@ -91,7 +91,7 @@ export default function UserProfile({ user }: Props) {
             {user.votes.toLocaleString()}
           </p>
         </div>
-      </Stack>
+      </Stack> */}
     </Flex>
   );
 }

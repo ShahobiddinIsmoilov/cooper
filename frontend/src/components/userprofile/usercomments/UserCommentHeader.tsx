@@ -31,7 +31,7 @@ export default function CommentHeader({ comment }: CommentCardProps) {
         </Link>
         <div className="w-[38px]" />
         <div className="inline-block mr-2">
-          <UserLink username={comment.username} user_id={comment.user} />
+          <UserLink username={comment.username} />
         </div>
         <div className="inline-block">
           {comment.parent === 0 ? (
@@ -39,10 +39,7 @@ export default function CommentHeader({ comment }: CommentCardProps) {
           ) : (
             <Flex className="gap-2">
               <span className="opacity-50">replied to </span>
-              <UserLink
-                username={comment.parent_username}
-                user_id={comment.parent_user}
-              />
+              <UserLink username={comment.parent_username} />
               <span className="opacity-50">3 hours ago </span>
             </Flex>
           )}

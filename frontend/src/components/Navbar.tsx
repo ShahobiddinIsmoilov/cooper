@@ -4,6 +4,7 @@ import { FaHome } from "react-icons/fa";
 import { FaGlobe } from "react-icons/fa";
 import { MdOutlineExplore } from "react-icons/md";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useWindowSize } from "../contexts/WindowSizeContext";
 import CreateCommunityButton from "./modals/community/CreateCommunityButton";
 import JoinedCommunities from "./community/JoinedCommunities";
 import DiscoverCommunities from "./community/DiscoverCommunities";
@@ -12,10 +13,13 @@ import Credits from "./Credits";
 
 function Navbar() {
   const user = useAuthContext().user;
+  const { screenWidth } = useWindowSize();
 
   return (
     <div
-      className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-hidden hover:overflow-y-scroll navbar-scrollbar flex flex-col justify-between`}
+      className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-hidden hover:overflow-y-scroll navbar-scrollbar flex flex-col justify-between ${
+        screenWidth >= 1408 ? "w-[300px]" : "w-[280px]"
+      }`}
     >
       <div>
         <div className="mt-2">
