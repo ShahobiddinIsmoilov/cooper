@@ -39,7 +39,10 @@ export default function NotificationList({ markAsRead, unreadExists }: Props) {
   const notifs = data.data;
 
   return (
-    <Stack gap={0} className="my-1 max-h-96 overflow-y-scroll rounded-xl">
+    <Stack
+      gap={0}
+      className="my-1 max-h-96 rounded-xl overflow-hidden hover:overflow-y-scroll notif-scrollbar"
+    >
       <div className="flex justify-end">
         <button
           onClick={handleMarkReadAll}

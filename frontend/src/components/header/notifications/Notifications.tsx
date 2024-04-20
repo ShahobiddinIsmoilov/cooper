@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import NotificationList from "./NotificationList";
 import useCredentials from "../../../services/useCredentials";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 
 export default function Notifications({ count }: { count: number }) {
   const [notifCount, setNotifCount] = useState(count);
@@ -31,6 +32,9 @@ export default function Notifications({ count }: { count: number }) {
     query.invalidateQueries({ queryKey: ["notifications"] });
   }
 
+  const screenHeight = useWindowSize().screenHeight;
+  const bellsize = screenHeight > 700 ? 20 : 16;
+
   return (
     <Menu
       width={400}
@@ -41,7 +45,7 @@ export default function Notifications({ count }: { count: number }) {
     >
       <Menu.Target>
         <button className="relative hover:bg-dark-700 border-white border-opacity-25 rounded-full p-3">
-          <FaBell size={20} />
+          <FaBell size={bellsize} />
           {notifCount > 0 && (
             <div className="w-5 h-5 top-1 right-1 absolute bg-red-600 text-white text-xs flex justify-center items-center rounded-full">
               {notifCount}

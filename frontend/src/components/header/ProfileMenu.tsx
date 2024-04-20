@@ -8,10 +8,14 @@ import { Avatar, Button, Group, Menu, Modal, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
 import { UserDetailProps } from "../../interfaces/userDetailProps";
+import { useWindowSize } from "../../contexts/WindowSizeContext";
 
 export default function ProfileMenu({ user }: { user: UserDetailProps }) {
   const [opened, { open, close }] = useDisclosure();
   const logout = useAuthContext().logoutUser;
+
+  const screenHeight = useWindowSize().screenHeight;
+  const avatarsize = screenHeight > 700 ? 36 : 32;
 
   return (
     <div>
@@ -19,7 +23,7 @@ export default function ProfileMenu({ user }: { user: UserDetailProps }) {
         <Menu.Target>
           <button className="hover:bg-dark-700 rounded-full p-1">
             <Avatar
-              size={36}
+              size={avatarsize}
               src={`../../../../src/assets/${user.avatar}`}
               className="hover:border-opacity-50 cursor-pointer"
             />

@@ -5,6 +5,7 @@ import { useAuthContext } from "../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
 import Line from "../../../utils/Line";
 import UserCommentList from "./UserCommentList";
+import ScrollTop from "../../ScrollTop";
 
 interface Props {
   setActive: (value: string) => void;
@@ -36,6 +37,7 @@ export default function UserComments({ setActive }: Props) {
       </Group>
       <Line />
       <UserCommentList sortOption={sortOption} />
+      <ScrollTop />
     </>
   );
 }

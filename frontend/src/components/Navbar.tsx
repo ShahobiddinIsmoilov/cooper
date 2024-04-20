@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ReactNode } from "react";
 import { FaHome } from "react-icons/fa";
 import { FaGlobe } from "react-icons/fa";
@@ -8,54 +8,56 @@ import CreateCommunityButton from "./modals/community/CreateCommunityButton";
 import JoinedCommunities from "./community/JoinedCommunities";
 import DiscoverCommunities from "./community/DiscoverCommunities";
 import AllCommunities from "./community/AllCommunities";
+import Credits from "./Credits";
 
 function Navbar() {
   const user = useAuthContext().user;
 
   return (
-    <div className="bg-dark-850 text-white h-full overflow-x-hidden overflow-y-scroll">
-      <Link to="/home">
-        <SidebarItem icon={<FaHome size={30} />} text="Home" />
-      </Link>
-      <Link to="/explore">
-        <SidebarItem icon={<MdOutlineExplore size={30} />} text="Explore" />
-      </Link>
-      <Link to="/all">
-        <SidebarItem icon={<FaGlobe size={30} />} text="All" />
-      </Link>
+    <div
+      className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-hidden hover:overflow-y-scroll navbar-scrollbar flex flex-col justify-between`}
+    >
       <div>
-        {user && (
-          <>
-            <CustomLine />
-            <p className="flex justify-center">
-              <CreateCommunityButton />
-            </p>
-          </>
-        )}
-        {!user && (
-          <>
-            <CustomLine />
-            <AllCommunities />
-          </>
-        )}
-        {user && (
-          <>
-            <CustomLine />
-            <JoinedCommunities user={user.user_id} />
-          </>
-        )}
-        {user && (
-          <>
-            <CustomLine />
-            <DiscoverCommunities user={user.user_id} />
-          </>
-        )}
-        <p className="text-white opacity-75 text-sm py-4 text-center">
+        <div className="mt-2">
+          <SidebarItem icon={<FaHome size={24} />} text="Home" />
+          <SidebarItem icon={<MdOutlineExplore size={24} />} text="Explore" />
+          <SidebarItem icon={<FaGlobe size={24} />} text="All" />
+        </div>
+        <div>
+          {user && (
+            <>
+              <CustomLine />
+              <p className="flex justify-center">
+                <CreateCommunityButton />
+              </p>
+            </>
+          )}
+          {!user && (
+            <>
+              <CustomLine />
+              <AllCommunities />
+            </>
+          )}
+          {user && (
+            <>
+              <CustomLine />
+              <JoinedCommunities user={user.user_id} />
+            </>
+          )}
+          {user && (
+            <>
+              <CustomLine />
+              <DiscoverCommunities user={user.user_id} />
+            </>
+          )}
+          {/* <p className="text-white opacity-75 text-sm py-4 text-center">
           <span className="hover:text-cyan-300 cursor-pointer">
             ALL COMMUNITIES
           </span>
-        </p>
+        </p> */}
+        </div>
       </div>
+      <Credits />
     </div>
   );
 }
@@ -68,11 +70,19 @@ interface SidebarItemProps {
 }
 
 function SidebarItem({ text, icon }: SidebarItemProps) {
+  const path = useLocation().pathname;
+  const current = "/" + text.toLowerCase();
+
   return (
-    <div className="mx-4 flex items-center px-8 py-4 rounded-xl hover:bg-dark-700">
+    <Link
+      to={current}
+      className={`mx-4 flex items-center px-8 py-3 rounded-xl hover:bg-dark-750 ${
+        current === path && "bg-dark-750"
+      }`}
+    >
       {icon}
-      <p className="text-xl truncate mx-2">{text}</p>
-    </div>
+      <p className="text-lg truncate mx-2">{text}</p>
+    </Link>
   );
 }
 

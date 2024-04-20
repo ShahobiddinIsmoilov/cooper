@@ -19,7 +19,9 @@ export default function AllCommunities() {
   return (
     communities.length > 0 && (
       <Stack gap={0}>
-        <p className="opacity-75 py-2 text-center">COMMUNITIES</p>
+        <p className="mb-2 text-xs font-bold tracking-widest text-center text-white/50">
+          COMMUNITIES
+        </p>
         {communities.map((community: CommunityProps) => (
           <CommunityCard key={community.name} community={community} />
         ))}

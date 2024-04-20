@@ -19,7 +19,9 @@ export default function DiscoverCommunities({ user }: { user: number }) {
   return (
     communities.length > 0 && (
       <Stack gap={0}>
-        <p className="opacity-75 py-2 text-center">DISCOVER COMMUNITIES</p>
+        <p className="my-2 text-xs font-bold tracking-widest text-center text-white/50">
+          DISCOVER NEW COMMUNITIES
+        </p>
         {communities.map((community: CommunityProps) => (
           <CommunityCard key={community.name} community={community} />
         ))}

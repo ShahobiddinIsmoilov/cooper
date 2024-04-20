@@ -16,9 +16,9 @@ export default function PostHeaderCommunity({
         <UserLink username={post.username} />
         <span className="opacity-50 text-xs xs:text-base"> ∙ 8 soat oldin</span>
       </div>
-      <span className="cursor-pointer flex items-center opacity-50 pr-1 hover:opacity-100 xs:p-0">
+      <button className="rounded-full p-2 cursor-pointer opacity-50 hover:opacity-100 hover:bg-dark-600">
         🔗
-      </span>
+      </button>
     </div>
   );
 }

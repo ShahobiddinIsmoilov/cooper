@@ -1,16 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import { ImSpinner4 } from "react-icons/im";
-import { IoCloudOffline } from "react-icons/io5";
-import { useWindowSize } from "../contexts/WindowSizeContext";
+import { useParams } from "react-router-dom";
 import { Avatar, Image } from "@mantine/core";
-import { CommunityDetailProps } from "../interfaces/communityDetailProps";
+import { IoCloudOffline } from "react-icons/io5";
+import { useQuery } from "@tanstack/react-query";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useWindowSize } from "../contexts/WindowSizeContext";
+import { CommunityDetailProps } from "../interfaces/communityDetailProps";
 import Infobar from "../components/Infobar";
-import getCommunityDetail from "../services/community/getCommunityDetail";
+import ScrollTop from "../components/ScrollTop";
 import PostFeed from "../components/post/PostFeed";
-import CreatePost from "../components/modals/post/CreatePost";
 import JoinButton from "../components/community/JoinButton";
+import CreatePost from "../components/modals/post/CreatePost";
+import getCommunityDetail from "../services/community/getCommunityDetail";
 
 export default function CommunityPage() {
   const user = useAuthContext().user;
@@ -83,6 +84,7 @@ export default function CommunityPage() {
           {screenWidth >= 920 && <Infobar community={community} />}
         </div>
       </div>
+      <ScrollTop />
     </>
   );
 }

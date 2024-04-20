@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import PostFeed from "../components/post/PostFeed";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useLayoutEffect } from "react";
+import PostFeed from "../components/post/PostFeed";
+import ScrollTop from "../components/ScrollTop";
 
 export default function HomePage() {
   const path = useLocation().pathname;
@@ -12,5 +13,10 @@ export default function HomePage() {
   });
 
   const user = useAuthContext().user;
-  return user ? <PostFeed filter="home" /> : <PostFeed filter="all" />;
+  return (
+    <>
+      {user ? <PostFeed filter="home" /> : <PostFeed filter="all" />}
+      <ScrollTop />
+    </>
+  );
 }

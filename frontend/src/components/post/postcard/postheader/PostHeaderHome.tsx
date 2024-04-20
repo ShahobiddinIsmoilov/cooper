@@ -8,7 +8,7 @@ export interface PostHeaderHomeProps {
 
 export default function PostHeaderHome({ post }: PostHeaderHomeProps) {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between items-center">
       <div className="flex items-center gap-2">
         <Avatar
           src={`../../../../src/assets/avatar_${post.community_link}.jpg`}
@@ -24,9 +24,9 @@ export default function PostHeaderHome({ post }: PostHeaderHomeProps) {
           ∙ 22 daqiqa oldin
         </span>
       </div>
-      <span className="cursor-pointer flex items-center opacity-50 pr-1 hover:opacity-100 xs:p-0">
+      <button className="rounded-full p-2 cursor-pointer opacity-50 hover:opacity-100 hover:bg-dark-600">
         🔗
-      </span>
+      </button>
     </div>
   );
 }

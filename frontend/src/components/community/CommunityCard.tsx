@@ -8,22 +8,18 @@ interface CommunityCardProps {
 
 function CommunityCard({ community }: CommunityCardProps) {
   return (
-    <Link to={`/community/${community.name}`}>
-      <div className="flex gap-3 items-center px-8 py-4 rounded-xl hover:bg-dark-700">
-        <div className="flex items-center min-w-12">
-          <Avatar
-            src={`../../../../src/assets/avatar_${community.name}.jpg`}
-            className="rounded-full h-12 w-12 object-cover"
-          />
-        </div>
-        <div className="truncate">
-          <p className="text-lg font-bold">{community.name}</p>
-          <p className="text-gray-400 truncate">
-            {community.members === 1
-              ? "1 member"
-              : community.members.toLocaleString() + " members"}
-          </p>
-        </div>
+    <Link
+      to={`/community/${community.name}`}
+      className="mx-4 flex gap-3 items-center px-8 py-2 rounded-xl hover:bg-dark-750"
+    >
+      <Avatar src={`../../../../src/assets/avatar_${community.name}.jpg`} />
+      <div className="truncate">
+        <p className="font-bold">{community.name}</p>
+        <p className="text-white/50 truncate text-sm">
+          {community.members === 1
+            ? "1 member"
+            : community.members.toLocaleString() + " members"}
+        </p>
       </div>
     </Link>
   );

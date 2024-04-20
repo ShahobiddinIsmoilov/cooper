@@ -1,7 +1,7 @@
 import { Stack } from "@mantine/core";
-import CommunityCard from "./CommunityCard";
 import { CommunityProps } from "../../interfaces/communityProps";
 import { useQuery } from "@tanstack/react-query";
+import CommunityCard from "./CommunityCard";
 import getCommunities from "../../services/community/getCommunities";
 
 export default function JoinedCommunities({ user }: { user: number }) {
@@ -19,7 +19,9 @@ export default function JoinedCommunities({ user }: { user: number }) {
   return (
     communities.length > 0 && (
       <Stack gap={0}>
-        <p className="opacity-75 py-2 text-center">COMMUNITIES YOU JOINED</p>
+        <p className="my-2 text-xs font-bold tracking-widest text-center text-white/50">
+          COMMUNITIES YOU JOINED
+        </p>
         {communities.map((community: CommunityProps) => (
           <CommunityCard key={community.name} community={community} />
         ))}

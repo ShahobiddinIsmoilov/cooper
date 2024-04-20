@@ -8,7 +8,7 @@ interface InfobarProps {
 
 function Infobar({ community }: InfobarProps) {
   return (
-    <div className="w-80 min-w-80 text-white overflow-hidden h-fit bg-dark-850 rounded-xl p-8 ml-2">
+    <div className="w-[280px] min-w-[280px] text-white overflow-hidden h-fit bg-dark-850 rounded-xl p-8 ml-2">
       <Stack gap={8}>
         <p className="flex justify-center items-center gap-2 opacity-50">
           <FaInfoCircle className="inline-block" />

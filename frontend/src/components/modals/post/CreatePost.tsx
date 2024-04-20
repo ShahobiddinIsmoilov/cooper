@@ -8,6 +8,7 @@ import { GrTextAlignLeft } from "react-icons/gr";
 import { FiLink } from "react-icons/fi";
 import { FaPlus, FaRegImage } from "react-icons/fa6";
 import { FileWithPath } from "@mantine/dropzone";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import useCredentials from "../../../services/useCredentials";
 import CreatePostForm from "./CreatePostForm";
 
@@ -79,12 +80,19 @@ export default function CreatePost(props: Props) {
     setFormDisabled(false);
   }
 
+  const screenHeight = useWindowSize().screenHeight;
+  const plussize = screenHeight > 700 ? 20 : 16;
+
   return (
     <>
       <Menu radius={12}>
         <Menu.Target>
-          <button className="p-[10px] flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full">
-            <FaPlus size={20} />
+          <button
+            className={`flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full ${
+              plussize === 20 ? "p-[10px]" : "p-[8px]"
+            }`}
+          >
+            <FaPlus size={plussize} />
             Create
           </button>
         </Menu.Target>

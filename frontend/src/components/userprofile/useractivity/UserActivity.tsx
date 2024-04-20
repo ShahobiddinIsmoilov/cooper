@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Line from "../../../utils/Line";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import ScrollTop from "../../ScrollTop";
 
 interface Props {
   setActive: (value: string) => void;
@@ -36,6 +37,7 @@ export default function UserActivity({ setActive }: Props) {
       </Group>
       <Line />
       <UserActivityList sortOption={sortOption} />
+      <ScrollTop />
     </>
   );
 }

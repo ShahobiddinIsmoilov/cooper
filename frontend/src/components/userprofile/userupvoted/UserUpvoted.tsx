@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Group, Select } from "@mantine/core";
 import Line from "../../../utils/Line";
 import UserUpvotedList from "./UserUpvotedList";
+import ScrollTop from "../../ScrollTop";
 
 interface Props {
   setActive: (value: string) => void;
@@ -32,6 +33,7 @@ export default function UserUpvoted({ setActive }: Props) {
       </Group>
       <Line />
       <UserUpvotedList sortOption={sortOption} />
+      <ScrollTop />
     </>
   );
 }

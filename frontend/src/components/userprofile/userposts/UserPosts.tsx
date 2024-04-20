@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import Line from "../../../utils/Line";
 import UserPostList from "./UserPostList";
+import ScrollTop from "../../ScrollTop";
 
 interface Props {
   setActive: (value: string) => void;
@@ -36,6 +37,7 @@ export default function UserPosts({ setActive }: Props) {
       </Group>
       <Line />
       <UserPostList sortOption={sortOption} />
+      <ScrollTop />
     </>
   );
 }

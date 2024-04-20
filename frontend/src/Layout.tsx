@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { AppShell, Container, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useWindowSize } from "./contexts/WindowSizeContext";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
@@ -16,13 +17,14 @@ import LostPage from "./pages/LostPage";
 
 export default function Layout() {
   const [opened] = useDisclosure();
+  const { screenHeight } = useWindowSize();
 
   return (
     <>
       <AppShell
-        header={{ height: 60 }}
+        header={{ height: screenHeight > 700 ? 60 : 50 }}
         navbar={{
-          width: 320,
+          width: { base: 280, xl: 300 },
           breakpoint: "lg",
           collapsed: { mobile: !opened },
         }}

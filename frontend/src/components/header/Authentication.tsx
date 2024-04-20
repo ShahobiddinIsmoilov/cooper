@@ -4,6 +4,7 @@ import { Modal, Stack } from "@mantine/core";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
+import { useWindowSize } from "../../contexts/WindowSizeContext";
 import UsernameLogin from "../modals/auth/UsernameLogin";
 import PasswordLogin from "../modals/auth/PasswordLogin";
 import UsernameRegister from "../modals/auth/UsernameRegister";
@@ -66,6 +67,9 @@ export function Authentication() {
     setPassword("");
     close();
   }
+
+  const screenHeight = useWindowSize().screenHeight;
+  const plussize = screenHeight > 700 ? 20 : 16;
 
   return user ? (
     <Dashboard username={user.username} />
@@ -138,14 +142,18 @@ export function Authentication() {
       </Modal>
       <button
         onClick={handleOpen}
-        className="py-2 px-3 flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full"
+        className={`flex items-center gap-1 hover:bg-dark-700 border-white border-opacity-25 rounded-full px-3 ${
+          plussize === 20 ? "py-[8px]" : "py-[6px]"
+        }`}
       >
-        <FaPlus size={20} />
+        <FaPlus size={plussize} />
         Create
       </button>
       <button
         onClick={handleOpen}
-        className="bg-cyan-700 hover:bg-cyan-600 rounded-full py-2 px-3"
+        className={`bg-cyan-700 hover:bg-cyan-600 rounded-full px-3 ${
+          plussize === 20 ? "py-[8px]" : "py-[6px]"
+        }`}
       >
         Log in
       </button>
