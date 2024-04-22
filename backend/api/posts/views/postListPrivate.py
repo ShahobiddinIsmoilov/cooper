@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 
 from ..models import SavePost, UpvotePost, DownvotePost
 from ..serializers import ListPostSerializer
-from api.convert import from_10_to_36_post
+from api.convert import encode_post_id
 
 
 @api_view(['GET'])
@@ -35,7 +35,7 @@ def postListPrivate(request):
         data[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()
         
         post_id = data[i]['id']
-        data[i]['id'] = from_10_to_36_post(post_id)
+        data[i]['permalink'] = encode_post_id(post_id)
     
     return Response(data)
 

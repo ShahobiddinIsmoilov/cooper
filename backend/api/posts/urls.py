@@ -7,7 +7,7 @@ from .views import (postList, postListPrivate, postDetail, postAction, getLinkDa
 urlpatterns = [
     path('list/', postList.postList, name='post-list'),
     path('privatelist/', postListPrivate.postListPrivate, name='post-list-private'),
-    path('detail/<str:pk>/', postDetail.postDetail, name='post-detail'),
+    path('detail/<str:permalink>/', postDetail.postDetail, name='post-detail'),
     path('action/', postAction.postAction, name='post-action'),
     path('create/', misc.postCreate, name='post-create'),
     path('update/<str:pk>/', misc.postUpdate, name='post-update'),

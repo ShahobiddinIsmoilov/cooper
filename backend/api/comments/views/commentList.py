@@ -5,8 +5,7 @@ from rest_framework.decorators import api_view
 from api.users.models import User
 from ..models import Comment, UpvoteComment, DownvoteComment
 from ..serializers import ListCommentSerializer
-from api.convert import from_10_to_36_comment, from_10_to_36_post, from_36_to_10_post
-
+from api.convert import encode_comment_id, encode_post_id
 
 @api_view(['GET'])
 def commentList(request):
@@ -14,7 +13,7 @@ def commentList(request):
     user = request.GET.get('user')
     
     if filter == 'post':
-        post = from_36_to_10_post(request.GET.get('post', ''))
+        post = request.GET.get('post', '')
         comments_raw = Comment.objects.filter(post=post)
     else:
         username = request.GET.get('username', '')
@@ -40,9 +39,9 @@ def commentList(request):
             downvoted = DownvoteComment.objects.filter(comment=comments[i], user=user)
             data[i]['downvoted'] = downvoted.exists()
         
-        comment_id = from_10_to_36_comment(data[i]['id'])
-        data[i]['id'] = comment_id
-        post_id = from_10_to_36_post(data[i]['post'])
-        data[i]['post'] = post_id
+        comment_permalink = encode_comment_id(data[i]['id'])
+        data[i]['comment_permalink'] = comment_permalink
+        post_permalink = encode_post_id(data[i]['post'])
+        data[i]['post_permalink'] = post_permalink
         
     return Response(data)

@@ -12,12 +12,12 @@ import Infobar from "../components/Infobar";
 
 export default function PostDetailPage() {
   const { screenWidth } = useWindowSize();
-  const { post_id } = useParams();
+  const { post_permalink } = useParams();
   const { community_link } = useParams();
 
   const { isPending, error, data } = useQuery({
-    queryKey: [`post-detail-${post_id}`],
-    queryFn: () => getPostDetail(post_id!),
+    queryKey: [`post-detail-${post_permalink}`],
+    queryFn: () => getPostDetail(post_permalink!),
     retry: 2,
   });
 
@@ -41,7 +41,11 @@ export default function PostDetailPage() {
   const community: CommunityDetailProps = data.data.community_detail;
 
   if (community_link !== community.link)
-    history.replaceState(null, "", `/c/${community.link}/post/${post_id}`);
+    history.replaceState(
+      null,
+      "",
+      `/c/${community.link}/post/${post.permalink}`
+    );
 
   return (
     <Flex>

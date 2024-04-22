@@ -98,7 +98,7 @@ export default function Layout() {
                 <Route path="/logout" element={<LogoutPage />} />
                 <Route path="/c/:community_link" element={<CommunityPage />} />
                 <Route
-                  path="/c/:community_link/post/:post_id"
+                  path="/c/:community_link/post/:post_permalink"
                   element={<PostDetailPage />}
                 />
                 <Route path="/user/:username/*" element={<UserPage />} />

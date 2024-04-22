@@ -10,7 +10,7 @@ from api.comments.models import Comment
 from api.posts.models import Post
 from .models import Notification
 from .serializers import ListNotificationSerializer
-from api.convert import from_10_to_36_post
+from api.convert import encode_post_id
 
 
 # Getting the list of notifications
@@ -30,7 +30,7 @@ def notificationList(request):
         user = get_object_or_404(User, pk=notif.user)
         community = get_object_or_404(Community, pk=notif.community)
         comment = get_object_or_404(Comment, pk=notif.comment.pk)
-        post = from_10_to_36_post(notif.parent_post)
+        post = encode_post_id(notif.parent_post)
         
         data[i]['user_avatar'] = str(user.avatar)
         data[i]['community_link'] = community.link

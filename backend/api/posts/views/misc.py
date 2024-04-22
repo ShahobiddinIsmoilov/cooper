@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 
 from ..models import Post
 from ..serializers import CreatePostSerializer, UpdatePostSerializer
-from api.convert import from_10_to_36_post, from_36_to_10_post
+from api.convert import encode_post_id, decode_post_id
 
 
 # Create new post
@@ -16,8 +16,8 @@ def postCreate(request):
 
     if serializer.is_valid(raise_exception=True):
         post = serializer.save(user=request.user)
-        post_id = from_10_to_36_post(post.id)
-        return Response(post_id, status=status.HTTP_201_CREATED)
+        permalink = encode_post_id(post.id)
+        return Response(permalink, status=status.HTTP_201_CREATED)
         
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -26,8 +26,7 @@ def postCreate(request):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def postUpdate(request, pk):
-    post_id = from_36_to_10_post(pk)
-    post = Post.objects.get(pk=post_id)
+    post = Post.objects.get(pk=pk)
     serializer = UpdatePostSerializer(instance=post, data=request.data)
 
     if serializer.is_valid(raise_exception=True):
@@ -40,8 +39,7 @@ def postUpdate(request, pk):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def postDelete(request, pk):
-    post_id = from_36_to_10_post(pk)
-    post = Post.objects.get(pk=post_id)
+    post = Post.objects.get(pk=pk)
     post.delete()
 
     return Response(status=status.HTTP_204_NO_CONTENT)

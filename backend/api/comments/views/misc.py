@@ -5,19 +5,13 @@ from rest_framework.decorators import api_view, permission_classes
 
 from ..models import Comment
 from ..serializers import CreateCommentSerializer, UpdateCommentSerializer
-from api.convert import from_36_to_10_post, from_36_to_10_comment
 
 
 # Create comment
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def commentCreate(request):
-    data = request.data.copy()
-    post = from_36_to_10_post(data['post'])
-    data['post'] = post
-    parent = from_36_to_10_comment(data['parent'])
-    data['parent'] = parent
-    serializer = CreateCommentSerializer(data=data)
+    serializer = CreateCommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
     return Response(serializer.data)

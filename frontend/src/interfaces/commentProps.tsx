@@ -18,4 +18,6 @@ export interface CommentProps {
   body: string;
   upvoted: boolean;
   downvoted: boolean;
+  comment_permalink: string;
+  post_permalink: string;
 }

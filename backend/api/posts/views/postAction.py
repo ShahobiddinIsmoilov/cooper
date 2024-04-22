@@ -4,15 +4,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 from ..models import Post, UpvotePost, DownvotePost, SavePost
-from api.convert import from_36_to_10_post
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def postAction(request):
     user = request.user
-    post_id = from_36_to_10_post(request.data.get('post'))
-    post = Post.objects.get(pk=post_id)
+    post = Post.objects.get(pk=request.data.get('post'))
     action = request.data.get('action')
     
     if action == 'upvote':

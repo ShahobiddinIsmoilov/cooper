@@ -24,4 +24,5 @@ export interface PostProps {
   downvoted: boolean;
   saved: boolean;
   hidden: boolean;
+  permalink: string;
 }

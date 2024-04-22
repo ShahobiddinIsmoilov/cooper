@@ -1,7 +1,6 @@
 import { Avatar } from "@mantine/core";
 import { NotifProps } from "../../../interfaces/notificationProps";
 import { BiCheckDouble } from "react-icons/bi";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 
@@ -18,6 +17,8 @@ export default function NotificationCard({ notif, markAsRead }: Props) {
     markAsRead("read_one", notif.id);
   }
 
+  function goToComment() {}
+
   return (
     <>
       <div
@@ -25,10 +26,7 @@ export default function NotificationCard({ notif, markAsRead }: Props) {
           !isRead && "bg-dark-850"
         }`}
       >
-        <Link
-          to={`/c/${notif.community_link}/post/${notif.parent_post}`}
-          className="flex gap-2"
-        >
+        <button className="flex gap-2 text-start">
           <Avatar src={`../../../../src/assets/media/${notif.user_avatar}`} />
           <div className="text-white w-[277px] break-words text-sm">
             <p className="font-bold">
@@ -37,9 +35,11 @@ export default function NotificationCard({ notif, markAsRead }: Props) {
               <span className="text-blue-400">{notif.community_name}</span>
               <span className="text-white/50 font-normal"> ∙ 8 soat oldin</span>
             </p>
-            <p className="post-detail">{ReactHtmlParser(notif.comment_body)}</p>
+            <div className="post-detail">
+              {ReactHtmlParser(notif.comment_body)}
+            </div>
           </div>
-        </Link>
+        </button>
         <div className="flex items-center">
           {!isRead ? (
             <button

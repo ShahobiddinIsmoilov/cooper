@@ -6,12 +6,12 @@ from api.communities.models import Community
 from api.communities.serializers import DetailCommunitySerializer
 from ..models import Post
 from ..serializers import DetailPostSerializer
-from api.convert import from_36_to_10_post, from_10_to_36_post
+from api.convert import decode_post_id, encode_post_id
 
 
 @api_view(['GET'])
-def postDetail(request, pk):
-    post_id = from_36_to_10_post(pk)
+def postDetail(request, permalink):
+    post_id = decode_post_id(permalink)
     post = get_object_or_404(Post, pk=post_id)
     post_serializer = DetailPostSerializer(post, many=False)
 
@@ -21,7 +21,7 @@ def postDetail(request, pk):
     data = {'post_detail': {**post_serializer.data},
             'community_detail': {**community_serializer.data}}
 
-    post_detail_id = from_10_to_36_post(data['post_detail']['id'])
-    data['post_detail']['id'] = post_detail_id
+    permalink = encode_post_id(data['post_detail']['id'])
+    data['post_detail']['permalink'] = permalink
     
     return Response(data)
