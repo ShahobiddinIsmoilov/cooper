@@ -1,23 +1,23 @@
-from itertools import chain
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 from ..models import Comment
-from api.posts.models import Post
-from api.posts.serializers import ListPostSerializer
-from ..serializers import (ListCommentSerializer,
-                          CreateCommentSerializer,
-                          UpdateCommentSerializer)
+from ..serializers import CreateCommentSerializer, UpdateCommentSerializer
+from api.convert import from_36_to_10_post, from_36_to_10_comment
 
 
 # Create comment
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def commentCreate(request):
-    serializer = CreateCommentSerializer(data=request.data)
+    data = request.data.copy()
+    post = from_36_to_10_post(data['post'])
+    data['post'] = post
+    parent = from_36_to_10_comment(data['parent'])
+    data['parent'] = parent
+    serializer = CreateCommentSerializer(data=data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
     return Response(serializer.data)

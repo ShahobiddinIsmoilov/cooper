@@ -27,6 +27,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post/', default=None, null=True)
     link = models.URLField(max_length=10000, default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     visits = models.IntegerField(default=0, null=True)
     upvotes = models.IntegerField(default=0, null=True)
     downvotes = models.IntegerField(default=0, null=True)

@@ -37,7 +37,7 @@ export default function CommunityLink({
   return (
     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Link
-        to={`/community/${community_link}`}
+        to={`/c/${community_link}`}
         className="font-bold hover:underline text-blue-400"
       >
         {community_name}
@@ -99,7 +99,7 @@ function CommunityPreview({ communityDetail }: CommunityPreviewProps) {
         <div className="mx-1 w-full">
           <div className="flex justify-between">
             <Link
-              to={`/community/${communityDetail.name}`}
+              to={`/c/${communityDetail.name}`}
               className="text-xl text-blue-400 hover:text-blue-300 font-bold max-w-[180px] overflow-hidden break-words"
             >
               {communityDetail.name}

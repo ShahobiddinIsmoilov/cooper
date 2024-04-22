@@ -8,6 +8,7 @@ from api.posts.models import Post, UpvotePost, DownvotePost, SavePost
 from api.posts.serializers import ListPostSerializer
 from ..models import Comment, UpvoteComment, DownvoteComment
 from ..serializers import ListCommentSerializer
+from api.convert import from_10_to_36_post, from_10_to_36_comment
 
 
 @api_view(['GET'])
@@ -40,6 +41,8 @@ def activityList(request, username):
                 serialized['downvoted'] = downvote.exists()
                 save = SavePost.objects.filter(post=item, user=user)
                 serialized['saved'] = save.exists()
+            post_id = from_10_to_36_post(serialized['id'])
+            serialized['id'] = post_id
         else:
             serialized = ListCommentSerializer(item, many=False).data
             if user != 'undefined':
@@ -47,6 +50,10 @@ def activityList(request, username):
                 serialized['upvoted'] = upvote.exists()
                 downvote = DownvoteComment.objects.filter(comment=item, user=user)
                 serialized['downvoted'] = downvote.exists()
+            comment_id = from_10_to_36_comment(serialized['id'])
+            serialized['id'] = comment_id
+            post_id = from_10_to_36_post(serialized['post'])
+            serialized['post'] = post_id
         data.append(serialized)
         
     return Response(data)

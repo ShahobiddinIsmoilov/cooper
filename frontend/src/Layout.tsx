@@ -3,7 +3,7 @@ import { AppShell, Container, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useWindowSize } from "./contexts/WindowSizeContext";
 import { MdMenu } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRedditAlien } from "react-icons/fa6";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -22,12 +22,21 @@ import "react-modern-drawer/dist/index.css";
 
 export default function Layout() {
   const [opened] = useDisclosure();
-  const { screenHeight } = useWindowSize();
+  const { screenWidth, screenHeight } = useWindowSize();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDrawer = () => {
-    setIsOpen((prevState) => !prevState);
-  };
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  function openDrawer() {
+    setIsDrawerOpen(true);
+  }
+
+  function closeDrawer() {
+    setIsDrawerOpen(false);
+  }
+
+  useEffect(() => {
+    screenWidth >= 1200 && closeDrawer();
+  });
 
   return (
     <>
@@ -41,7 +50,7 @@ export default function Layout() {
       >
         <AppShell.Header>
           <Flex className="bg-dark-900 items-center h-full">
-            <button onClick={toggleDrawer} className="ml-4 lg:hidden">
+            <button onClick={openDrawer} className="ml-4 lg:hidden">
               <MdMenu size={28} />
             </button>
             <div className="flex-grow h-full">
@@ -56,24 +65,24 @@ export default function Layout() {
 
         <div className="lg:hidden">
           <Drawer
-            open={isOpen}
-            onClose={toggleDrawer}
+            open={isDrawerOpen}
+            onClose={closeDrawer}
             direction="left"
             duration={200}
           >
             <div
-              className={`flex items-center gap-8 bg-dark-850 w-[280px] ${
+              className={`flex items-center gap-8 bg-dark-850 w-[280px] border-r border-line ${
                 screenHeight >= 700 ? "h-[60px]" : "h-[50px]"
               }`}
             >
-              <button onClick={toggleDrawer} className="ml-4">
+              <button onClick={closeDrawer} className="ml-4">
                 <MdMenu size={28} />
               </button>
-              <Link to="/home">
+              <Link to="/home" onClick={closeDrawer}>
                 <FaRedditAlien size={32} />
               </Link>
             </div>
-            <Navbar />
+            <Navbar closeDrawer={closeDrawer} />
           </Drawer>
         </div>
 
@@ -87,12 +96,9 @@ export default function Layout() {
                 <Route path="/all" element={<AllPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
+                <Route path="/c/:community_link" element={<CommunityPage />} />
                 <Route
-                  path="/community/:community_link"
-                  element={<CommunityPage />}
-                />
-                <Route
-                  path="/community/:community_link/post/:post_id"
+                  path="/c/:community_link/post/:post_id"
                   element={<PostDetailPage />}
                 />
                 <Route path="/user/:username/*" element={<UserPage />} />

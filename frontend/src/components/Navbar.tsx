@@ -11,21 +11,37 @@ import DiscoverCommunities from "./community/DiscoverCommunities";
 import AllCommunities from "./community/AllCommunities";
 import Credits from "./Credits";
 
-function Navbar() {
+interface Props {
+  closeDrawer?: () => void;
+}
+
+export default function Navbar({ closeDrawer }: Props) {
   const user = useAuthContext().user;
   const { screenWidth } = useWindowSize();
 
   return (
     <div
-      className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-hidden hover:overflow-y-scroll navbar-scrollbar flex flex-col justify-between ${
+      className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-hidden hover:overflow-y-scroll navbar-scrollbar flex flex-col justify-between border-r border-line ${
         screenWidth >= 1408 ? "w-[300px]" : "w-[280px]"
       }`}
     >
       <div>
         <div className="mt-2">
-          <SidebarItem icon={<FaHome size={24} />} text="Home" />
-          <SidebarItem icon={<MdOutlineExplore size={24} />} text="Explore" />
-          <SidebarItem icon={<FaGlobe size={24} />} text="All" />
+          <SidebarItem
+            icon={<FaHome size={24} />}
+            text="Home"
+            closeDrawer={closeDrawer}
+          />
+          <SidebarItem
+            icon={<MdOutlineExplore size={24} />}
+            text="Explore"
+            closeDrawer={closeDrawer}
+          />
+          <SidebarItem
+            icon={<FaGlobe size={24} />}
+            text="All"
+            closeDrawer={closeDrawer}
+          />
         </div>
         <div>
           {user && (
@@ -39,19 +55,25 @@ function Navbar() {
           {!user && (
             <>
               <CustomLine />
-              <AllCommunities />
+              <AllCommunities closeDrawer={closeDrawer} />
             </>
           )}
           {user && (
             <>
               <CustomLine />
-              <JoinedCommunities user={user.user_id} />
+              <JoinedCommunities
+                user={user.user_id}
+                closeDrawer={closeDrawer}
+              />
             </>
           )}
           {user && (
             <>
               <CustomLine />
-              <DiscoverCommunities user={user.user_id} />
+              <DiscoverCommunities
+                user={user.user_id}
+                closeDrawer={closeDrawer}
+              />
             </>
           )}
           {/* <p className="text-white opacity-75 text-sm py-4 text-center">
@@ -66,20 +88,20 @@ function Navbar() {
   );
 }
 
-export default Navbar;
-
 interface SidebarItemProps {
   icon: ReactNode;
   text: string;
+  closeDrawer?: () => void;
 }
 
-function SidebarItem({ text, icon }: SidebarItemProps) {
+function SidebarItem({ text, icon, closeDrawer }: SidebarItemProps) {
   const path = useLocation().pathname;
   const current = "/" + text.toLowerCase();
 
   return (
     <Link
       to={current}
+      onClick={closeDrawer}
       className={`mx-4 flex items-center px-8 py-3 rounded-xl hover:bg-dark-750 ${
         current === path && "bg-dark-750"
       }`}

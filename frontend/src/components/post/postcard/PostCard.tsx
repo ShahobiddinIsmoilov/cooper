@@ -22,7 +22,7 @@ function PostCard({ post, notCommunity }: PostCardProps) {
           <PostHeaderCommunity post={post} />
         )}
       </div>
-      <Link to={`/community/${post.community_link}/post/${post.id}`}>
+      <Link to={`/c/${post.community_link}/post/${post.id}`}>
         <p className="xs:text-xl font-bold py-2 px-4 hover:text-indigo-400">
           {post.title}
         </p>

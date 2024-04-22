@@ -37,7 +37,7 @@ function PostDetailFooter({ post }: PostDetailFooterProps) {
             {post?.downvotes?.toLocaleString()}
           </span>
         </div>
-        <Link to={`/community/${post?.community}/post/${post?.id}`}>
+        <Link to={`/c/${post?.community}/post/${post?.id}`}>
           <div
             className="py-1 px-3 rounded-full cursor-pointer flex justify-center
                       items-center hover:bg-dark-700 text-white gap-2"

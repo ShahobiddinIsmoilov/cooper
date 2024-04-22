@@ -8,6 +8,7 @@ interface Props {
   phone: string;
   setDisplayName: (value: string) => void;
   setPhone: (value: string) => void;
+  removeSpaces: (s: string) => string;
   enableButtons: () => boolean;
 }
 
@@ -22,15 +23,21 @@ export default function AccountSettings({
   phone,
   setDisplayName,
   setPhone,
+  removeSpaces,
   enableButtons,
 }: Props) {
   function handleDisplayNameChange(value: string) {
-    setDisplayName(value);
+    setDisplayName(handleSpaces(value));
     enableButtons();
   }
 
+  function handleSpaces(s: string) {
+    s = s.replace(/\s\s+/g, " ");
+    return s;
+  }
+
   function handlePhoneChange(value: string) {
-    setPhone(value);
+    setPhone(removeSpaces(value));
     enableButtons();
   }
 

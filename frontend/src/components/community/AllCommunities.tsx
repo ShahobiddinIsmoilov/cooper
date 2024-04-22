@@ -1,10 +1,14 @@
 import { Stack } from "@mantine/core";
-import CommunityCard from "./CommunityCard";
 import { CommunityProps } from "../../interfaces/communityProps";
 import { useQuery } from "@tanstack/react-query";
+import CommunityCard from "./CommunityCard";
 import getCommunities from "../../services/community/getCommunities";
 
-export default function AllCommunities() {
+interface Props {
+  closeDrawer?: () => void;
+}
+
+export default function AllCommunities({ closeDrawer }: Props) {
   const { isPending, error, data } = useQuery({
     queryKey: ["community-list-all"],
     queryFn: () => getCommunities("/api/community/list/all"),
@@ -23,7 +27,11 @@ export default function AllCommunities() {
           COMMUNITIES
         </p>
         {communities.map((community: CommunityProps) => (
-          <CommunityCard key={community.name} community={community} />
+          <CommunityCard
+            key={community.name}
+            community={community}
+            closeDrawer={closeDrawer}
+          />
         ))}
       </Stack>
     )

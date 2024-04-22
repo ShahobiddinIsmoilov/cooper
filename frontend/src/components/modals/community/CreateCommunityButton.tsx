@@ -22,7 +22,7 @@ export default function CreateCommunityForm() {
       });
       closeModal();
       setFormDisabled(false);
-      navigate(`/community/${response.data}`);
+      navigate(`/c/${response.data}`);
     },
   });
 

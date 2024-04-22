@@ -31,7 +31,7 @@ export default function CreatePost(props: Props) {
       });
       closeModal();
       setFormDisabled(false);
-      navigate(`/community/${props.community}/post/${response.data}`);
+      navigate(`/c/${props.community}/post/${response.data}`);
     },
   });
 

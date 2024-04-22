@@ -4,7 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import CommunityCard from "./CommunityCard";
 import getCommunities from "../../services/community/getCommunities";
 
-export default function DiscoverCommunities({ user }: { user: number }) {
+interface Props {
+  user: number;
+  closeDrawer?: () => void;
+}
+
+export default function DiscoverCommunities({ user, closeDrawer }: Props) {
   const { isPending, error, data } = useQuery({
     queryKey: ["community-list-discover"],
     queryFn: () => getCommunities(`/api/community/list/discover/?user=${user}`),
@@ -23,7 +28,11 @@ export default function DiscoverCommunities({ user }: { user: number }) {
           DISCOVER NEW COMMUNITIES
         </p>
         {communities.map((community: CommunityProps) => (
-          <CommunityCard key={community.name} community={community} />
+          <CommunityCard
+            key={community.name}
+            community={community}
+            closeDrawer={closeDrawer}
+          />
         ))}
       </Stack>
     )

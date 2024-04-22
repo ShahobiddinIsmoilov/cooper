@@ -13,6 +13,7 @@ interface Props {
   setInstagram: (value: string) => void;
   setFacebook: (value: string) => void;
   setTwitter: (value: string) => void;
+  removeSpaces: (s: string) => string;
   enableButtons: () => boolean;
 }
 
@@ -26,25 +27,26 @@ export default function Social({
   setInstagram,
   setFacebook,
   setTwitter,
+  removeSpaces,
   enableButtons,
 }: Props) {
   function handleTelegramChange(value: string) {
-    setTelegram(value);
+    setTelegram(removeSpaces(value));
     enableButtons();
   }
 
   function handleInstagramChange(value: string) {
-    setInstagram(value);
+    setInstagram(removeSpaces(value));
     enableButtons();
   }
 
   function handleFacebookChange(value: string) {
-    setFacebook(value);
+    setFacebook(removeSpaces(value));
     enableButtons();
   }
 
   function handleTwitterChange(value: string) {
-    setTwitter(value);
+    setTwitter(removeSpaces(value));
     enableButtons();
   }
 

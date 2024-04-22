@@ -93,7 +93,7 @@ function MenuItem({ icon, text, onClick }: MenuItemProps) {
   return (
     <div
       onClick={onClick}
-      className="w-full flex gap-2 text-lg hover:bg-dark-600 p-4 cursor-pointer items-center rounded-lg"
+      className="w-full flex gap-2 text-lg hover:bg-dark-700 p-4 cursor-pointer items-center rounded-lg"
     >
       {icon}
       {text}

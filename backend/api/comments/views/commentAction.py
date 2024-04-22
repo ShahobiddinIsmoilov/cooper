@@ -4,13 +4,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 from ..models import Comment, UpvoteComment, DownvoteComment
+from api.convert import from_36_to_10_comment
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def commentAction(request):
     user = request.user
-    comment = Comment.objects.get(pk=request.data.get('comment'))
+    comment_id = from_36_to_10_comment(request.data.get('comment'))
+    comment = Comment.objects.get(pk=comment_id)
     action = request.data.get('action')
     
     if action == 'upvote':

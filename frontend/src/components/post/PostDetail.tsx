@@ -24,7 +24,7 @@ export default function PostDetail({
   return (
     <div className="my-2 mx-2">
       <PostDetailHeader post={post} />
-      <div className="text-xl xs:text-2xl font-bold text-white py-2">
+      <div className="text-xl xs:text-xl font-bold text-white py-2">
         {post.title}
       </div>
       <div className="mt-2">

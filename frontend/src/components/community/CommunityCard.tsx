@@ -4,12 +4,17 @@ import { Avatar } from "@mantine/core";
 
 interface CommunityCardProps {
   community: CommunityProps;
+  closeDrawer?: () => void;
 }
 
-function CommunityCard({ community }: CommunityCardProps) {
+export default function CommunityCard({
+  community,
+  closeDrawer,
+}: CommunityCardProps) {
   return (
     <Link
-      to={`/community/${community.name}`}
+      to={`/c/${community.name}`}
+      onClick={closeDrawer}
       className="mx-4 flex gap-3 items-center px-8 py-2 rounded-xl hover:bg-dark-750"
     >
       <Avatar src={`../../../../src/assets/avatar_${community.name}.jpg`} />
@@ -24,5 +29,3 @@ function CommunityCard({ community }: CommunityCardProps) {
     </Link>
   );
 }
-
-export default CommunityCard;

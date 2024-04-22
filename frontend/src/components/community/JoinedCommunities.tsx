@@ -4,7 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import CommunityCard from "./CommunityCard";
 import getCommunities from "../../services/community/getCommunities";
 
-export default function JoinedCommunities({ user }: { user: number }) {
+interface Props {
+  user: number;
+  closeDrawer?: () => void;
+}
+
+export default function JoinedCommunities({ user, closeDrawer }: Props) {
   const { isPending, error, data } = useQuery({
     queryKey: ["community-list-joined"],
     queryFn: () => getCommunities(`/api/community/list/joined/?user=${user}`),
@@ -23,7 +28,11 @@ export default function JoinedCommunities({ user }: { user: number }) {
           COMMUNITIES YOU JOINED
         </p>
         {communities.map((community: CommunityProps) => (
-          <CommunityCard key={community.name} community={community} />
+          <CommunityCard
+            key={community.name}
+            community={community}
+            closeDrawer={closeDrawer}
+          />
         ))}
       </Stack>
     )

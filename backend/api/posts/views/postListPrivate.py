@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 
 from ..models import SavePost, UpvotePost, DownvotePost
 from ..serializers import ListPostSerializer
+from api.convert import from_10_to_36_post
 
 
 @api_view(['GET'])
@@ -26,14 +27,17 @@ def postListPrivate(request):
     else:
         posts = sorted(posts_raw, key=lambda x: x.created_at, reverse=True)
         
-    serialized = ListPostSerializer(posts, many=True).data
+    data = ListPostSerializer(posts, many=True).data
     
-    for i in range(len(serialized)):
-        serialized[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()
-        serialized[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i], user=user).exists()
-        serialized[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()
+    for i in range(len(data)):
+        data[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()
+        data[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i], user=user).exists()
+        data[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()
+        
+        post_id = data[i]['id']
+        data[i]['id'] = from_10_to_36_post(post_id)
     
-    return Response(serialized)
+    return Response(data)
 
 def getUpvotedPosts(user):
     relationships = UpvotePost.objects.filter(user=user)

@@ -24,7 +24,7 @@ export default function CommentHeader({ comment }: CommentCardProps) {
         </div>
         <BsDot className="inline-block" />
         <Link
-          to={`/community/${comment.community_link}/post/${comment.post}`}
+          to={`/c/${comment.community_link}/post/${comment.post}`}
           className="hover:underline"
         >
           <span className="font-bold text-white">{comment.post_title}</span>

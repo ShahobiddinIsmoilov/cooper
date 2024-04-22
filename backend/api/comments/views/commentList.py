@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from api.users.models import User
 from ..models import Comment, UpvoteComment, DownvoteComment
 from ..serializers import ListCommentSerializer
+from api.convert import from_10_to_36_comment, from_10_to_36_post, from_36_to_10_post
 
 
 @api_view(['GET'])
@@ -13,7 +14,7 @@ def commentList(request):
     user = request.GET.get('user')
     
     if filter == 'post':
-        post = request.GET.get('post', '')
+        post = from_36_to_10_post(request.GET.get('post', ''))
         comments_raw = Comment.objects.filter(post=post)
     else:
         username = request.GET.get('username', '')
@@ -32,11 +33,16 @@ def commentList(request):
     serializer = ListCommentSerializer(comments, many=True)
     data = serializer.data
     
-    if user != 'undefined':
-        for i in range(len(data)):
+    for i in range(len(data)):
+        if user != 'undefined':
             upvoted = UpvoteComment.objects.filter(comment=comments[i], user=user)
             data[i]['upvoted'] = upvoted.exists()
             downvoted = DownvoteComment.objects.filter(comment=comments[i], user=user)
             data[i]['downvoted'] = downvoted.exists()
+        
+        comment_id = from_10_to_36_comment(data[i]['id'])
+        data[i]['id'] = comment_id
+        post_id = from_10_to_36_post(data[i]['post'])
+        data[i]['post'] = post_id
         
     return Response(data)

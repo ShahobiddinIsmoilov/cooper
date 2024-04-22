@@ -33,7 +33,7 @@ export default function UserComments({ setActive, user }: Props) {
   const [twitter, setTwitter] = useState(initialTwitter);
 
   function enableButtons() {
-    if (displayName !== initialDisplayName) return true;
+    if (displayName.trim() !== initialDisplayName) return true;
     if (phone !== initialPhone) return true;
     if (telegram !== initialTelegram) return true;
     if (instagram !== initialInstagram) return true;
@@ -65,8 +65,9 @@ export default function UserComments({ setActive, user }: Props) {
   });
 
   function handleSave() {
+    setDisplayName(displayName.trim() === "" ? user.username : displayName);
     const newSettings = {
-      display_name: displayName,
+      display_name: displayName.trim() === "" ? user.username : displayName,
       phone: phone,
       telegram: telegram,
       instagram: instagram,
@@ -74,6 +75,11 @@ export default function UserComments({ setActive, user }: Props) {
       twitter: twitter,
     };
     mutation.mutate(newSettings);
+  }
+
+  function removeSpaces(s: string) {
+    s = s.replace(/\s/g, "");
+    return s;
   }
 
   return (
@@ -106,6 +112,7 @@ export default function UserComments({ setActive, user }: Props) {
         phone={phone}
         setDisplayName={setDisplayName}
         setPhone={setPhone}
+        removeSpaces={removeSpaces}
         enableButtons={enableButtons}
       />
       <Social
@@ -118,6 +125,7 @@ export default function UserComments({ setActive, user }: Props) {
         setInstagram={setInstagram}
         setFacebook={setFacebook}
         setTwitter={setTwitter}
+        removeSpaces={removeSpaces}
         enableButtons={enableButtons}
       />
       <div>

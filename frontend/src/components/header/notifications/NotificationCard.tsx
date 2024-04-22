@@ -26,7 +26,7 @@ export default function NotificationCard({ notif, markAsRead }: Props) {
         }`}
       >
         <Link
-          to={`/community/${notif.community_link}/post/${notif.parent_post}`}
+          to={`/c/${notif.community_link}/post/${notif.parent_post}`}
           className="flex gap-2"
         >
           <Avatar src={`../../../../src/assets/media/${notif.user_avatar}`} />
