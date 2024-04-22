@@ -6,18 +6,21 @@ import { IoCloudOffline } from "react-icons/io5";
 import { Flex } from "@mantine/core";
 import { PostProps } from "../interfaces/postProps";
 import { CommunityDetailProps } from "../interfaces/communityDetailProps";
+import { makeRequest } from "../services/makeRequest";
+import { useAuthContext } from "../contexts/AuthContext";
 import PostDetail from "../components/post/PostDetail";
-import getPostDetail from "../services/post/getPostDetail";
 import Infobar from "../components/Infobar";
 
 export default function PostDetailPage() {
   const { screenWidth } = useWindowSize();
   const { post_permalink } = useParams();
   const { community_link } = useParams();
+  const user = useAuthContext().user?.user_id;
 
   const { isPending, error, data } = useQuery({
     queryKey: [`post-detail-${post_permalink}`],
-    queryFn: () => getPostDetail(post_permalink!),
+    queryFn: () =>
+      makeRequest(`api/post/detail/${post_permalink}/?user=${user}`),
     retry: 2,
   });
 
@@ -49,7 +52,7 @@ export default function PostDetailPage() {
 
   return (
     <Flex>
-      <div className="flex-grow max-w-3xl xs:px-2">
+      <div className="flex-grow max-w-[768px] my-2 mx-4">
         <PostDetail
           post={post}
           community={community.id}

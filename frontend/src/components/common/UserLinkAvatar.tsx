@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ImSpinner4 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
-import { UserDetailProps } from "../../../../interfaces/userDetailProps";
+import { UserDetailProps } from "../../interfaces/userDetailProps";
 import { BiSolidLike } from "react-icons/bi";
 import { Avatar } from "@mantine/core";
-import { useAuthContext } from "../../../../contexts/AuthContext";
-import { makeRequest } from "../../../../services/makeRequest";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { makeRequest } from "../../services/makeRequest";
 
 interface UserLinkProps {
   username: string;

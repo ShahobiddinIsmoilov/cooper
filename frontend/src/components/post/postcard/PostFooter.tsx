@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
-import { PostHeaderHomeProps } from "../postheader/PostHeaderHome";
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { FaComment } from "react-icons/fa";
-import { useWindowSize } from "../../../../contexts/WindowSizeContext";
+import { useWindowSize } from "../../../contexts/WindowSizeContext";
 import { useState } from "react";
-import { PostCardDots } from "./PostCardDots";
-import useCredentials from "../../../../services/useCredentials";
+import { ContentOptions } from "../../common/ContentOptions";
+import { PostProps } from "../../../interfaces/postProps";
+import useCredentials from "../../../services/useCredentials";
 
-export default function PostFooter({ post }: PostHeaderHomeProps) {
+export interface Props {
+  post: PostProps;
+}
+
+export default function PostFooter({ post }: Props) {
   const { screenWidth } = useWindowSize();
   const [upvoted, setUpvoted] = useState(post.upvoted);
   const [downvoted, setDownvoted] = useState(post.downvoted);
@@ -70,20 +74,21 @@ export default function PostFooter({ post }: PostHeaderHomeProps) {
             )}
           </button>
         </div>
-        <Link to={`/c/${post.community_link}/post/${post.permalink}`}>
-          <div className="py-1 px-3 rounded-full cursor-pointer flex justify-center bg-dark-900 xs:bg-transparent items-center hover:bg-dark-600 text-white gap-2">
-            <FaComment className="text-lg xs:text-xl" />
-            <span className="xs:text-lg text-cyan-400 font-bold">
-              {screenWidth < 576
-                ? post?.comments.toLocaleString()
-                : post?.comments === 1
-                ? "1 comment"
-                : post?.comments.toLocaleString() + " comments"}
-            </span>
-          </div>
+        <Link
+          to={`/c/${post.community_link}/post/${post.permalink}`}
+          className="py-[6px] px-3 rounded-full cursor-pointer flex justify-center bg-dark-900 xs:bg-transparent items-center hover:bg-dark-600 text-white gap-2"
+        >
+          <FaComment className="text-lg xs:text-xl" />
+          <span className="xs:text-lg text-cyan-400 font-bold">
+            {screenWidth < 576
+              ? post?.comments.toLocaleString()
+              : post?.comments === 1
+              ? "1 comment"
+              : post?.comments.toLocaleString() + " comments"}
+          </span>
         </Link>
       </div>
-      <PostCardDots post={post} />
+      <ContentOptions post={post} bg="600" />
     </div>
   );
 }

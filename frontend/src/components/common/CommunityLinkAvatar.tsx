@@ -2,17 +2,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ImSpinner4 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
-import { CommunityDetailProps } from "../../../../interfaces/communityDetailProps";
+import { CommunityDetailProps } from "../../interfaces/communityDetailProps";
 import { Avatar, Image } from "@mantine/core";
-import getCommunityDetail from "../../../../services/community/getCommunityDetail";
+import getCommunityDetail from "../../services/community/getCommunityDetail";
 
 interface CommunityLinkProps {
-  community_name?: string;
+  community_avatar?: string;
   community_link: string;
 }
 
-export default function CommunityLink({
-  community_name,
+export default function CommunityLinkAvatar({
+  community_avatar,
   community_link,
 }: CommunityLinkProps) {
   const [showPreview, setShowPreview] = useState(false);
@@ -40,7 +40,7 @@ export default function CommunityLink({
         to={`/c/${community_link}`}
         className="font-bold hover:underline text-blue-400"
       >
-        {community_name}
+        <Avatar src={`../../../../src/assets/avatar_${community_link}.jpg`} />
       </Link>
       {showPreview && <Preview community_link={community_link} />}
     </div>

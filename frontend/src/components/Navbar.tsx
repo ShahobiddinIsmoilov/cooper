@@ -22,7 +22,7 @@ export default function Navbar({ closeDrawer }: Props) {
   return (
     <div
       className={`bg-dark-850 text-white h-full overflow-x-hidden overflow-hidden hover:overflow-y-scroll navbar-scrollbar flex flex-col justify-between border-r border-line ${
-        screenWidth >= 1408 ? "w-[300px]" : "w-[280px]"
+        screenWidth >= 1408 || screenWidth < 1200 ? "w-[300px]" : "w-[280px]"
       }`}
     >
       <div>

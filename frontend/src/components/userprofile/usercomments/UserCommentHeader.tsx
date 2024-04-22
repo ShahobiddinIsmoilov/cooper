@@ -2,8 +2,8 @@ import { Avatar, Flex } from "@mantine/core";
 import { CommentProps } from "../../../interfaces/commentProps";
 import { BsDot } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import UserLink from "../../post/postcard/postheader/UserLink";
-import CommunityLink from "../../post/postcard/postheader/CommunityLink";
+import UserLink from "../../common/UserLink";
+import CommunityLink from "../../common/CommunityLink";
 
 interface CommentCardProps {
   comment: CommentProps;

@@ -71,7 +71,7 @@ export default function Layout() {
             duration={200}
           >
             <div
-              className={`flex items-center gap-8 bg-dark-850 w-[280px] border-r border-line ${
+              className={`flex items-center gap-8 bg-dark-850 w-[300px] border-r border-line ${
                 screenHeight >= 700 ? "h-[60px]" : "h-[50px]"
               }`}
             >
@@ -88,7 +88,7 @@ export default function Layout() {
 
         <AppShell.Main>
           <Flex justify={{ xs: "flex-center" }}>
-            <Container className="xs:px-2 w-[1056px] max-w-[1056px]">
+            <Container className="w-[1056px] max-w-[1056px] p-0">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/home" element={<HomePage />} />

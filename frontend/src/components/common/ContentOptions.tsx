@@ -1,11 +1,11 @@
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegBookmark, FaBookmark, FaRegFlag } from "react-icons/fa6";
 import { Menu } from "@mantine/core";
-import useCredentials from "../../../../services/useCredentials";
 import { useState } from "react";
-import { PostProps } from "../../../../interfaces/postProps";
+import { PostProps } from "../../interfaces/postProps";
+import useCredentials from "../../services/useCredentials";
 
-export function PostCardDots({ post }: { post: PostProps }) {
+export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
   const api = useCredentials();
   const [saved, setSaved] = useState(post.saved);
 
@@ -23,7 +23,9 @@ export function PostCardDots({ post }: { post: PostProps }) {
     <div>
       <Menu position="bottom-end" offset={0} radius={12}>
         <Menu.Target>
-          <button className="hover:bg-dark-600 rounded-full text-white flex p-3 opacity-55 hover:opacity-100 cursor-pointer items-center">
+          <button
+            className={`hover:bg-dark-${bg} rounded-full text-white/50 hover:text-white flex p-[10px] cursor-pointer items-center`}
+          >
             <BsThreeDots />
           </button>
         </Menu.Target>

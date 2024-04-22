@@ -4,9 +4,9 @@ import Line from "../../utils/Line";
 import CommentFeed from "../comment/CommentFeed";
 import ReactHtmlParser from "react-html-parser";
 import CommentProvider from "../../contexts/CommentContext";
-import PostFooter from "./postcard/postfooter/PostFooter";
 import ImageViewer from "./ImageViewer";
 import LinkPreview from "./LinkPreview";
+import PostDetailFooter from "./PostDetailFooter";
 
 interface PostDetailProps {
   post: PostProps;
@@ -22,24 +22,24 @@ export default function PostDetail({
   community_link,
 }: PostDetailProps) {
   return (
-    <div className="my-2 mx-2">
+    <>
       <PostDetailHeader post={post} />
-      <div className="text-xl xs:text-xl font-bold text-white py-2">
+      <div className="text-lg xs:text-xl font-bold text-white mt-3 mb-2">
         {post.title}
       </div>
+      {post.type === "text" ? (
+        <div className="post-detail overflow-hidden break-words">
+          {ReactHtmlParser(post.body)}
+        </div>
+      ) : post.type === "image" ? (
+        <ImageViewer imageUrl={post.image} />
+      ) : (
+        <LinkPreview link={post.link} />
+      )}
+      <PostDetailFooter post={post} />
       <div className="mt-2">
-        {post.type === "text" ? (
-          <div className="post-detail overflow-hidden break-words">
-            {ReactHtmlParser(post.body)}
-          </div>
-        ) : post.type === "image" ? (
-          <ImageViewer imageUrl={post.image} />
-        ) : (
-          <LinkPreview link={post.link} />
-        )}
+        <Line />
       </div>
-      <PostFooter post={post} />
-      <Line />
       <CommentProvider
         post_id={post.id}
         post_title={post.title}
@@ -50,6 +50,6 @@ export default function PostDetail({
       >
         <CommentFeed />
       </CommentProvider>
-    </div>
+    </>
   );
 }

@@ -1,26 +1,21 @@
 import { Link } from "react-router-dom";
 import { PostProps } from "../../../interfaces/postProps";
-import PostHeaderHome from "./postheader/PostHeaderHome";
-import PostFooter from "./postfooter/PostFooter";
-import PostHeaderCommunity from "./postheader/PostHeaderCommunity";
+import PostHeaderHome from "./PostHeader";
+import PostFooter from "./PostFooter";
 import ReactHtmlParser from "react-html-parser";
 import ImageViewer from "../ImageViewer";
 import LinkPreview from "../LinkPreview";
 
 export interface PostCardProps {
   post: PostProps;
-  notCommunity?: boolean;
+  headerVariant: string;
 }
 
-function PostCard({ post, notCommunity }: PostCardProps) {
+export default function PostCard({ post, headerVariant }: PostCardProps) {
   return (
     <div className="text-white xs:rounded-xl my-[6px] py-[6px] hover:bg-dark-750">
       <div className="mx-4">
-        {notCommunity ? (
-          <PostHeaderHome post={post} />
-        ) : (
-          <PostHeaderCommunity post={post} />
-        )}
+        <PostHeaderHome post={post} variant={headerVariant} />
       </div>
       <Link to={`/c/${post.community_link}/post/${post.permalink}`}>
         <p className="xs:text-xl font-bold py-2 px-4 hover:text-indigo-400">
@@ -44,7 +39,3 @@ function PostCard({ post, notCommunity }: PostCardProps) {
     </div>
   );
 }
-
-export default PostCard;
-
-// △▽

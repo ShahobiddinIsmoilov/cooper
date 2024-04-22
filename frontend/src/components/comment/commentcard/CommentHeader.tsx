@@ -1,7 +1,7 @@
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 import { CommentProps } from "../../../interfaces/commentProps";
-import UserLink from "../../post/postcard/postheader/UserLink";
-import UserLinkAvatar from "../../post/postcard/postheader/UserLinkAvatar";
+import UserLink from "../../common/UserLink";
+import UserLinkAvatar from "../../common/UserLinkAvatar";
 
 interface CommentCardProps {
   comment: CommentProps;
@@ -30,8 +30,8 @@ function CommentHeader({ comment, hidden, setHidden }: CommentCardProps) {
         )}
       </button>
       <div className="text-xs xs:text-base flex items-center gap-1" id="fucker">
-        <UserLinkAvatar username={comment.username} user_id={comment.user} />
-        <UserLink username={comment.username} user_id={comment.user} />
+        <UserLinkAvatar username={comment.username} />
+        <UserLink username={comment.username} />
         <span className="opacity-50 text-sm"> ∙ 15 daqiqa oldin </span>
       </div>
     </div>

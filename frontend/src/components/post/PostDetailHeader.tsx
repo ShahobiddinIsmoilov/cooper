@@ -1,34 +1,51 @@
 import { useNavigate } from "react-router-dom";
 import { PostProps } from "../../interfaces/postProps";
 import { FaArrowLeft } from "react-icons/fa6";
-import UserLink from "./postcard/postheader/UserLink";
+import UserLink from "../common/UserLink";
+import CommunityLinkAvatar from "../common/CommunityLinkAvatar";
+import CommunityLink from "../common/CommunityLink";
+import readableTime from "../../utils/readableTime";
+import exactTime from "../../utils/exactTime";
+import ContentShare from "../common/ContentShare";
 
 export interface PostDetailHeaderProps {
   post: PostProps;
 }
 
-function PostDetailHeader({ post }: PostDetailHeaderProps) {
+export default function PostDetailHeader({ post }: PostDetailHeaderProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between text-white">
-      <div className="flex items-center">
-        <div
-          className="p-2 rounded-full cursor-pointer bg-dark-800 hover:bg-dark-700"
+    <div className="flex justify-between">
+      <div className="flex items-center gap-2">
+        <button
+          className="p-2 rounded-full cursor-pointer hover:bg-dark-700"
           onClick={() => navigate(-1)}
         >
-          <FaArrowLeft className="text-2xl" />
-        </div>
-        <div className="px-4 flex gap-2">
-          <UserLink username={post?.username} user_id={post?.user} />
-          <span className="opacity-50 text-xs xs:text-base"> ∙ 3h ago</span>
+          <FaArrowLeft size={22} />
+        </button>
+        <CommunityLinkAvatar
+          community_avatar={post.community_avatar}
+          community_link={post.community_link}
+        />
+        <div>
+          <CommunityLink
+            community_name={post.community_name}
+            community_link={post.community_link}
+          />
+          <div className="flex items-center gap-1 text-sm">
+            <UserLink username={post.username} />
+            <span
+              title={exactTime(post.created_at, "uz")}
+              className="text-white/50"
+            >
+              {" "}
+              ∙ {readableTime(post.created_at, "uz")}
+            </span>
+          </div>
         </div>
       </div>
-      <span className="cursor-pointer flex items-center opacity-50 pr-1 hover:opacity-100 text-xs xs:text-base xs:p-0">
-        🔗
-      </span>
+      <ContentShare content="post" bg="700" />
     </div>
   );
 }
-
-export default PostDetailHeader;
