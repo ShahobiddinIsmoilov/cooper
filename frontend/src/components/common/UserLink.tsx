@@ -7,6 +7,7 @@ import { BiSolidLike } from "react-icons/bi";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { makeRequest } from "../../services/makeRequest";
 import { Avatar } from "@mantine/core";
+import readableTime from "../../utils/readableTime";
 
 interface UserLinkProps {
   username: string;
@@ -46,7 +47,7 @@ export default function UserLink({ username }: UserLinkProps) {
   );
 }
 
-function Preview({ username }: UserLinkProps) {
+export function Preview({ username }: UserLinkProps) {
   const { isPending, error, data } = useQuery({
     queryKey: [`user-preview-${username}`],
     queryFn: () => makeRequest(`/api/user/detail/${username}`),
@@ -102,7 +103,7 @@ function UserPreview({ userDetail }: UserPreviewProps) {
               <p className="text-xl hover:text-indigo-400">
                 {userDetail.display_name}
               </p>
-              <p className="text-orange-400">{userDetail.username}</p>
+              <p className="text-orange-400 text-base">{userDetail.username}</p>
             </Link>
           </div>
         </div>
@@ -110,13 +111,13 @@ function UserPreview({ userDetail }: UserPreviewProps) {
       <div className="flex justify-center w-96 px-6 pb-4">
         <div className="w-64 overflow-hidden">
           <p className="font-bold opacity-50">Date joined:</p>
-          <p>22-sentyabr, 2024</p>
+          {readableTime(userDetail.created_at, "uz")}
         </div>
         <div className="w-48">
           <p className="font-bold opacity-50">Likes:</p>
           <p>
             <BiSolidLike className="text-yellow-400 inline-block mr-1" />
-            2,457
+            {userDetail.votes}
           </p>
         </div>
       </div>
