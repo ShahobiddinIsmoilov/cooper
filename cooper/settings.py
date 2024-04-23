@@ -30,7 +30,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'django-insecure-ka3g4r$@1wh(12u%ud5_f95d_agcg6ki5bd%eg@@&b855(knp0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -75,6 +75,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://192.168.43.213:3000',
+    'cooper-production-0905.up.railway.app'
 ]
 
 # CORS_ALLOW_HEADERS = [
