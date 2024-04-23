@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-ka3g4r$@1wh(12u%ud5_f95d_agcg6ki5bd%eg@@&b855(knp0
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'https://cooper-production-0905.up.railway.app'
+    'cooper-production-0905.up.railway.app'
 ]
 
 
