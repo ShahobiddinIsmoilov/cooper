@@ -92,7 +92,9 @@ export default function CommentForm({
               className="text-blue-400 hover:text-blue-300 hover:bg-transparent h-8 rounded-full px-2"
               onClick={() => setToolbarVisible(!toolbarVisible)}
             >
-              Formatting options
+              {toolbarVisible
+                ? "Hide formatting options"
+                : "Show formatting options"}
             </Button>
             <span>
               <Button

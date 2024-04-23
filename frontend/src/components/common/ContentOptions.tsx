@@ -1,9 +1,12 @@
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegBookmark, FaBookmark, FaRegFlag } from "react-icons/fa6";
-import { Menu } from "@mantine/core";
 import { useState } from "react";
 import { PostProps } from "../../interfaces/postProps";
+import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import useCredentials from "../../services/useCredentials";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import "./content-menu.css";
 
 export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
   const api = useCredentials();
@@ -20,30 +23,32 @@ export function ContentOptions({ post, bg }: { post: PostProps; bg: string }) {
   }
 
   return (
-    <div>
-      <Menu position="bottom-end" offset={0} radius={12}>
-        <Menu.Target>
-          <button
-            className={`hover:bg-dark-${bg} rounded-full text-white/50 hover:text-white flex p-[10px] cursor-pointer items-center`}
-          >
-            <BsThreeDots />
-          </button>
-        </Menu.Target>
-        <Menu.Dropdown className="bg-dark-850">
-          <Menu.Item p={0} onClick={handleClick}>
-            <div className="text-lg flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
-              {saved ? <FaBookmark size={22} /> : <FaRegBookmark size={22} />}
-              <span>{saved ? "Remove from Saved" : "Save"}</span>
-            </div>
-          </Menu.Item>
-          <Menu.Item p={0}>
-            <div className="text-lg flex gap-2 items-center hover:bg-dark-700 cursor-pointer px-4 py-2 rounded-lg">
-              <FaRegFlag size={22} />
-              <span>Report</span>
-            </div>
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
-    </div>
+    <Menu
+      menuButton={
+        <MenuButton
+          className={`hover:bg-dark-${bg} rounded-full text-white/50 hover:text-white flex p-[10px] cursor-pointer items-center`}
+        >
+          <BsThreeDots />
+        </MenuButton>
+      }
+      align="end"
+      menuStyle={{
+        backgroundColor: "#191919",
+        borderRadius: "12px",
+        zIndex: 2,
+      }}
+    >
+      <MenuItem
+        onClick={handleClick}
+        className="content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white"
+      >
+        {saved ? <FaBookmark size={20} /> : <FaRegBookmark size={20} />}
+        <span>{saved ? "Remove from Saved" : "Save"}</span>
+      </MenuItem>
+      <MenuItem className="content-menuitem flex gap-2 items-center cursor-pointer rounded-lg text-white">
+        <FaRegFlag size={20} />
+        <span>Report</span>
+      </MenuItem>
+    </Menu>
   );
 }
