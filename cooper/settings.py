@@ -75,7 +75,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://192.168.43.213:3000',
-    'cooper-production-0905.up.railway.app'
+    'https://cooper-production-0905.up.railway.app'
 ]
 
 # CORS_ALLOW_HEADERS = [
