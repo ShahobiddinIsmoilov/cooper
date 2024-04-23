@@ -32,7 +32,9 @@ SECRET_KEY = 'django-insecure-ka3g4r$@1wh(12u%ud5_f95d_agcg6ki5bd%eg@@&b855(knp0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://cooper-production-0905.up.railway.app'
+]
 
 
 # Application definition
@@ -75,7 +77,6 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://192.168.43.213:3000',
-    'https://cooper-production-0905.up.railway.app'
 ]
 
 # CORS_ALLOW_HEADERS = [
