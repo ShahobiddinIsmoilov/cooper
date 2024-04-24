@@ -25,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-ka3g4r$@1wh(12u%ud5_f95d_agcg6ki5bd%eg@@&b855(knp0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -115,7 +116,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': os.getenv('DB_PASSWORD'),
+        # 'PASSWORD': os.getenv('DB_PASSWORD'),
+        'PASSWORD': 'USoeyArUfcdQzEEaumlHkuUbjIwvFnre',
         'HOST': 'viaduct.proxy.rlwy.net',
         'PORT': '55959',
         # 'NAME': 'predator',
@@ -162,8 +164,10 @@ USE_TZ = True
 
 
 # AWS S3 Bucket configuration
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = 'AKIAXYKJQD547O23VZ6R'
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'cooper-static-files-bucket'
 AWS_S3_REGION_NAME = 'us-east-1'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
