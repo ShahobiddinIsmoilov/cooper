@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     votes = models.IntegerField(default=0, null=True)
     display_name = models.CharField(max_length=32, default=None, null=True)
-    avatar = models.ImageField(upload_to='user/', default='user/default.png', null=True)
+    avatar = models.ImageField(upload_to='media/user/', default='user/default.png', null=True)
     telegram = models.URLField(max_length=10000, default=None, null=True)
     instagram = models.URLField(max_length=10000, default=None, null=True)
     facebook = models.URLField(max_length=10000, default=None, null=True)
