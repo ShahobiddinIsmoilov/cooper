@@ -2,7 +2,6 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from api.users.models import User
 from api.communities.models import Community
 from api.communities.serializers import DetailCommunitySerializer
 from ..models import Post, SavePost, UpvotePost, DownvotePost
@@ -23,9 +22,10 @@ def postDetail(request, permalink):
             'community_detail': {**community_serializer.data}}
 
     user = request.GET.get('user')
-    data['post_detail']['upvoted'] = UpvotePost.objects.filter(post=post, user=user).exists()
-    data['post_detail']['downvoted'] = DownvotePost.objects.filter(post=post, user=user).exists()
-    data['post_detail']['saved'] = SavePost.objects.filter(post=post, user=user).exists()
+    if user != 'undefined':
+        data['post_detail']['upvoted'] = UpvotePost.objects.filter(post=post, user=user).exists()
+        data['post_detail']['downvoted'] = DownvotePost.objects.filter(post=post, user=user).exists()
+        data['post_detail']['saved'] = SavePost.objects.filter(post=post, user=user).exists()
     
     permalink = encode_post_id(data['post_detail']['id'])
     data['post_detail']['permalink'] = permalink
