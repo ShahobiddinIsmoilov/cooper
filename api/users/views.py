@@ -111,7 +111,11 @@ def userDetail(request, username):
     
     data['notifications'] = len(notifications)
     
-    return Response(data)
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    return Response(data, headers=headers)
 
 
 @api_view(['PUT', 'PATCH'])

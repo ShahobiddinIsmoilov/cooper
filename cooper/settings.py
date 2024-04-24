@@ -84,7 +84,7 @@ CORS_ALLOWED_ORIGINS = [
 # CORS_ALLOW_HEADERS = [
 #     'Content-Type',
 #     'Authorization',
-#     'UserID',  # Custom header
+#     # 'UserID',  # Custom header
 # ]
 
 # CORS_URLS_REGEX = r"^/user/.*"
@@ -183,9 +183,10 @@ AWS_S3_VERIFY = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = f'{AWS_S3_URL_PROTOCOL}//{AWS_S3_CUSTOM_DOMAIN}/static/'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATIC_URL = 'static/'
+# STATIC_URL = f'{AWS_S3_URL_PROTOCOL}//{AWS_S3_CUSTOM_DOMAIN}/static/'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media files uploaded by users
 # MEDIA_URL = f'{AWS_S3_URL_PROTOCOL}://{AWS_S3_CUSTOM_DOMAIN}/media/'
