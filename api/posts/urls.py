@@ -10,7 +10,7 @@ urlpatterns = [
     path('detail/<str:permalink>/', postDetail.postDetail, name='post-detail'),
     path('action/', postAction.postAction, name='post-action'),
     path('create/', misc.postCreate, name='post-create'),
-    path('update/<str:pk>/', misc.postUpdate, name='post-update'),
-    path('delete/<str:pk>/', misc.postDelete, name='post-delete'),
-    path('utils/getLinkData/', getLinkData.getLinkData, name='post-get-linkdata'),
+    path('update/<int:pk>/', misc.postUpdate, name='post-update'),
+    path('delete/<int:pk>/', misc.postDelete, name='post-delete'),
+    path('getmetadata/', getLinkData.getLinkData, name='post-get-linkdata'),
 ]

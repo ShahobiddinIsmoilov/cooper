@@ -8,7 +8,8 @@ from rest_framework.reverse import reverse
 from .models import Community, UserCommunity
 from .serializers import (ListCommunitySerializer,
                           DetailCommunitySerializer,
-                          CreateCommunitySerializer)
+                          CreateCommunitySerializer,
+                          UpdateCommunitySerializer)
 
 
 @api_view(['GET'])
@@ -108,12 +109,12 @@ def communityUpdate(request, pk):
     Updates the community with specified changes
     """
     community = Community.objects.get(pk=pk)
-    serializer = DetailCommunitySerializer(instance=community, data=request.data)
+    serializer = UpdateCommunitySerializer(instance=community, data=request.data)
 
     if serializer.is_valid(raise_exception=True):
         serializer.save()
     
-    return Response(serializer.data)
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['DELETE'])
@@ -125,10 +126,3 @@ def communityDelete(request, pk):
     community.delete()
 
     return Response(status=status.HTTP_204_NO_CONTENT)
-    
-
-@api_view(['GET','HEAD'])
-def api_root(request, format=None):
-    return Response({
-        'communities': reverse('community-list', request=request, format=None),
-    })

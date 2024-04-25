@@ -53,7 +53,7 @@ def postList(request):
         community_serializer = DetailCommunitySerializer(post_community, many=False)
         data[i]['community_avatar'] = community_serializer.data['avatar']
         
-        if user != 'undefined':
+        if user != 'undefined' and user != None:
             data[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()
             data[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i], user=user).exists()
             data[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()

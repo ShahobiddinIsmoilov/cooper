@@ -51,9 +51,8 @@ class RegistrationView(generics.GenericAPIView):
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        user_data = serializer.data
         
-        return Response(user_data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
     
 
 class LoginView(generics.GenericAPIView):
@@ -111,11 +110,7 @@ def userDetail(request, username):
     
     data['notifications'] = len(notifications)
     
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    
-    return Response(data, headers=headers)
+    return Response(data)
 
 
 @api_view(['PUT', 'PATCH'])
