@@ -14,21 +14,23 @@ def commentCreate(request):
     serializer = CreateCommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
-    return Response(serializer.data)
+    return Response(status=status.HTTP_201_CREATED)
 
 
 # Update comment
-@api_view(['POST'])
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
 def commentUpdate(request, pk):
     comment = Comment.objects.get(pk=pk)
     serializer = UpdateCommentSerializer(instance=comment, data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save()
-    return Response(serializer.data)
+    return Response(status=status.HTTP_200_OK)
 
 
 # Delete comment
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def commentDelete(request, pk):
     comment = Comment.objects.get(pk=pk)
     comment.delete()

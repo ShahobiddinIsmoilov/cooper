@@ -3,11 +3,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from api.users.models import User
+from .models import User
 from api.posts.models import Post, UpvotePost, DownvotePost, SavePost
 from api.posts.serializers import ListPostSerializer
-from ..models import Comment, UpvoteComment, DownvoteComment
-from ..serializers import ListCommentSerializer
+from api.comments.models import Comment, UpvoteComment, DownvoteComment
+from api.comments.serializers import ListCommentSerializer
 from api.convert import encode_post_id, encode_comment_id
 
 
