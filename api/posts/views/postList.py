@@ -3,12 +3,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from api.users.models import User
-from api.users.serializers import UserDetailSerializer
 from api.communities.models import Community, UserCommunity
-from api.communities.serializers import DetailCommunitySerializer
 from ..models import Post, SavePost, UpvotePost, DownvotePost
-from ..serializers import ListPostSerializer
-from api.convert import encode_post_id
+from ..serializers import PostSerializer
 
 
 @api_view(['GET'])
@@ -33,34 +30,23 @@ def postList(request):
     sort_by = request.GET.get('sort', '')
     
     if sort_by == 'hot':
-        posts = posts_raw.order_by('-score', '-created_at')
+        posts = sorted(posts_raw, key=lambda x: (x.score, x.created_at), reverse=True)
     elif sort_by == 'top':
-        posts = posts_raw.order_by('-votes', '-created_at')
+        posts = sorted(posts_raw, key=lambda x: (x.votes, x.created_at), reverse=True)
     elif sort_by == 'best':
-        posts = posts_raw.order_by('-ratio', '-created_at')
+        posts = sorted(posts_raw, key=lambda x: (x.ratio, x.created_at), reverse=True)
     else:
         posts = posts_raw.order_by('-created_at')
     
-    serializer = ListPostSerializer(posts, many=True)
+    serializer = PostSerializer(posts, many=True)
     data = serializer.data
     
-    for i in range(len(data)):
-        post_user = getattr(posts[i], 'user')
-        user_serializer = UserDetailSerializer(post_user, many=False)
-        data[i]['user_avatar'] = user_serializer.data['avatar']
-        
-        post_community = getattr(getattr(posts[i], 'community'), 'avatar')
-        community_serializer = DetailCommunitySerializer(post_community, many=False)
-        data[i]['community_avatar'] = community_serializer.data['avatar']
-        
-        if user != 'undefined' and user != None:
+    if user != 'undefined' and user != None:
+        for i in range(len(data)):
             data[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()
             data[i]['downvoted'] = DownvotePost.objects.filter(post=posts[i], user=user).exists()
             data[i]['saved'] = SavePost.objects.filter(post=posts[i], user=user).exists()
             
-        post_id = data[i]['id']
-        data[i]['permalink'] = encode_post_id(post_id)
-    
     return Response(data)
 
 def getHomePosts(user):

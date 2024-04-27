@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from ..models import SavePost, UpvotePost, DownvotePost
-from ..serializers import ListPostSerializer
+from ..serializers import PostSerializer
 from api.convert import encode_post_id
 
 
@@ -27,7 +27,7 @@ def postListPrivate(request):
     else:
         posts = sorted(posts_raw, key=lambda x: x.created_at, reverse=True)
         
-    data = ListPostSerializer(posts, many=True).data
+    data = PostSerializer(posts, many=True).data
     
     for i in range(len(data)):
         data[i]['upvoted'] = UpvotePost.objects.filter(post=posts[i], user=user).exists()

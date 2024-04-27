@@ -11,10 +11,8 @@ class ListCommunitySerializer(serializers.ModelSerializer):
         model = Community
         fields = ['name',
                   'link',
-                  'description',
                   'members',
-                  'avatar',
-                  'banner']
+                  'avatar']
 
 
 class DetailCommunitySerializer(serializers.ModelSerializer):

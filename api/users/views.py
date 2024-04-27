@@ -58,6 +58,7 @@ def userUpdate(request, pk):
     Updating user settings
     """
     user = get_object_or_404(User, pk=pk)
+    
     serializer = UserUpdateSerializer(instance=user, data=request.data)
     
     if serializer.is_valid(raise_exception=True):

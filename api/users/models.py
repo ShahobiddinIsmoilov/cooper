@@ -34,8 +34,8 @@ class UserManager(BaseUserManager):
     
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=32, unique=True)
-    phone = models.CharField(max_length=9, default=None, null=True)
+    username = models.CharField(max_length=24, unique=True)
+    phone = models.CharField(max_length=20, default=None, null=True, blank=True)
     is_verified = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -44,11 +44,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     votes = models.IntegerField(default=0, null=True)
     display_name = models.CharField(max_length=32, default=None, null=True)
-    avatar = models.ImageField(upload_to='media/user/', default='user/default.png', null=True)
-    telegram = models.URLField(max_length=10000, default=None, null=True)
-    instagram = models.URLField(max_length=10000, default=None, null=True)
-    facebook = models.URLField(max_length=10000, default=None, null=True)
-    twitter = models.URLField(max_length=10000, default=None, null=True)
+    avatar = models.ImageField(upload_to='media/user/', default='media/user/trollface.png',
+                               null=True, blank=True)
+    telegram = models.URLField(default=None, null=True, blank=True)
+    instagram = models.URLField(default=None, null=True, blank=True)
+    facebook = models.URLField(default=None, null=True, blank=True)
+    twitter = models.URLField(default=None, null=True, blank=True)
     
     class Meta:
         indexes = [
@@ -69,10 +70,15 @@ class User(AbstractBaseUser, PermissionsMixin):
             'access': str(refresh.access_token)
         }
         
-
-class Note(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.TextField()
-    
-    def __str__(self):
-        return self.body
+    @property
+    def phone_number(self):
+        phone = self.phone
+        if phone == None or phone == '':
+            return '-'
+        if len(phone) != 12:
+            return phone
+        country = f'+{phone[:3]}'
+        code = f' ({phone[3:5]})'
+        number = f' {phone[5:8]}-{phone[8:10]}-{phone[10:12]}'
+        pretty = country + code + number
+        return pretty

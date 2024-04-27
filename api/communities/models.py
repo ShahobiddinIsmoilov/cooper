@@ -8,18 +8,19 @@ User = get_user_model()
 
 class Community(models.Model):
     owner = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
-    owner_username = models.CharField(max_length=32, default=None, null=True)
-    name = models.CharField(max_length=32, default=None, null=True, unique=True)
-    link = models.CharField(max_length=32, default=None, null=True, unique=True)
-    description = models.TextField(max_length=1000, default=None, null=True)
-    members = models.IntegerField(default=0, null=True)
-    posts = models.IntegerField(default=0, null=True)
-    comments = models.IntegerField(default=0, null=True)
-    upvotes = models.IntegerField(default=0, null=True)
-    downvotes = models.IntegerField(default=0, null=True)
-    rules = models.TextField(max_length=5000, default=None, null=True)
-    avatar = models.ImageField(upload_to='community/', default='community/default.png', null=True)
-    banner = models.ImageField(upload_to='community/', default='community/default.png', null=True)
+    name = models.CharField(max_length=32, default=None, null=True, blank=True, unique=True)
+    link = models.CharField(max_length=32, default=None, null=True, blank=True, unique=True)
+    description = models.TextField(max_length=1000, default=None, null=True, blank=True)
+    members = models.IntegerField(default=0, null=True, blank=True)
+    posts = models.IntegerField(default=0, null=True, blank=True)
+    comments = models.IntegerField(default=0, null=True, blank=True)
+    rules = models.TextField(max_length=5000, default=None, null=True, blank=True)
+    avatar = models.ImageField(upload_to='media/community/',
+                               default='media/community/default_avatar.png',
+                               null=True, blank=True)
+    banner = models.ImageField(upload_to='media/community/',
+                               default='media/community/default_banner.png',
+                               null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -41,7 +42,7 @@ class UserCommunity(models.Model):
         unique_together = ('user', 'community')
         
     def __str__(self):
-        return str(self.user) + ' - ' + str(self.community)
+        return 'User-community relationship object'
     
 
 @receiver(post_save, sender=UserCommunity)

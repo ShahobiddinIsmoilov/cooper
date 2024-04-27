@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 
 from .models import User
 from api.posts.models import Post, UpvotePost, DownvotePost, SavePost
-from api.posts.serializers import ListPostSerializer
+from api.posts.serializers import PostSerializer
 from api.comments.models import Comment, UpvoteComment, DownvoteComment
 from api.comments.serializers import ListCommentSerializer
 from api.convert import encode_post_id, encode_comment_id
@@ -33,7 +33,7 @@ def activityList(request, username):
     
     for item in activity:
         if hasattr(item, 'title'):
-            serialized = ListPostSerializer(item, many=False).data
+            serialized = PostSerializer(item, many=False).data
             if user != 'undefined':
                 upvote = UpvotePost.objects.filter(post=item, user=user)
                 serialized['upvoted'] = upvote.exists()

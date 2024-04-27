@@ -5,10 +5,8 @@ from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import Note
-
-
 User = get_user_model()
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
     """
@@ -18,7 +16,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'display_name']
+        fields = ['username', 'password']
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -133,8 +131,3 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
-    
-class NoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Note
-        fields = '__all__'
