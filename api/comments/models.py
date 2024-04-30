@@ -14,7 +14,8 @@ class Comment(models.Model):
     post = models.ForeignKey('posts.Post', default=None, null=True, on_delete=models.SET_NULL)
     community = models.ForeignKey('communities.Community', default=None, null=True,
                                                            on_delete=models.CASCADE)
-    parent = models.ForeignKey('comments.Comment', default=0, null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey('comments.Comment', default=None, null=True,
+                                                   on_delete=models.SET_NULL)
     body = models.TextField(max_length=10000, default=None, null=True)
     upvotes = models.IntegerField(default=0, null=True)
     downvotes = models.IntegerField(default=0, null=True)
@@ -22,6 +23,20 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     votes = models.IntegerField(default=0, null=True)
     ratio = models.FloatField(default=0, null=True)
+    
+    @property
+    def permalink(self):
+        return encode_comment_id(self.id)
+    
+    @property
+    def post_permalink(self):
+        return encode_post_id(self.post_id)
+    
+    @property
+    def parent_comment_id(self):
+        if self.parent == None:
+            return 0
+        return self.parent_id
     
     class Meta:
         indexes = [
@@ -66,25 +81,25 @@ def increment_comments(sender, instance, created, **kwargs):
         
         Notification = apps.get_model('inbox', 'Notification')
         
-        if instance.parent_id == 0:
-            parent_user = instance.post.user
+        if instance.parent_id == None:
+            receiver = instance.post.user
             parent_permalink = None
             notification_type = 'post_reply'
         else:
-            parent_user = instance.parent.user
+            receiver = instance.parent.user
             parent_permalink = encode_comment_id(instance.parent_id)
             notification_type = 'comment_reply'
             
         post_permalink = encode_post_id(instance.post_id)
         
         Notification.objects.create(
-            parent_user=parent_user,
-            parent_permalink=parent_permalink,
+            type=notification_type,
+            receiver=receiver,
+            sender=instance.user,
             comment=instance,
-            user=instance.user,
-            post_permalink=post_permalink,
             community=instance.community,
-            type=notification_type
+            post_permalink=post_permalink,
+            parent_permalink=parent_permalink
         ).save()
 
         
@@ -116,7 +131,7 @@ class UpvoteComment(models.Model):
     #     unique_together = ('user', 'post')
         
     def __str__(self):
-        return str(self.user) + ' - ' + str(self.comment)
+        return 'Comment upvote object'
     
     
 class DownvoteComment(models.Model):
@@ -127,4 +142,4 @@ class DownvoteComment(models.Model):
     #     unique_together = ('user', 'post')
         
     def __str__(self):
-        return str(self.user) + ' - ' + str(self.comment)
+        return 'Comment downvote object'

@@ -115,16 +115,16 @@ WSGI_APPLICATION = 'cooper.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'railway',
-        # 'USER': 'postgres',
-        # # 'PASSWORD': os.getenv('DB_PASSWORD'),
-        # 'PASSWORD': 'USoeyArUfcdQzEEaumlHkuUbjIwvFnre',
-        # 'HOST': 'viaduct.proxy.rlwy.net',
-        # 'PORT': '55959',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        # 'PASSWORD': os.getenv('DB_PASSWORD'),
+        'PASSWORD': 'USoeyArUfcdQzEEaumlHkuUbjIwvFnre',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '55959',
         # ----------- default sqlite -----------
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

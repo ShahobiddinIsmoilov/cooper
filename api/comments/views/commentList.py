@@ -32,16 +32,11 @@ def commentList(request):
     serializer = ListCommentSerializer(comments, many=True)
     data = serializer.data
     
-    for i in range(len(data)):
-        if user != 'undefined' and user != None:
+    if user != 'undefined' and user != None:
+        for i in range(len(data)):
             upvoted = UpvoteComment.objects.filter(comment=comments[i], user=user)
             data[i]['upvoted'] = upvoted.exists()
             downvoted = DownvoteComment.objects.filter(comment=comments[i], user=user)
             data[i]['downvoted'] = downvoted.exists()
-        
-        comment_permalink = encode_comment_id(data[i]['id'])
-        data[i]['permalink'] = comment_permalink
-        post_permalink = encode_post_id(data[i]['post'])
-        data[i]['post_permalink'] = post_permalink
         
     return Response(data)

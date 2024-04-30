@@ -13,8 +13,8 @@ def notificationList(request):
     filter = request.GET.get('filter')
     
     if filter == 'user':
-        parent_user = request.GET.get('parent_user')
-        notifs = Notification.objects.filter(parent_user=parent_user).order_by('-created_at')
+        receiver = request.GET.get('receiver')
+        notifs = Notification.objects.filter(receiver=receiver).order_by('-created_at')
     else:
         notifs = Notification.objects.all().order_by('-created_at')
         
@@ -27,7 +27,7 @@ def notificationList(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def notificationAction(request):
-    parent_user = request.user.id
+    receiver = request.user.id
     action = request.data.get('action')
     
     if action == 'read_one':
@@ -36,7 +36,7 @@ def notificationAction(request):
         notification.is_read = True
         notification.save()
     elif action == 'read_all':
-        notifications = Notification.objects.filter(parent_user=parent_user, is_read=False)
+        notifications = Notification.objects.filter(receiver=receiver, is_read=False)
         print(notifications)
         for notification in notifications:
             notification.is_read = True

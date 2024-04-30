@@ -11,7 +11,7 @@ class PostSerializer(serializers.ModelSerializer):
     user_avatar = serializers.ImageField(source='user.avatar', read_only=True)
     community_name = serializers.CharField(source='community.name', read_only=True)
     community_link = serializers.CharField(source='community.link', read_only=True)
-    community_avatar = serializers.CharField(source='community.avatar', read_only=True)
+    community_avatar = serializers.ImageField(source='community.avatar', read_only=True)
     permalink = serializers.CharField(read_only=True)
     votes = serializers.IntegerField(read_only=True)
     ratio = serializers.FloatField(read_only=True)

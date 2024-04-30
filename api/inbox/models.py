@@ -15,15 +15,15 @@ class Notification(models.Model):
     ]
     
     type = models.CharField(max_length=15, default='other', null=True, choices=TYPES)
-    parent_user = models.ForeignKey(User, default=None, null=True, on_delete=models.CASCADE)
-    parent_permalink = models.CharField(max_length=15, default=None, null=True)
-    post_permalink = models.CharField(max_length=15, default=None, null=True)
-    comment = models.ForeignKey(Comment, default=None, null=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, default=None, null=True, related_name='notif_trigger_user',
+    receiver = models.ForeignKey(User, default=None, null=True, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, default=None, null=True, related_name='notif_sender',
                                                             on_delete=models.SET_NULL)
+    comment = models.ForeignKey(Comment, default=None, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey(Community, default=None, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    post_permalink = models.CharField(max_length=15, default=None, null=True)
+    parent_permalink = models.CharField(max_length=15, default=None, null=True)
     is_read = models.BooleanField(default=False, null=True)
     
     def __str__(self):
-        return self.type
+        return 'Notification object'

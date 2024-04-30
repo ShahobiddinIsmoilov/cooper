@@ -30,7 +30,7 @@ def userDetail(request, username):
     data = UserDetailSerializer(user, many=False).data
     
     Notification = apps.get_model('inbox', 'Notification')
-    notifications = Notification.objects.filter(parent_user=user.id, is_read=False)
+    notifications = Notification.objects.filter(receiver=user.id, is_read=False)
     
     data['notifications'] = len(notifications)
     
