@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'cooper-production-d75f.up.railway.app',
+    'cooper.up.railway.app',
 ]
 
 
