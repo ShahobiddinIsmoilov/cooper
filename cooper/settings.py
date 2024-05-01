@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'cooper-production-d75f.up.railway.app',
+    'cooper.up.railway.app',
 ]
 
 
@@ -74,10 +74,12 @@ MIDDLEWARE = [
 
 # CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://cooper-production-d75f.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://cooper.up.railway.app']
 
 CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
     'http://192.168.43.213:3000',
+    'https://diagonal.up.railway.app',
 ]
 
 # CORS_ALLOW_HEADERS = [
