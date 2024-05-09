@@ -10,25 +10,84 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('communities', '0001_initial'),
-        ('comments', '0001_initial'),
+        ("communities", "0001_initial"),
+        ("comments", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Notification',
+            name="Notification",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.CharField(choices=[('post_reply', 'Post reply'), ('comment_reply', 'Comment reply'), ('other', 'Other')], default='other', max_length=15, null=True)),
-                ('parent_permalink', models.CharField(default=None, max_length=15, null=True)),
-                ('post_permalink', models.CharField(default=None, max_length=15, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('is_read', models.BooleanField(default=False, null=True)),
-                ('comment', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='comments.comment')),
-                ('community', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='communities.community')),
-                ('parent_user', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('user', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='notif_trigger_user', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("post_reply", "Post reply"),
+                            ("comment_reply", "Comment reply"),
+                            ("other", "Other"),
+                        ],
+                        default="other",
+                        max_length=15,
+                        null=True,
+                    ),
+                ),
+                (
+                    "parent_permalink",
+                    models.CharField(default=None, max_length=15, null=True),
+                ),
+                (
+                    "post_permalink",
+                    models.CharField(default=None, max_length=15, null=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("is_read", models.BooleanField(default=False, null=True)),
+                (
+                    "comment",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="comments.comment",
+                    ),
+                ),
+                (
+                    "community",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="communities.community",
+                    ),
+                ),
+                (
+                    "parent_user",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="notif_trigger_user",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

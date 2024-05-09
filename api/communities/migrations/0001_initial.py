@@ -15,43 +15,119 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Community',
+            name="Community",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, default=None, max_length=32, null=True, unique=True)),
-                ('link', models.CharField(blank=True, default=None, max_length=32, null=True, unique=True)),
-                ('description', models.TextField(blank=True, default=None, max_length=1000, null=True)),
-                ('members', models.IntegerField(blank=True, default=0, null=True)),
-                ('posts', models.IntegerField(blank=True, default=0, null=True)),
-                ('comments', models.IntegerField(blank=True, default=0, null=True)),
-                ('rules', models.TextField(blank=True, default=None, max_length=5000, null=True)),
-                ('avatar', models.ImageField(blank=True, default='media/community/default_avatar.png', null=True, upload_to='media/community/')),
-                ('banner', models.ImageField(blank=True, default='media/community/default_banner.png', null=True, upload_to='media/community/')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('owner', models.ForeignKey(default=1, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        blank=True, default=None, max_length=32, null=True, unique=True
+                    ),
+                ),
+                (
+                    "link",
+                    models.CharField(
+                        blank=True, default=None, max_length=32, null=True, unique=True
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        blank=True, default=None, max_length=1000, null=True
+                    ),
+                ),
+                ("members", models.IntegerField(blank=True, default=0, null=True)),
+                ("posts", models.IntegerField(blank=True, default=0, null=True)),
+                ("comments", models.IntegerField(blank=True, default=0, null=True)),
+                (
+                    "rules",
+                    models.TextField(
+                        blank=True, default=None, max_length=5000, null=True
+                    ),
+                ),
+                (
+                    "avatar",
+                    models.ImageField(
+                        blank=True,
+                        default="media/community/default_avatar.png",
+                        null=True,
+                        upload_to="media/community/",
+                    ),
+                ),
+                (
+                    "banner",
+                    models.ImageField(
+                        blank=True,
+                        default="media/community/default_banner.png",
+                        null=True,
+                        upload_to="media/community/",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        default=1,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='UserCommunity',
+            name="UserCommunity",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('community', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='communities.community')),
-                ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "community",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="communities.community",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('user', 'community')},
+                "unique_together": {("user", "community")},
             },
         ),
         migrations.AddIndex(
-            model_name='community',
-            index=models.Index(fields=['name'], name='communities_name_3031a9_idx'),
+            model_name="community",
+            index=models.Index(fields=["name"], name="communities_name_3031a9_idx"),
         ),
         migrations.AddIndex(
-            model_name='community',
-            index=models.Index(fields=['link'], name='communities_link_5f53cc_idx'),
+            model_name="community",
+            index=models.Index(fields=["link"], name="communities_link_5f53cc_idx"),
         ),
         migrations.AddIndex(
-            model_name='community',
-            index=models.Index(fields=['created_at'], name='communities_created_4d42e1_idx'),
+            model_name="community",
+            index=models.Index(
+                fields=["created_at"], name="communities_created_4d42e1_idx"
+            ),
         ),
     ]

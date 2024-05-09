@@ -4,7 +4,7 @@ from .mainview import OK
 
 
 urlpatterns = [
-    path('', OK),
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
+    path("", OK),
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
 ]

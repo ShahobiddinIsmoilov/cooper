@@ -8,7 +8,7 @@ from ..serializers import CreateCommentSerializer, UpdateCommentSerializer
 
 
 # Create comment
-@api_view(['POST'])
+@api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def commentCreate(request):
     serializer = CreateCommentSerializer(data=request.data)
@@ -18,7 +18,7 @@ def commentCreate(request):
 
 
 # Update comment
-@api_view(['PATCH'])
+@api_view(["PATCH"])
 @permission_classes([IsAuthenticated])
 def commentUpdate(request, pk):
     comment = Comment.objects.get(pk=pk)
@@ -29,7 +29,7 @@ def commentUpdate(request, pk):
 
 
 # Delete comment
-@api_view(['DELETE'])
+@api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 def commentDelete(request, pk):
     comment = Comment.objects.get(pk=pk)

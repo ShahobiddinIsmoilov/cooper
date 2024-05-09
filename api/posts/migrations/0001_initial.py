@@ -10,60 +10,172 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('communities', '0001_initial'),
+        ("communities", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.CharField(choices=[('text', 'Text'), ('image', 'Image'), ('link', 'Link')], default='text', max_length=5, null=True)),
-                ('title', models.CharField(default=None, max_length=200, null=True)),
-                ('body_text', models.TextField(blank=True, default=None, max_length=10000, null=True)),
-                ('body', models.TextField(default=None, max_length=10000, null=True)),
-                ('image', models.ImageField(default=None, null=True, upload_to='media/post/')),
-                ('link', models.URLField(default=None, max_length=10000, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('visits', models.IntegerField(default=0, null=True)),
-                ('upvotes', models.IntegerField(default=0, null=True)),
-                ('downvotes', models.IntegerField(default=0, null=True)),
-                ('comments', models.IntegerField(default=0, null=True)),
-                ('community', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='communities.community')),
-                ('user', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("text", "Text"),
+                            ("image", "Image"),
+                            ("link", "Link"),
+                        ],
+                        default="text",
+                        max_length=5,
+                        null=True,
+                    ),
+                ),
+                ("title", models.CharField(default=None, max_length=200, null=True)),
+                (
+                    "body_text",
+                    models.TextField(
+                        blank=True, default=None, max_length=10000, null=True
+                    ),
+                ),
+                ("body", models.TextField(default=None, max_length=10000, null=True)),
+                (
+                    "image",
+                    models.ImageField(default=None, null=True, upload_to="media/post/"),
+                ),
+                ("link", models.URLField(default=None, max_length=10000, null=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("visits", models.IntegerField(default=0, null=True)),
+                ("upvotes", models.IntegerField(default=0, null=True)),
+                ("downvotes", models.IntegerField(default=0, null=True)),
+                ("comments", models.IntegerField(default=0, null=True)),
+                (
+                    "community",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="communities.community",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='UpvotePost',
+            name="UpvotePost",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('post', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='posts.post')),
-                ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "post",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="posts.post",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='DownvotePost',
+            name="DownvotePost",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('post', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='posts.post')),
-                ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "post",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="posts.post",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='SavePost',
+            name="SavePost",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('post', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='posts.post')),
-                ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "post",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="posts.post",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('user', 'post')},
+                "unique_together": {("user", "post")},
             },
         ),
         migrations.AddIndex(
-            model_name='post',
-            index=models.Index(fields=['created_at'], name='posts_post_created_dadbfe_idx'),
+            model_name="post",
+            index=models.Index(
+                fields=["created_at"], name="posts_post_created_dadbfe_idx"
+            ),
         ),
     ]

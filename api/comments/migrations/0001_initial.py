@@ -10,55 +10,141 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('communities', '0001_initial'),
-        ('posts', '0001_initial'),
+        ("communities", "0001_initial"),
+        ("posts", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('body', models.TextField(default=None, max_length=10000, null=True)),
-                ('upvotes', models.IntegerField(default=0, null=True)),
-                ('downvotes', models.IntegerField(default=0, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('votes', models.IntegerField(default=0, null=True)),
-                ('ratio', models.FloatField(default=0, null=True)),
-                ('community', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='communities.community')),
-                ('parent', models.ForeignKey(default=0, null=True, on_delete=django.db.models.deletion.SET_NULL, to='comments.comment')),
-                ('post', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='posts.post')),
-                ('user', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("body", models.TextField(default=None, max_length=10000, null=True)),
+                ("upvotes", models.IntegerField(default=0, null=True)),
+                ("downvotes", models.IntegerField(default=0, null=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("votes", models.IntegerField(default=0, null=True)),
+                ("ratio", models.FloatField(default=0, null=True)),
+                (
+                    "community",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="communities.community",
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        default=0,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="comments.comment",
+                    ),
+                ),
+                (
+                    "post",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="posts.post",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=None,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='UpvoteComment',
+            name="UpvoteComment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comment', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='comments.comment')),
-                ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "comment",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="comments.comment",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='DownvoteComment',
+            name="DownvoteComment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comment', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='comments.comment')),
-                ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "comment",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="comments.comment",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=1,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.AddIndex(
-            model_name='comment',
-            index=models.Index(fields=['votes'], name='comments_co_votes_79efdf_idx'),
+            model_name="comment",
+            index=models.Index(fields=["votes"], name="comments_co_votes_79efdf_idx"),
         ),
         migrations.AddIndex(
-            model_name='comment',
-            index=models.Index(fields=['ratio'], name='comments_co_ratio_c1d389_idx'),
+            model_name="comment",
+            index=models.Index(fields=["ratio"], name="comments_co_ratio_c1d389_idx"),
         ),
         migrations.AddIndex(
-            model_name='comment',
-            index=models.Index(fields=['created_at'], name='comments_co_created_5f6a12_idx'),
+            model_name="comment",
+            index=models.Index(
+                fields=["created_at"], name="comments_co_created_5f6a12_idx"
+            ),
         ),
     ]

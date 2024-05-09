@@ -9,7 +9,7 @@ from api.convert import encode_post_id, decode_post_id
 
 
 # Create new post
-@api_view(['POST'])
+@api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def postCreate(request):
     serializer = CreatePostSerializer(data=request.data)
@@ -18,12 +18,12 @@ def postCreate(request):
         post = serializer.save(user=request.user)
         permalink = encode_post_id(post.id)
         return Response(permalink, status=status.HTTP_201_CREATED)
-        
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Update post
-@api_view(['PATCH'])
+@api_view(["PATCH"])
 @permission_classes([IsAuthenticated])
 def postUpdate(request, pk):
     post = Post.objects.get(pk=pk)
@@ -36,7 +36,7 @@ def postUpdate(request, pk):
 
 
 # Delete post
-@api_view(['DELETE'])
+@api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 def postDelete(request, pk):
     post = Post.objects.get(pk=pk)

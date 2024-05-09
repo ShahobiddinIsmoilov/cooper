@@ -4,6 +4,6 @@ from .views import notificationList, notificationAction
 
 # Notification urls
 urlpatterns = [
-    path('list/', notificationList, name='notification-list'),
-    path('action/', notificationAction, name='notification-action'),
+    path("list/", notificationList, name="notification-list"),
+    path("action/", notificationAction, name="notification-action"),
 ]

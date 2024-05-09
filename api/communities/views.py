@@ -3,53 +3,54 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.reverse import reverse
 
 from .models import Community, UserCommunity
-from .serializers import (ListCommunitySerializer,
-                          DetailCommunitySerializer,
-                          CreateCommunitySerializer,
-                          UpdateCommunitySerializer)
+from .serializers import (
+    ListCommunitySerializer,
+    DetailCommunitySerializer,
+    CreateCommunitySerializer,
+    UpdateCommunitySerializer,
+)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def communityListJoined(request):
     """
     Function to get and return the list of a user's joined communities
     """
-    relationships = UserCommunity.objects.filter(user=request.GET.get('user', ''))
+    relationships = UserCommunity.objects.filter(user=request.GET.get("user", ""))
     communities = [item.community for item in relationships]
     serializer = ListCommunitySerializer(communities, many=True)
-    
+
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def communityListDiscover(request):
     """
     Function to get and return the list of communities a user hasn't joined
     """
-    relationships = UserCommunity.objects.filter(user=request.GET.get('user', ''))
+    relationships = UserCommunity.objects.filter(user=request.GET.get("user", ""))
     joined = [item.community for item in relationships]
     all = Community.objects.all()
     communities = list(set(all) - set(joined))
     serializer = ListCommunitySerializer(communities, many=True)
-    
+
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def communityListAll(request):
     """
     Function to get and return the list of all communities
     """
     communities = Community.objects.all()
     serializer = ListCommunitySerializer(communities, many=True)
-    
+
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def communityDetail(request, link: str):
     """
     Retrieves the details of a community with the name parameter
@@ -57,39 +58,39 @@ def communityDetail(request, link: str):
     """
     community = get_object_or_404(Community, link=link)
     serializer = DetailCommunitySerializer(community, many=False)
-    
+
     exists = False
-    authenticated = request.GET.get('auth', '')
-    if authenticated == 'true':
-        user = request.GET.get('user', '')
+    authenticated = request.GET.get("auth", "")
+    if authenticated == "true":
+        user = request.GET.get("user", "")
         exists = UserCommunity.objects.filter(user=user, community=community).exists()
-            
-    response = {'is_joined': exists, **serializer.data}
-    
+
+    response = {"is_joined": exists, **serializer.data}
+
     return Response(response)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def communityAction(request, pk):
     """
     Handles user join and leave actions
     """
-    action = request.GET.get('action', '')
+    action = request.GET.get("action", "")
     user = request.user
     community = Community.objects.get(pk=pk)
-    
-    if action == 'join':
+
+    if action == "join":
         new_instance = UserCommunity.objects.create(user=user, community=community)
         new_instance.save()
-    elif action == 'leave':
+    elif action == "leave":
         existing_instance = UserCommunity.objects.get(user=user, community=community)
         existing_instance.delete()
-    
+
     return Response(status=status.HTTP_200_OK)
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 def communityCreate(request):
     """
     Creates a new community with the given details
@@ -99,11 +100,11 @@ def communityCreate(request):
     if serializer.is_valid(raise_exception=True):
         community = serializer.save(owner=request.user)
         return Response(community.link, status=status.HTTP_201_CREATED)
-    
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
+@api_view(["PUT"])
 def communityUpdate(request, pk):
     """
     Updates the community with specified changes
@@ -113,11 +114,11 @@ def communityUpdate(request, pk):
 
     if serializer.is_valid(raise_exception=True):
         serializer.save()
-    
+
     return Response(status=status.HTTP_200_OK)
 
 
-@api_view(['DELETE'])
+@api_view(["DELETE"])
 def communityDelete(request, pk):
     """
     Deletes the community with the given name
