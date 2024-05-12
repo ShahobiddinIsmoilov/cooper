@@ -116,14 +116,3 @@ def communityUpdate(request, pk):
         serializer.save()
 
     return Response(status=status.HTTP_200_OK)
-
-
-@api_view(["DELETE"])
-def communityDelete(request, pk):
-    """
-    Deletes the community with the given name
-    """
-    community = Community.objects.get(pk=pk)
-    community.delete()
-
-    return Response(status=status.HTTP_204_NO_CONTENT)

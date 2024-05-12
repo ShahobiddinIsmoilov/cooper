@@ -40,4 +40,4 @@ class UpdateCommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Community
-        fields = ["description", "rules", "avatar", "banner"]
+        fields = ["name", "description", "avatar", "banner"]

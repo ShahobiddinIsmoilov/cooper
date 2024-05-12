@@ -11,5 +11,4 @@ urlpatterns = [
     path("action/<int:pk>/", views.communityAction, name="community-action"),
     path("create/", views.communityCreate, name="community-create"),
     path("update/<int:pk>/", views.communityUpdate, name="community-update"),
-    path("delete/<int:pk>/", views.communityDelete, name="community-delete"),
 ]
