@@ -73,9 +73,9 @@ MIDDLEWARE = [
 CSRF_TRUSTED_ORIGINS = ["https://cooper.up.railway.app"]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
     "http://192.168.43.213:3000",
-    "https://diagonal.up.railway.app",
+    "http://diagonal.uz/",
+    "http://roundhouse.proxy.rlwy.net:33455",
 ]
 
 # CORS_ALLOW_HEADERS = [
