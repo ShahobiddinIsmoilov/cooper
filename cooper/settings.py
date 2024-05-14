@@ -76,6 +76,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.43.213:3000",
     "http://diagonal.uz",
     "http://roundhouse.proxy.rlwy.net:33455",
+    "https://diagonal.up.railway.app",
 ]
 
 # CORS_ALLOW_HEADERS = [
