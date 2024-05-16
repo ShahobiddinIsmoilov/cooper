@@ -5,6 +5,8 @@ from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from api.users.models import Code
+
 User = get_user_model()
 
 
@@ -12,7 +14,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
     """
     User registration serializer
     """
-
     password = serializers.CharField(max_length=64, min_length=6, write_only=True)
 
     class Meta:
@@ -39,7 +40,6 @@ class LoginSerializer(serializers.ModelSerializer):
     """
     User login serializer
     """
-
     username = serializers.CharField(max_length=40, min_length=3)
     password = serializers.CharField(max_length=64, min_length=6, write_only=True)
 
@@ -67,7 +67,6 @@ class LogoutSerializer(serializers.Serializer):
     """
     User logout serializer
     """
-
     refresh = serializers.CharField()
 
     def validate(self, attrs):
@@ -87,7 +86,6 @@ class UserSerializer(serializers.ModelSerializer):
     """
     Serializer to get the users list
     """
-
     class Meta:
         model = User
         fields = ["id", "username"]
@@ -97,7 +95,6 @@ class UserDetailSerializer(serializers.ModelSerializer):
     """
     Serializer to get specific user details
     """
-
     class Meta:
         model = User
         fields = [
@@ -131,7 +128,16 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             "facebook",
             "twitter",
         ]
+        
 
+class CodeSerializer(serializers.ModelSerializer):
+    """
+    Authentication code serializer
+    """
+    class Meta:
+        model = Code
+        fields = ["phone"]
+    
 
 # Customizing token claims. Settings.py is configured to use this serializer
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):

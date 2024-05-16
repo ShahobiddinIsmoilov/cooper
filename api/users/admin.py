@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from django.contrib import admin
-from .models import User
+from .models import User, Code
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -28,6 +28,19 @@ class UserAdmin(admin.ModelAdmin):
 
     readonly_fields = ("username", "id", "phone_number", "votes", "created_at")
 
-
 admin.site.register(User, UserAdmin)
+
+
+class CodeAdmin(admin.ModelAdmin):
+    list_display = ("object_type", "phone", "code", "id")
+    
+    def object_type(self, obj):
+        return "Authentication code"
+    
+    fields = ("phone", "code", "id")
+    
+    readonly_fields = ("phone", "code", "id")
+    
+admin.site.register(Code, CodeAdmin)
+
 admin.site.unregister(Group)

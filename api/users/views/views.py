@@ -5,7 +5,7 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .serializers import (
+from ..serializers import (
     RegistrationSerializer,
     UserSerializer,
     UserDetailSerializer,
@@ -19,7 +19,6 @@ class UserList(generics.ListAPIView):
     """
     Getting the list of users
     """
-
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

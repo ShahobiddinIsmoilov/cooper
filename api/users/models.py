@@ -86,3 +86,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         number = f" {phone[5:8]}-{phone[8:10]}-{phone[10:12]}"
         pretty = country + code + number
         return pretty
+
+
+class Code(models.Model):
+    phone = models.CharField(default=None, null=True, blank=True)
+    code = models.CharField(max_length=6, default=None, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return "Authentication code"
