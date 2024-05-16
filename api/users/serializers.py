@@ -136,7 +136,7 @@ class CodeSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Code
-        fields = ["phone"]
+        fields = ['phone', 'code', 'created_at']
     
 
 # Customizing token claims. Settings.py is configured to use this serializer
