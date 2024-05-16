@@ -35,8 +35,10 @@ def new_code(request):
         exists = Code.objects.filter(code=code).exists()
         
     Code.objects.create(code=code, phone=phone)
-    data = {'code': code}
-    
+    data = {
+        'status': 'OK',
+        'code': code
+    }
     return Response(data, status=status.HTTP_200_OK)
 
 
