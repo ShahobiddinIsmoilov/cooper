@@ -19,4 +19,6 @@ urlpatterns = [
     path("delete/<int:pk>/", views.userDelete, name="user-delete"),
     path("new-code/", auth.new_code, name="generate-new-code"),
     path("check-code/", auth.check_code, name="check-code"),
+    path("check-username/", auth.check_username, name="check-username"),
+    path("my-username/", auth.my_username, name="my-username"),
 ]
