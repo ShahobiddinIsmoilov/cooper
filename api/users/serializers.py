@@ -18,7 +18,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "password"]
+        fields = ["username", "password", "phone", "display_name"]
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -27,11 +27,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
         username = attrs.get("username")
         password = attrs.get("password")
 
-        if len(username) < 3:
-            raise serializers.ValidationError("username length cannot be less than 3")
-
-        if username.lower() in password.lower() or password.lower() in username.lower():
-            raise serializers.ValidationError("username and password cannot be similar")
+        if len(username) < 4:
+            raise serializers.ValidationError("username length cannot be less than 4")
 
         return attrs
 

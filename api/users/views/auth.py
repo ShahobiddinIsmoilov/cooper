@@ -86,7 +86,8 @@ def check_username(request):
         data = {'status': 'ERROR', 'message': 'Username not provided'}
         return Response(data, status=status.HTTP_200_OK)
         
-    exists = User.objects.filter(username=request.data.get('username')).exists()
+    username = request.data.get('username')
+    exists = User.objects.filter(username__iexact=username).exists()
     
     if exists:
         data = {'status': 'ERROR', 'message': 'Username taken'}
