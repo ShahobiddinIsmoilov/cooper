@@ -69,7 +69,8 @@ def check_code(request):
     
     code.delete()
     phone = serializer.data['phone']
-    registered_before = User.objects.filter(phone=phone).exists()
+    user = User.objects.filter(phone=phone)
+    registered_before = user.exists()
     
     if type == "register":
         if registered_before:
@@ -93,9 +94,10 @@ def check_code(request):
             }
             return Response(data, status=status.HTTP_200_OK)
         
+        username = UserDetailSerializer(user.first(), many=False).data['username']
         data = {
             'status': 'OK',
-            'message': "All good"
+            'username': username
         }
         return Response(data, status=status.HTTP_200_OK)
     
