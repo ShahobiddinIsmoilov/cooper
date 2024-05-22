@@ -16,6 +16,7 @@ urlpatterns = [
     path("token/", TokenObtainPairView.as_view(), name="token"),
     path("token/refresh/", TokenRefreshView.as_view(), name="refresh-token"),
     path("update/<int:pk>/", views.userUpdate, name="user-update"),
+    path("reset-password/", views.passwordUpdate, name="password-update"),
     path("delete/<int:pk>/", views.userDelete, name="user-delete"),
     path("new-code/", auth.new_code, name="generate-new-code"),
     path("check-code/", auth.check_code, name="check-code"),

@@ -91,8 +91,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Code(models.Model):
     CODE_TYPES = [
         ("register", "Account registration"),
-        ("restore", "Password restoration"),
         ("change", "Phone number change"),
+        ("reset", "Password reset"),
     ]
     
     type = models.CharField(max_length=8, default="register", null=True, choices=CODE_TYPES)

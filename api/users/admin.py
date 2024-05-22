@@ -39,9 +39,11 @@ class CodeAdmin(admin.ModelAdmin):
     def code_type(self, obj):
         if obj.type == "register":
             return "Account registration"
-        if obj.type == "restore":
-            return "Password restoration"
-        return "Phone number change"
+        if obj.type == "reset":
+            return "Password reset"
+        if obj.type == "change":
+            return "Phone number change"
+        return obj.type
     
     def status(self, obj):
         created_at = obj.created_at.timestamp()
@@ -51,9 +53,9 @@ class CodeAdmin(admin.ModelAdmin):
             return "Expired"
         return "Active"
     
-    fields = ("phone", "code", "id")
+    fields = ("code_type", "status", "phone", "code", "id")
     
-    readonly_fields = ("phone", "code", "id")
+    readonly_fields = ("code_type", "status", "phone", "code", "id")
     
 admin.site.register(Code, CodeAdmin)
 

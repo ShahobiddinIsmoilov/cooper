@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from django.apps import apps
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 
 from ..serializers import (
     RegistrationSerializer,
@@ -55,7 +56,8 @@ class RegistrationView(generics.GenericAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-@api_view(["PUT", "PATCH"])
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
 def userUpdate(request, pk):
     """
     Updating user settings
@@ -70,7 +72,22 @@ def userUpdate(request, pk):
     return Response(status=status.HTTP_200_OK)
 
 
+@api_view(["PUT"])
+def passwordUpdate(request):
+    """
+    Resetting user password
+    """
+    username = request.data.get("username")
+    password = request.data.get("password")
+    user = get_object_or_404(User, username=username)
+    user.set_password(password)
+    user.save()
+
+    return Response(status=status.HTTP_200_OK)
+
+
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def userDelete(request, pk):
     """
     Deleting a user

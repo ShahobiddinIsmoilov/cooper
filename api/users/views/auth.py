@@ -85,7 +85,7 @@ def check_code(request):
         }
         return Response(data, status=status.HTTP_200_OK)
     
-    if type == "restore":
+    if type == "reset":
         if not registered_before:
             data = {
                 'status': 'ERROR',

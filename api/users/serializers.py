@@ -117,6 +117,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            "password",
             "avatar",
             "display_name",
             "phone",
