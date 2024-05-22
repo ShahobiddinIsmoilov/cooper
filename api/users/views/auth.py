@@ -1,8 +1,8 @@
 from random import randint
-from django.utils import timezone
 from datetime import timedelta
 from datetime import datetime
 from dateutil import parser
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -14,14 +14,16 @@ from api.users.serializers import CodeSerializer, UserDetailSerializer
 @api_view(["POST"])
 def new_code(request):
     phone = request.data.get('phone')
+    type = request.data.get('type')
     
-    if not phone:
-        data = {'status': 'ERROR', 'message': 'Phone number not provided'}
+    if not (phone and type):
+        data = {'status': 'ERROR', 'message': 'Necessary data not provided'}
         return Response(data, status=status.HTTP_200_OK)
     
     current_time = timezone.now()
     one_minute_ago = current_time - timedelta(minutes=1)
-    recent = Code.objects.filter(phone=phone, created_at__gte=one_minute_ago).exists()
+    recent = Code.objects.filter(phone=phone, type=type,
+                                 created_at__gt=one_minute_ago).exists()
     
     if recent:
         data = {'status': 'ERROR', 'message': 'Last code is still valid'}
@@ -32,9 +34,9 @@ def new_code(request):
     exists = True
     while exists:
         code = randint(100000, 999999)
-        exists = Code.objects.filter(code=code).exists()
+        exists = Code.objects.filter(code=code, type=type).exists()
         
-    Code.objects.create(code=code, phone=phone)
+    Code.objects.create(code=code, phone=phone, type=type)
     data = {
         'status': 'OK',
         'code': code
@@ -44,11 +46,12 @@ def new_code(request):
 
 @api_view(["POST"])
 def check_code(request):
-    if not request.data.get('code'):
-        data = {'status': 'ERROR', 'message': 'Code not provided'}
+    type = request.data.get('type')
+    if not (request.data.get('code') and type):
+        data = {'status': 'ERROR', 'message': 'Necessary data not provided'}
         return Response(data, status=status.HTTP_200_OK)
         
-    code = Code.objects.filter(code=request.data.get('code')).first()
+    code = Code.objects.filter(code=request.data.get('code'), type=type).first()
     
     if not code:
         data = {'status': 'ERROR', 'message': 'Invalid code'}
@@ -66,16 +69,53 @@ def check_code(request):
     
     code.delete()
     phone = serializer.data['phone']
-    
     registered_before = User.objects.filter(phone=phone).exists()
     
-    if registered_before:
-        data = {'status': 'ERROR', 'message': 'Phone number registered before'}
+    if type == "register":
+        if registered_before:
+            data = {
+                'status': 'ERROR',
+                'message': 'Already registered'
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        
+        data = {
+            'status': 'OK',
+            'phone': phone
+        }
+        return Response(data, status=status.HTTP_200_OK)
+    
+    if type == "restore":
+        if not registered_before:
+            data = {
+                'status': 'ERROR',
+                'message': 'Not registered'
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        
+        data = {
+            'status': 'OK',
+            'message': "All good"
+        }
+        return Response(data, status=status.HTTP_200_OK)
+    
+    if type == "change":
+        if registered_before:
+            data = {
+                'status': 'ERROR',
+                'message': 'Already registered'
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        
+        data = {
+            'status': 'OK',
+            'phone': phone
+        }
         return Response(data, status=status.HTTP_200_OK)
     
     data = {
-        'status': 'OK',
-        'phone': phone
+        'status': 'ERROR',
+        'message': "Code type mismatch"
     }
     return Response(data, status=status.HTTP_200_OK)
 

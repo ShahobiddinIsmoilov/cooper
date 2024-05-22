@@ -1,5 +1,7 @@
-from django.contrib.auth.models import Group
+from datetime import datetime
 from django.contrib import admin
+from django.contrib.auth.models import Group
+
 from .models import User, Code
 
 
@@ -32,10 +34,22 @@ admin.site.register(User, UserAdmin)
 
 
 class CodeAdmin(admin.ModelAdmin):
-    list_display = ("object_type", "phone", "code", "id")
+    list_display = ("code_type", "status", "phone", "code", "id")
     
-    def object_type(self, obj):
-        return "Authentication code"
+    def code_type(self, obj):
+        if obj.type == "register":
+            return "Account registration"
+        if obj.type == "restore":
+            return "Password restoration"
+        return "Phone number change"
+    
+    def status(self, obj):
+        created_at = obj.created_at.timestamp()
+        now = datetime.now().timestamp()
+        passed_seconds = now - created_at
+        if passed_seconds > 60:
+            return "Expired"
+        return "Active"
     
     fields = ("phone", "code", "id")
     

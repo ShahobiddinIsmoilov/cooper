@@ -89,9 +89,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Code(models.Model):
+    CODE_TYPES = [
+        ("register", "Account registration"),
+        ("restore", "Password restoration"),
+        ("change", "Phone number change"),
+    ]
+    
+    type = models.CharField(max_length=8, default="register", null=True, choices=CODE_TYPES)
     phone = models.CharField(default=None, null=True, blank=True)
     code = models.CharField(max_length=6, default=None, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return "Authentication code"
+        return "Code object"
