@@ -7,12 +7,10 @@ User = get_user_model()
 
 
 class Community(models.Model):
-    owner = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(
-        max_length=32, default=None, null=True, blank=True, unique=True
-    )
+    owner = models.ForeignKey(User, default=None, null=True, on_delete=models.SET_NULL)
+    name = models.CharField(max_length=32, default=None, null=True, blank=True)
     link = models.CharField(
-        max_length=32, default=None, null=True, blank=True, unique=True
+        max_length=24, default=None, null=True, blank=True, unique=True
     )
     description = models.TextField(
         max_length=1000,

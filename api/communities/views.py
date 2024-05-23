@@ -91,6 +91,7 @@ def communityAction(request, pk):
 
 
 @api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def communityCreate(request):
     """
     Creates a new community with the given details
@@ -105,6 +106,7 @@ def communityCreate(request):
 
 
 @api_view(["PUT"])
+@permission_classes([IsAuthenticated])
 def communityUpdate(request, pk):
     """
     Updates the community with specified changes
@@ -116,3 +118,18 @@ def communityUpdate(request, pk):
         serializer.save()
 
     return Response(status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def check_link(request, link):
+    """
+    Checks the availability of community link
+    """
+    exists = Community.objects.filter(link__iexact=link).exists()
+    
+    if exists:
+        data = {"status": "ERROR"}
+        return Response(data, status=status.HTTP_200_OK)
+    else:
+        data = {"status": "OK"}
+        return Response(data, status=status.HTTP_200_OK)
