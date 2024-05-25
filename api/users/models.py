@@ -53,10 +53,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True,
     )
-    telegram = models.URLField(default=None, null=True, blank=True)
-    instagram = models.URLField(default=None, null=True, blank=True)
-    facebook = models.URLField(default=None, null=True, blank=True)
-    twitter = models.URLField(default=None, null=True, blank=True)
+    telegram = models.CharField(max_length=50, default=None, null=True, blank=True)
+    instagram = models.CharField(max_length=50, default=None, null=True, blank=True)
+    facebook = models.CharField(max_length=50, default=None, null=True, blank=True)
+    twitter = models.CharField(max_length=50, default=None, null=True, blank=True)
 
     class Meta:
         indexes = [
