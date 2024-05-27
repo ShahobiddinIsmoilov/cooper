@@ -26,6 +26,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, default=None, null=True)
     body_text = models.TextField(max_length=10000, default=None, null=True, blank=True)
     body = models.TextField(max_length=10000, default=None, null=True)
+    edited = models.BooleanField(default=False, null=True)
     image = models.ImageField(upload_to="media/post/", default=None, null=True)
     link = models.URLField(max_length=10000, default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

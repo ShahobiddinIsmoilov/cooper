@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 
 from ..models import Post
 from ..serializers import CreatePostSerializer, UpdatePostSerializer
-from api.convert import encode_post_id, decode_post_id
+from api.convert import encode_post_id
 
 
 # Create new post

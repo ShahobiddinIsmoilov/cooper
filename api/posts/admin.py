@@ -8,7 +8,9 @@ class PostAdmin(admin.ModelAdmin):
     fields = (
         "type",
         "title",
+        "body_text",
         "body",
+        "edited",
         "image",
         "link",
         "community",
@@ -28,7 +30,9 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = (
         "type",
         "title",
+        "body_text",
         "body",
+        "edited",
         "image",
         "link",
         "community",

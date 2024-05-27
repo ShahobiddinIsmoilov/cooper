@@ -42,4 +42,4 @@ class UpdatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["body"]
+        fields = ["body", "body_text", "edited"]
