@@ -32,7 +32,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["community", "title", "type", "body", "image", "link"]
+        fields = ["community", "title", "type", "body", "body_text", "image", "link"]
 
 
 class UpdatePostSerializer(serializers.ModelSerializer):

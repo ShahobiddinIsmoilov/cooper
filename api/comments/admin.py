@@ -5,8 +5,9 @@ from .models import Comment, UpvoteComment, DownvoteComment
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("body", "post_id", "community", "user", "id")
-
+    
     fields = (
+        "body_text",
         "body",
         "parent",
         "post",
@@ -14,11 +15,13 @@ class CommentAdmin(admin.ModelAdmin):
         "user",
         "id",
         "created_at",
-        "updated_at",
+        "edited",
+        "edited_at",
         "upvotes",
         "downvotes",
         "votes",
         "ratio",
+        "deleted",
     )
 
     readonly_fields = (
@@ -26,10 +29,12 @@ class CommentAdmin(admin.ModelAdmin):
         "post",
         "community",
         "parent",
+        "body_text",
         "body",
         "id",
         "created_at",
-        "updated_at",
+        "edited",
+        "edited_at",
         "upvotes",
         "downvotes",
         "votes",

@@ -21,12 +21,15 @@ class Comment(models.Model):
         "comments.Comment", default=None, null=True, on_delete=models.SET_NULL
     )
     body = models.TextField(max_length=10000, default=None, null=True)
+    body_text = models.TextField(max_length=10000, default=None, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    edited = models.BooleanField(default=False, null=True)
+    edited_at = models.DateTimeField(null=True, blank=True)
     upvotes = models.IntegerField(default=0, null=True)
     downvotes = models.IntegerField(default=0, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     votes = models.IntegerField(default=0, null=True)
     ratio = models.FloatField(default=0, null=True)
+    deleted = models.BooleanField(default=False, null=True)
 
     @property
     def permalink(self):

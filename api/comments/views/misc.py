@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -23,15 +24,19 @@ def commentCreate(request):
 def commentUpdate(request, pk):
     comment = Comment.objects.get(pk=pk)
     serializer = UpdateCommentSerializer(instance=comment, data=request.data)
+    
     if serializer.is_valid(raise_exception=True):
-        serializer.save()
+        serializer.save(edited=True, edited_at=timezone.now())
+        
     return Response(status=status.HTTP_200_OK)
 
 
 # Delete comment
-@api_view(["DELETE"])
-@permission_classes([IsAuthenticated])
+@api_view(["PATCH"])
+# @permission_classes([IsAuthenticated])
 def commentDelete(request, pk):
     comment = Comment.objects.get(pk=pk)
-    comment.delete()
+    comment.deleted = True
+    comment.save()
+    
     return Response(status=status.HTTP_204_NO_CONTENT)

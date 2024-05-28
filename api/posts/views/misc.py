@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -30,16 +31,17 @@ def postUpdate(request, pk):
     serializer = UpdatePostSerializer(instance=post, data=request.data)
 
     if serializer.is_valid(raise_exception=True):
-        serializer.save()
+        serializer.save(edited=True, edited_at=timezone.now())
 
     return Response(status=status.HTTP_200_OK)
 
 
 # Delete post
-@api_view(["DELETE"])
-@permission_classes([IsAuthenticated])
+@api_view(["PATCH"])
+# @permission_classes([IsAuthenticated])
 def postDelete(request, pk):
     post = Post.objects.get(pk=pk)
-    post.delete()
+    post.deleted = True
+    post.save()
 
     return Response(status=status.HTTP_204_NO_CONTENT)
