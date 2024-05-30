@@ -49,11 +49,21 @@ class Comment(models.Model):
     
     @property
     def post_deleted(self):
-        return self.post.deleted
+        if self.post:
+            return self.post.deleted
+        return True
     
     @property
     def parent_deleted(self):
-        return self.parent.deleted
+        if self.parent:
+            return self.parent.deleted
+        return True
+    
+    @property
+    def parent_user_deleted(self):
+        if self.parent.user:
+            return self.parent.user.deleted
+        return True
 
     class Meta:
         indexes = [

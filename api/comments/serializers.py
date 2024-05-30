@@ -17,6 +17,9 @@ class ListCommentSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
     avatar = serializers.ImageField(source="user.avatar", read_only=True)
     parent = serializers.IntegerField(source="parent_comment_id", read_only=True)
+    post_deleted = serializers.BooleanField(read_only=True)
+    parent_deleted = serializers.BooleanField(read_only=True)
+    parent_user_deleted = serializers.BooleanField(read_only=True)
     parent_username = serializers.CharField(
         source="parent.user.username", read_only=True
     )
