@@ -38,3 +38,15 @@ class Notification(models.Model):
 
     def __str__(self):
         return "Notification object"
+
+    @property
+    def comment_deleted(self):
+        if self.comment:
+            return self.comment.deleted
+        return True
+    
+    @property
+    def sender_deleted(self):
+        if self.sender:
+            return False
+        return True
