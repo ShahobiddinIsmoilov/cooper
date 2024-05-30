@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
@@ -38,10 +39,19 @@ def postUpdate(request, pk):
 
 # Delete post
 @api_view(["PATCH"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def postDelete(request, pk):
     post = Post.objects.get(pk=pk)
     post.deleted = True
     post.save()
+    
+    Community = apps.get_model("communities", "Community")
+    community = Community.objects.get(id=post.community_id)
+    comments_to_subtract = post.comments
+    if community.comments >= comments_to_subtract:
+        community.comments -= comments_to_subtract
+    if community.posts > 0:
+        community.posts -= 1
+    community.save()
 
     return Response(status=status.HTTP_204_NO_CONTENT)

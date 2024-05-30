@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
@@ -33,7 +34,7 @@ def commentUpdate(request, pk):
 
 # Delete comment
 @api_view(["PATCH"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def commentDelete(request, pk):
     comment = Comment.objects.get(pk=pk)
     comment.deleted = True

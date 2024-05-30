@@ -1,8 +1,8 @@
 from django.db import models
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from django.apps import apps
 
 from api.convert import encode_post_id, encode_comment_id
 
@@ -18,7 +18,7 @@ class Comment(models.Model):
         "communities.Community", default=None, null=True, on_delete=models.CASCADE
     )
     parent = models.ForeignKey(
-        "comments.Comment", default=None, null=True, on_delete=models.SET_NULL
+        "comments.Comment", default=None, null=True, on_delete=models.CASCADE
     )
     body = models.TextField(max_length=10000, default=None, null=True)
     body_text = models.TextField(max_length=10000, default=None, null=True)
@@ -46,6 +46,14 @@ class Comment(models.Model):
         if self.parent == None:
             return 0
         return self.parent_id
+    
+    @property
+    def post_deleted(self):
+        return self.post.deleted
+    
+    @property
+    def parent_deleted(self):
+        return self.parent.deleted
 
     class Meta:
         indexes = [
