@@ -56,7 +56,10 @@ def activityList(request, username):
                 serialized["downvoted"] = downvote.exists()
             comment_permalink = encode_comment_id(serialized["id"])
             serialized["comment_permalink"] = comment_permalink
-            post_permalink = encode_post_id(serialized["post"])
+            if serialized["post"] != None:
+                post_permalink = encode_post_id(serialized["post"])
+            else:
+                post_permalink = None
             serialized["post_permalink"] = post_permalink
         data.append(serialized)
 
