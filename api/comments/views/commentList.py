@@ -5,7 +5,6 @@ from rest_framework.decorators import api_view
 from api.users.models import User
 from ..models import Comment, UpvoteComment, DownvoteComment
 from ..serializers import ListCommentSerializer
-from api.convert import encode_comment_id, encode_post_id
 
 
 @api_view(["GET"])

@@ -37,7 +37,9 @@ class Comment(models.Model):
 
     @property
     def post_permalink(self):
-        return encode_post_id(self.post_id)
+        if self.post_id:
+            return encode_post_id(self.post_id)
+        return self.post_id
 
     @property
     def parent_comment_id(self):
