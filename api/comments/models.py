@@ -155,7 +155,7 @@ class UpvoteComment(models.Model):
     comment = models.ForeignKey(Comment, default=1, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('user', 'post')
+        unique_together = ('user', 'comment')
 
     def __str__(self):
         return "Comment upvote object"
@@ -166,7 +166,7 @@ class DownvoteComment(models.Model):
     comment = models.ForeignKey(Comment, default=1, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('user', 'post')
+        unique_together = ('user', 'comment')
 
     def __str__(self):
         return "Comment downvote object"
