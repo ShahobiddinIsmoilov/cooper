@@ -99,8 +99,8 @@ class UpvotePost(models.Model):
     def post_id(self):
         return self.post.id
 
-    # class Meta:
-    #     unique_together = ('user', 'post')
+    class Meta:
+        unique_together = ('user', 'post')
 
     def __str__(self):
         return "Post upvote object"
@@ -114,8 +114,8 @@ class DownvotePost(models.Model):
     def post_id(self):
         return self.post.id
 
-    # class Meta:
-    #     unique_together = ('user', 'post')
+    class Meta:
+        unique_together = ('user', 'post')
 
     def __str__(self):
         return "Post downvote object"
