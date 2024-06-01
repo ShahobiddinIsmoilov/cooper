@@ -10,7 +10,7 @@ class ListCommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Community
-        fields = ["name", "link", "members", "avatar"]
+        fields = ["id", "name", "link", "members", "avatar"]
 
 
 class DetailCommunitySerializer(serializers.ModelSerializer):
