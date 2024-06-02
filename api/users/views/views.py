@@ -29,7 +29,7 @@ def userDetail(request, username):
     """
     Retrieving the details about a user
     """
-    user = get_object_or_404(User, username__iexac=username)
+    user = get_object_or_404(User, username__iexact=username)
     data = UserDetailSerializer(user, many=False).data
 
     Notification = apps.get_model("inbox", "Notification")
