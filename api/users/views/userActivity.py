@@ -13,7 +13,7 @@ from api.convert import encode_post_id, encode_comment_id
 
 @api_view(["GET"])
 def activityList(request, username):
-    activity_user = get_object_or_404(User, username=username)
+    activity_user = get_object_or_404(User, username__iexact=username)
     comments = Comment.objects.filter(user=activity_user)
     posts = Post.objects.filter(user=activity_user)
 

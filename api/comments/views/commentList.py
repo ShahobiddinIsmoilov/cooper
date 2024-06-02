@@ -17,7 +17,7 @@ def commentList(request):
         comments_raw = Comment.objects.filter(post=post)
     else:
         username = request.GET.get("username", "")
-        comments_user = get_object_or_404(User, username=username)
+        comments_user = get_object_or_404(User, username__iexac=username)
         comments_raw = Comment.objects.filter(user=comments_user)
 
     sort_by = request.GET.get("sort", "")

@@ -24,7 +24,7 @@ def postList(request):
         posts_raw = Post.objects.filter(community=community)
     else:
         username = request.GET.get("username", "")
-        posts_user = get_object_or_404(User, username=username)
+        posts_user = get_object_or_404(User, username__iexact=username)
         posts_raw = Post.objects.filter(user=posts_user)
 
     sort_by = request.GET.get("sort", "")
