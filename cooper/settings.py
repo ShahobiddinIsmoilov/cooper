@@ -73,7 +73,7 @@ MIDDLEWARE = [
 CSRF_TRUSTED_ORIGINS = ["https://cooper.up.railway.app"]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://192.168.43.213:3000",
+    "http://192.168.1.105:3000",
     "https://diagonal.uz",
     "https://www.diagonal.uz",
     "https://diagonal.up.railway.app",
